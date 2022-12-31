@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Pratik Ingle</title>
+<link>https://mm218.dev/Projects.html</link>
+<atom:link href="https://mm218.dev/Projects.xml" rel="self" type="application/rss+xml"/>
+<description>Technology and Swarm robotics</description>
+<generator>quarto-1.0.37</generator>
+<lastBuildDate>Fri, 23 Dec 2022 14:25:19 GMT</lastBuildDate>
+</channel>
+</rss>
