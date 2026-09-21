@@ -1,0 +1,485 @@
+[
+  {
+    "objectID": "research.html",
+    "href": "research.html",
+    "title": "Research",
+    "section": "",
+    "text": "My current work is about grasp-free manipulation: moving objects by shaping and controlling the surface beneath them rather than closing a gripper around them. This is useful when objects are fragile, irregular, soft, food-like, or too varied for a single end-effector to handle reliably."
+  },
+  {
+    "objectID": "research.html#current-directions",
+    "href": "research.html#current-directions",
+    "title": "Research",
+    "section": "Current Directions",
+    "text": "Current Directions\n\nSoft manipulation surfaces\nRobotic manipulation surfaces deform underneath an object and move it by changing contact geometry. The central challenge is balancing three goals that often fight each other: precise control, hardware simplicity, and scalable workspace size.\nMy PhD work explores fabric-based surfaces actuated by sparse, coordinated vertical actuators. Instead of treating manipulation as a grasping problem, I model how surface deformation can create usable object motion for positioning, transfer, and handling heterogeneous objects.\n\n\nModular grasp-free manipulation\nA single soft surface is useful, but many applications need larger workspaces. Modular surfaces can expand the workspace, but transferring objects across module boundaries is difficult because neighboring modules mechanically interact through the surface.\nMy recent work studies shared-boundary actuation, hierarchical planning, directional object passing, and compensation for passive-object disturbance caused by mechanically coupled modules.\n\n\nTactile sensing and self-supervised learning\nDuring my UCL visit, I have been working on tactile sensing for in-hand object shape and quantity inference with a leapXela-style tactile robot setup. The project involves self-supervised representation learning with Masked Autoencoders (MAE) and Joint Embedding Predictive Architectures (JEPA), plus MuJoCo simulation of normal and shear tactile channels for data collection.\n\n\nEarlier work: swarm robotics and collectives\nBefore my PhD, I worked on collective robotics and decision-making in dynamic environments. This included multi-robot foraging, moving depots, collective decision models, and quantum-inspired approaches to identifying influential agents in swarms."
+  },
+  {
+    "objectID": "research.html#publications",
+    "href": "research.html#publications",
+    "title": "Research",
+    "section": "Publications",
+    "text": "Publications\n\nPratik Ingle, Jorn Lambertsen, Kasper Stoy, and Andres Faina. 2026. Scalable Surface-Based Manipulation Through Modularity and Inter-Module Object Transfer. arXiv:2601.21884.\nPratik Ingle, Kasper Stoy, and Andres Faina. 2025. Heterogeneous object manipulation on nonlinear soft surface through linear controller. IEEE 21st International Conference on Automation Science and Engineering (CASE), 1780-1787. DOI.\nPratik Ingle, Kasper Stoy, and Andres Faina. 2025. Soft Manipulation Surface With Reduced Actuator Density For Heterogeneous Object Manipulation. IEEE 8th International Conference on Soft Robotics (RoboSoft), selected for oral presentation. DOI."
+  },
+  {
+    "objectID": "research.html#talks",
+    "href": "research.html#talks",
+    "title": "Research",
+    "section": "Talks",
+    "text": "Talks\n\nRoboSoft 2026: Scalable Surface-Based Manipulation Through Modularity and Inter-Module Object Transfer.\nCASE 2025: Heterogeneous object manipulation on nonlinear soft surface through linear controller.\nRoboSoft 2025: Soft Manipulation Surface With Reduced Actuator Density For Heterogeneous Object Manipulation.\nEI 2025: Harnessing Fabric Softness and Scalability for Object Manipulation.\nANTS 2024: Moving Depot (MOD): An Efficient Depot Motion Strategy for Multi-Robot Foraging."
+  },
+  {
+    "objectID": "research.html#research-experience",
+    "href": "research.html#research-experience",
+    "title": "Research",
+    "section": "Research Experience",
+    "text": "Research Experience\nREAL Lab, IT University of Copenhagen\nPhD researcher, Oct 2023-present. Learning and control for grasp-free manipulation robots.\nCRISP Lab, University College London\nVisiting PhD researcher, Mar-Aug 2026. Tactile sensing, leapXela-style robots, MAE/JEPA representation learning, and MuJoCo sensor simulation.\nSwarm Lab, NJIT and IISER Bhopal\nResearch on decision-making in collectives, dynamic environments, animal behaviour, and bio-inspired swarm robotics.\nMOON Lab, IISER Bhopal\nRobotics hardware, ROS, UAVs, embedded systems, and swarm robotics."
+  },
+  {
+    "objectID": "research.html#schools-and-workshops",
+    "href": "research.html#schools-and-workshops",
+    "title": "Research",
+    "section": "Schools and Workshops",
+    "text": "Schools and Workshops\n\nAdvanced Course on Data Science and Machine Learning, 2025.\nIEEE RAS Summer School on Multi-Robot Systems, 2024.\nSCIoI and ISAB Summer School on Embodied Intelligence: Perception and Learning, 2023.\nCOSMOS Summer School on Modeling Social and Collective Behavior, 2022.\nPRAIRIE/MIAI Artificial Intelligence Summer School, 2021."
+  },
+  {
+    "objectID": "posts/research/scalable-surface-based-manipulation/index.html",
+    "href": "posts/research/scalable-surface-based-manipulation/index.html",
+    "title": "Scalable Surface-Based Manipulation Through Modularity",
+    "section": "",
+    "text": "Robotic Manipulation Surfaces (RMS) move objects by deforming the surface they rest on. This makes them attractive for fragile, irregular, or food-like objects, where grasping can damage the item or require a specialized gripper. The difficulty is scale: dense actuator arrays can give fine control, but they become expensive and mechanically complex when the workspace grows."
+  },
+  {
+    "objectID": "posts/research/scalable-surface-based-manipulation/index.html#the-core-idea",
+    "href": "posts/research/scalable-surface-based-manipulation/index.html#the-core-idea",
+    "title": "Scalable Surface-Based Manipulation Through Modularity",
+    "section": "The core idea",
+    "text": "The core idea\nThe paper asks whether a manipulation surface can be made modular. Instead of building one very dense surface, we connect fabric-based modules and coordinate object movement across module boundaries. Adjacent modules share edge actuators, reducing actuator count from 4n^2 to (n + 1)^2 for an n x n grid.\nIn a 2 x 2 prototype, this gives a 1 x 1 m workspace with only 9 actuators."
+  },
+  {
+    "objectID": "posts/research/scalable-surface-based-manipulation/index.html#what-makes-it-hard",
+    "href": "posts/research/scalable-surface-based-manipulation/index.html#what-makes-it-hard",
+    "title": "Scalable Surface-Based Manipulation Through Modularity",
+    "section": "What makes it hard",
+    "text": "What makes it hard\nSharing actuators is efficient, but it mechanically couples neighboring modules. Moving one module can disturb objects on another module. The platform therefore needs both high-level path planning and low-level compensation.\nOur framework combines:\n\nManhattan-style conflict-free path planning.\nDirectional object passing between modules.\nA geometric PID controller for positioning.\nCompensation strategies for passive-object disturbance."
+  },
+  {
+    "objectID": "posts/research/scalable-surface-based-manipulation/index.html#result",
+    "href": "posts/research/scalable-surface-based-manipulation/index.html#result",
+    "title": "Scalable Surface-Based Manipulation Through Modularity",
+    "section": "Result",
+    "text": "Result\nThe system achieves coordinated inter-module transfer and sub-centimeter positioning for heterogeneous objects, including fragile items. Compensation reduced passive-object displacement by 59-78% across the measured configurations."
+  },
+  {
+    "objectID": "posts/research/scalable-surface-based-manipulation/index.html#why-i-care-about-this",
+    "href": "posts/research/scalable-surface-based-manipulation/index.html#why-i-care-about-this",
+    "title": "Scalable Surface-Based Manipulation Through Modularity",
+    "section": "Why I care about this",
+    "text": "Why I care about this\nFor me, the interesting part is not only that a surface can move objects. It is that manipulation can be treated as a property of a distributed surface: hardware design, geometry, and control all contribute. That feels like a promising route toward scalable manipulation in logistics, food processing, and other settings where objects are too varied for one gripper.\nPaper: arXiv:2601.21884"
+  },
+  {
+    "objectID": "posts/research/reduced-actuator-soft-manipulation-surface/index.html",
+    "href": "posts/research/reduced-actuator-soft-manipulation-surface/index.html",
+    "title": "Soft Manipulation With Fewer Actuators",
+    "section": "",
+    "text": "A common way to build a manipulation surface is to place many actuators under it. That can work, but it makes the platform expensive, mechanically dense, and difficult to scale.\nIn our RoboSoft 2025 paper, we explored a different design: a soft surface actuated by fewer vertical actuators, spaced far enough apart that the object can be much smaller than the distance between actuators. This creates a control problem because the surface is nonlinear and continuous, but it also creates a hardware opportunity: fewer actuators can cover a larger area."
+  },
+  {
+    "objectID": "posts/research/reduced-actuator-soft-manipulation-surface/index.html#what-the-surface-does",
+    "href": "posts/research/reduced-actuator-soft-manipulation-surface/index.html#what-the-surface-does",
+    "title": "Soft Manipulation With Fewer Actuators",
+    "section": "What the surface does",
+    "text": "What the surface does\nThe surface changes shape, and the object moves because gravity, contact geometry, and surface deformation combine into a controllable motion field. The robot does not grasp the object. It changes the world under the object."
+  },
+  {
+    "objectID": "posts/research/reduced-actuator-soft-manipulation-surface/index.html#why-heterogeneous-objects-matter",
+    "href": "posts/research/reduced-actuator-soft-manipulation-surface/index.html#why-heterogeneous-objects-matter",
+    "title": "Soft Manipulation With Fewer Actuators",
+    "section": "Why heterogeneous objects matter",
+    "text": "Why heterogeneous objects matter\nReal applications rarely contain one perfect object. Objects differ in weight, shape, size, fragility, and friction. A manipulation surface should not need a new gripper for every case.\nThat is why this line of work focuses on heterogeneous objects. The long-term question is whether a single soft surface can provide enough controllability while staying mechanically simple."
+  },
+  {
+    "objectID": "posts/research/reduced-actuator-soft-manipulation-surface/index.html#what-i-learned",
+    "href": "posts/research/reduced-actuator-soft-manipulation-surface/index.html#what-i-learned",
+    "title": "Soft Manipulation With Fewer Actuators",
+    "section": "What I learned",
+    "text": "What I learned\nHardware simplicity moves complexity into modeling, sensing, and control. That tradeoff is not automatically good, but it is interesting: if the surface can be controlled robustly, sparse actuation makes the system much easier to scale.\nPaper: DOI"
+  },
+  {
+    "objectID": "posts/research/linear-control-nonlinear-soft-surface/index.html",
+    "href": "posts/research/linear-control-nonlinear-soft-surface/index.html",
+    "title": "Linear Control on a Nonlinear Soft Surface",
+    "section": "",
+    "text": "Soft robotic systems are nonlinear almost by definition: fabrics deform, objects slide and roll, friction changes, and contact geometry matters. It is tempting to assume the controller must also be complex.\nOur CASE 2025 paper explores a more pragmatic question: how far can a simple linear controller go on a nonlinear soft manipulation surface?"
+  },
+  {
+    "objectID": "posts/research/linear-control-nonlinear-soft-surface/index.html#why-simple-control-is-worth-testing",
+    "href": "posts/research/linear-control-nonlinear-soft-surface/index.html#why-simple-control-is-worth-testing",
+    "title": "Linear Control on a Nonlinear Soft Surface",
+    "section": "Why simple control is worth testing",
+    "text": "Why simple control is worth testing\nSimple controllers are easier to tune, debug, and deploy. When hardware is new, a controller that reveals the important system behavior can be more useful than an opaque controller that only works in a narrow setup.\nThe goal was not to claim that the surface is linear. It was to test whether a linear controller can still produce useful manipulation when the actuation and object response are nonlinear."
+  },
+  {
+    "objectID": "posts/research/linear-control-nonlinear-soft-surface/index.html#the-manipulation-loop",
+    "href": "posts/research/linear-control-nonlinear-soft-surface/index.html#the-manipulation-loop",
+    "title": "Linear Control on a Nonlinear Soft Surface",
+    "section": "The manipulation loop",
+    "text": "The manipulation loop\nAt a high level, the controller compares the current object position with the target, maps the error into actuator commands, and updates the surface shape. The soft surface then converts those changes into object motion.\nThe interesting part is that the controller can remain relatively simple while the physical surface performs much of the transformation."
+  },
+  {
+    "objectID": "posts/research/linear-control-nonlinear-soft-surface/index.html#takeaway",
+    "href": "posts/research/linear-control-nonlinear-soft-surface/index.html#takeaway",
+    "title": "Linear Control on a Nonlinear Soft Surface",
+    "section": "Takeaway",
+    "text": "Takeaway\nFor grasp-free manipulation, the controller and hardware should be designed together. The surface is not just a passive floor; it is part of the computation.\nPaper: DOI"
+  },
+  {
+    "objectID": "posts/research/index.html",
+    "href": "posts/research/index.html",
+    "title": "Research Notes",
+    "section": "",
+    "text": "Scalable Surface-Based Manipulation Through Modularity\n\n\n\n\n\nA plain-language explanation of my arXiv paper on modular soft manipulation surfaces.\n\n\n\n\n\n\nMarch 12, 2026\n\n\n\n\n\n\n  \n\n\n\n\nLinear Control on a Nonlinear Soft Surface\n\n\n\n\n\nA note on using simple controllers for heterogeneous object manipulation on nonlinear soft surfaces.\n\n\n\n\n\n\nAugust 17, 2025\n\n\n\n\n\n\n  \n\n\n\n\nSoft Manipulation With Fewer Actuators\n\n\n\n\n\nWhy reduced actuator density matters for soft manipulation surfaces.\n\n\n\n\n\n\nApril 22, 2025\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/learning/index.html",
+    "href": "posts/learning/index.html",
+    "title": "Learning Log",
+    "section": "",
+    "text": "Simulating a Tactile Sensor in MuJoCo\n\n\n\n\n\nNotes on building a MuJoCo approximation of a 3-channel tactile sensor.\n\n\n\n\n\n\nJuly 29, 2026\n\n\n\n\n\n\n\n\nNormal and Shear Forces in Tactile Sensing\n\n\n\n\n\nWhy 3-channel tactile sensors are useful for in-hand object inference.\n\n\n\n\n\n\nJuly 22, 2026\n\n\n\n\n\n\n\n\nMAE vs JEPA: Two Ways to Learn Representations Without Labels\n\n\n\n\n\nNotes from learning Masked Autoencoders and Joint Embedding Predictive Architectures.\n\n\n\n\n\n\nJuly 15, 2026\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/learning/mae-vs-jepa/index.html",
+    "href": "posts/learning/mae-vs-jepa/index.html",
+    "title": "MAE vs JEPA: Two Ways to Learn Representations Without Labels",
+    "section": "",
+    "text": "I am using this post as a working note while learning self-supervised learning for tactile sensing. The two families I keep comparing are Masked Autoencoders (MAE) and Joint Embedding Predictive Architectures (JEPA)."
+  },
+  {
+    "objectID": "posts/learning/mae-vs-jepa/index.html#the-shared-goal",
+    "href": "posts/learning/mae-vs-jepa/index.html#the-shared-goal",
+    "title": "MAE vs JEPA: Two Ways to Learn Representations Without Labels",
+    "section": "The shared goal",
+    "text": "The shared goal\nBoth methods try to learn useful representations without requiring manual labels. Instead of asking a model to predict a human-provided class, we create a prediction problem from the data itself.\nFor tactile sensing, this is appealing because labeled tactile data can be expensive. But the robot can collect lots of interaction data: normal forces, shear forces, contact patches, and temporal sequences."
+  },
+  {
+    "objectID": "posts/learning/mae-vs-jepa/index.html#mae-intuition",
+    "href": "posts/learning/mae-vs-jepa/index.html#mae-intuition",
+    "title": "MAE vs JEPA: Two Ways to Learn Representations Without Labels",
+    "section": "MAE intuition",
+    "text": "MAE intuition\nA Masked Autoencoder hides part of the input and trains the model to reconstruct what was removed. In vision, that means masking image patches. In tactile sensing, a similar idea could mask spatial taxels, temporal spans, or force channels.\nThe reconstruction target keeps the training signal concrete: the model must recover missing data."
+  },
+  {
+    "objectID": "posts/learning/mae-vs-jepa/index.html#jepa-intuition",
+    "href": "posts/learning/mae-vs-jepa/index.html#jepa-intuition",
+    "title": "MAE vs JEPA: Two Ways to Learn Representations Without Labels",
+    "section": "JEPA intuition",
+    "text": "JEPA intuition\nJEPA also predicts missing information, but it predicts in representation space rather than directly reconstructing pixels or sensor values. The model learns an embedding of visible context and predicts the embedding of the target.\nThis can encourage more semantic or task-useful representations because the model is not forced to reproduce every low-level detail."
+  },
+  {
+    "objectID": "posts/learning/mae-vs-jepa/index.html#the-question-i-care-about",
+    "href": "posts/learning/mae-vs-jepa/index.html#the-question-i-care-about",
+    "title": "MAE vs JEPA: Two Ways to Learn Representations Without Labels",
+    "section": "The question I care about",
+    "text": "The question I care about\nFor tactile sensing, the right representation should preserve object-relevant properties: shape, contact distribution, slip, force direction, and possibly object count. I want to understand whether direct reconstruction or representation-space prediction gives better features for downstream inference."
+  },
+  {
+    "objectID": "posts/learning/mae-vs-jepa/index.html#open-notes",
+    "href": "posts/learning/mae-vs-jepa/index.html#open-notes",
+    "title": "MAE vs JEPA: Two Ways to Learn Representations Without Labels",
+    "section": "Open notes",
+    "text": "Open notes\n\nWhat should be masked: time, taxels, force channels, or spatial regions?\nShould shear and normal channels be treated symmetrically?\nHow much of the tactile signal is useful low-level detail versus nuisance variation?\nWhich downstream probe best reveals representation quality?"
+  },
+  {
+    "objectID": "posts/learning/tactile-sensing-normal-shear/index.html",
+    "href": "posts/learning/tactile-sensing-normal-shear/index.html",
+    "title": "Normal and Shear Forces in Tactile Sensing",
+    "section": "",
+    "text": "Touch is not just pressure. A tactile sensor can measure how hard an object presses into the surface, but also how contact moves sideways. That sideways information is often the clue that an object is slipping, rotating, or changing contact state."
+  },
+  {
+    "objectID": "posts/learning/tactile-sensing-normal-shear/index.html#three-channels",
+    "href": "posts/learning/tactile-sensing-normal-shear/index.html#three-channels",
+    "title": "Normal and Shear Forces in Tactile Sensing",
+    "section": "Three channels",
+    "text": "Three channels\nThe tactile setup I am learning from uses three force channels:\n\nNormal force: how strongly the object presses into the sensor.\nShear-x: lateral force along one sensor axis.\nShear-y: lateral force along the other sensor axis.\n\nTogether, these channels describe richer contact mechanics than normal force alone."
+  },
+  {
+    "objectID": "posts/learning/tactile-sensing-normal-shear/index.html#why-shear-matters",
+    "href": "posts/learning/tactile-sensing-normal-shear/index.html#why-shear-matters",
+    "title": "Normal and Shear Forces in Tactile Sensing",
+    "section": "Why shear matters",
+    "text": "Why shear matters\nIf the normal force stays similar but shear changes, the object may be sliding or rotating. For in-hand manipulation, that can reveal object pose changes before the object visually moves in an obvious way.\nThis is especially relevant for shape and quantity inference. A pile of objects, a single larger object, and an object contacting at a different angle can produce different shear patterns even when the normal force magnitude is comparable."
+  },
+  {
+    "objectID": "posts/learning/tactile-sensing-normal-shear/index.html#what-i-want-from-representations",
+    "href": "posts/learning/tactile-sensing-normal-shear/index.html#what-i-want-from-representations",
+    "title": "Normal and Shear Forces in Tactile Sensing",
+    "section": "What I want from representations",
+    "text": "What I want from representations\nThe representation should make contact events legible. It should capture where contact occurs, how force flows across the sensor, and how those patterns evolve over time.\nThat is why tactile sensing is a good fit for self-supervised learning: the raw signal is rich, but the useful abstractions are not always obvious in advance."
+  },
+  {
+    "objectID": "posts/learning/mujoco-tactile-sensor-simulation/index.html",
+    "href": "posts/learning/mujoco-tactile-sensor-simulation/index.html",
+    "title": "Simulating a Tactile Sensor in MuJoCo",
+    "section": "",
+    "text": "One part of my UCL visit is about replicating a 3-channel tactile sensor in MuJoCo for data collection and training. The goal is not to build a perfect copy of the real sensor. The goal is to create a simulation that produces useful tactile structure for learning."
+  },
+  {
+    "objectID": "posts/learning/mujoco-tactile-sensor-simulation/index.html#what-needs-to-be-simulated",
+    "href": "posts/learning/mujoco-tactile-sensor-simulation/index.html#what-needs-to-be-simulated",
+    "title": "Simulating a Tactile Sensor in MuJoCo",
+    "section": "What needs to be simulated",
+    "text": "What needs to be simulated\nA useful tactile simulation needs at least:\n\nContact location across the sensor surface.\nNormal force at contact points.\nShear forces in two lateral directions.\nTemporal changes as objects move, slip, or press into the surface.\n\nThe difficult part is matching the signal statistics closely enough that models trained on simulation learn transferable structure."
+  },
+  {
+    "objectID": "posts/learning/mujoco-tactile-sensor-simulation/index.html#the-modeling-tradeoff",
+    "href": "posts/learning/mujoco-tactile-sensor-simulation/index.html#the-modeling-tradeoff",
+    "title": "Simulating a Tactile Sensor in MuJoCo",
+    "section": "The modeling tradeoff",
+    "text": "The modeling tradeoff\nA high-fidelity tactile simulation can become expensive quickly. But a very simple proxy may miss the contact cues needed for downstream tasks. The practical question is where the approximation should live.\nFor representation learning, it may be enough for the simulation to capture the relationships between contact, shape, and force dynamics, even if every taxel is not physically perfect."
+  },
+  {
+    "objectID": "posts/learning/mujoco-tactile-sensor-simulation/index.html#data-collection-loop",
+    "href": "posts/learning/mujoco-tactile-sensor-simulation/index.html#data-collection-loop",
+    "title": "Simulating a Tactile Sensor in MuJoCo",
+    "section": "Data collection loop",
+    "text": "Data collection loop\nThe imagined loop is:\n\nSample objects, poses, and interactions in simulation.\nRecord normal and shear force maps over time.\nTrain MAE/JEPA-style models on the generated tactile streams.\nTest whether the learned representation transfers to real tactile data."
+  },
+  {
+    "objectID": "posts/learning/mujoco-tactile-sensor-simulation/index.html#open-questions",
+    "href": "posts/learning/mujoco-tactile-sensor-simulation/index.html#open-questions",
+    "title": "Simulating a Tactile Sensor in MuJoCo",
+    "section": "Open questions",
+    "text": "Open questions\n\nWhich contact model best matches the real sensor behavior?\nHow much domain randomization is useful?\nShould the network see raw forces or preprocessed tactile maps?\nWhat downstream task best measures whether the simulation is good enough?"
+  },
+  {
+    "objectID": "posts/tutorials/getting-started-with-webots/index.html",
+    "href": "posts/tutorials/getting-started-with-webots/index.html",
+    "title": "Getting Started With Webots",
+    "section": "",
+    "text": "Webots is a simulation software package for rapidly prototyping mobile robots and autonomous systems. It provides a 3D physics-based environment with support for sensors, controllers, data visualization, and robot models."
+  },
+  {
+    "objectID": "posts/tutorials/getting-started-with-webots/index.html#what-can-webots-be-used-for",
+    "href": "posts/tutorials/getting-started-with-webots/index.html#what-can-webots-be-used-for",
+    "title": "Getting Started With Webots",
+    "section": "What can Webots be used for?",
+    "text": "What can Webots be used for?\n\nMobile robot prototyping for academic research and industry.\nRobot locomotion research, including legged robots.\nMulti-agent and swarm robotics.\nAdaptive behavior experiments such as genetic algorithms.\nTeaching robotics and running robot contests."
+  },
+  {
+    "objectID": "posts/tutorials/getting-started-with-webots/index.html#what-you-should-know-first",
+    "href": "posts/tutorials/getting-started-with-webots/index.html#what-you-should-know-first",
+    "title": "Getting Started With Webots",
+    "section": "What you should know first",
+    "text": "What you should know first\nYou can use Webots with C, C++, Java, Python, or MATLAB. If you want to create custom robot models or environments, it also helps to know some 3D graphics concepts and the VRML97 descriptive language.\nA Webots simulation typically includes:\n\nA world file (.wbt) that defines robots and the environment.\nController programs that run the robot logic.\nOptional physics plugins for custom physics behavior."
+  },
+  {
+    "objectID": "posts/tutorials/getting-started-with-webots/index.html#create-the-first-project",
+    "href": "posts/tutorials/getting-started-with-webots/index.html#create-the-first-project",
+    "title": "Getting Started With Webots",
+    "section": "Create the first project",
+    "text": "Create the first project\nOpen Webots and go to Wizards > New Project Directory. Name the project bug, name the world file bug.wbt, and select the options to add a rectangular arena.\nBefore adding a robot, change the arena size from 1 x 1 m to 2 x 2 m by editing RectangleArena > floorSize."
+  },
+  {
+    "objectID": "posts/tutorials/getting-started-with-webots/index.html#add-an-e-puck-robot",
+    "href": "posts/tutorials/getting-started-with-webots/index.html#add-an-e-puck-robot",
+    "title": "Getting Started With Webots",
+    "section": "Add an e-puck robot",
+    "text": "Add an e-puck robot\nClick Add in the scene tree, then choose PROTO nodes > robots > gctronic > e-puck > E-puck. The robot should appear in the arena. Save the world before running the simulation.\nThe e-puck has a default obstacle avoidance controller, so you can run the simulation immediately to see the robot move."
+  },
+  {
+    "objectID": "posts/tutorials/getting-started-with-webots/index.html#create-a-simple-controller",
+    "href": "posts/tutorials/getting-started-with-webots/index.html#create-a-simple-controller",
+    "title": "Getting Started With Webots",
+    "section": "Create a simple controller",
+    "text": "Create a simple controller\nGo to Wizards > New Robot Controller, choose Python, and name the controller move_forward.\n\"\"\"move_forward controller.\"\"\"\nfrom controller import Robot\n\nrobot = Robot()\ntime_step = 32\nmax_speed = 6.24\n\nleft_motor = robot.getMotor(\"left wheel motor\")\nright_motor = robot.getMotor(\"right wheel motor\")\n\nleft_motor.setPosition(float(\"inf\"))\nright_motor.setPosition(float(\"inf\"))\nleft_motor.setVelocity(0.0)\nright_motor.setVelocity(0.0)\n\nwhile robot.step(time_step) != -1:\n    left_speed = max_speed * 0.5\n    right_speed = max_speed * 0.25\n\n    left_motor.setVelocity(left_speed)\n    right_motor.setVelocity(right_speed)\nSet the e-puck controller to move_forward and run the simulation. Try changing the wheel speeds to make the robot move in a circular path."
+  },
+  {
+    "objectID": "posts/tutorials/getting-started-with-webots/index.html#line-following-with-ir-sensors",
+    "href": "posts/tutorials/getting-started-with-webots/index.html#line-following-with-ir-sensors",
+    "title": "Getting Started With Webots",
+    "section": "Line following with IR sensors",
+    "text": "Line following with IR sensors\nAdd infrared ground sensors to the e-puck by using the groundSensorsSlot. Name two sensors ir0 and ir1, then enable them in the controller.\nfrom controller import Robot\n\nrobot = Robot()\ntime_step = 32\nmax_speed = 6.24\n\nleft_motor = robot.getMotor(\"left wheel motor\")\nright_motor = robot.getMotor(\"right wheel motor\")\nleft_motor.setPosition(float(\"inf\"))\nright_motor.setPosition(float(\"inf\"))\nleft_motor.setVelocity(0.0)\nright_motor.setVelocity(0.0)\n\nleft_ir = robot.getDistanceSensor(\"ir1\")\nright_ir = robot.getDistanceSensor(\"ir0\")\nleft_ir.enable(time_step)\nright_ir.enable(time_step)\n\nwhile robot.step(time_step) != -1:\n    left_ir_value = left_ir.getValue()\n    right_ir_value = right_ir.getValue()\n\n    left_speed = max_speed * 0.25\n    right_speed = max_speed * 0.25\n\n    if left_ir_value > right_ir_value and 6 < left_ir_value < 15:\n        left_speed = -max_speed * 0.25\n    elif right_ir_value > left_ir_value and 6 < right_ir_value < 15:\n        right_speed = -max_speed * 0.25\n\n    left_motor.setVelocity(left_speed)\n    right_motor.setVelocity(right_speed)\nOriginal standalone tutorial: https://pratik-ingle.github.io/webots_tutorial/"
+  },
+  {
+    "objectID": "posts/tutorials/index.html",
+    "href": "posts/tutorials/index.html",
+    "title": "Tutorials",
+    "section": "",
+    "text": "Getting Started With Webots\n\n\n\n\n\nA beginner tutorial for creating a Webots project, adding an e-puck robot, and writing simple controllers.\n\n\n\n\n\n\nDecember 1, 2021\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/quantum/index.html",
+    "href": "posts/quantum/index.html",
+    "title": "Quantum Notes",
+    "section": "",
+    "text": "Variational Quantum Eigensolver From Scratch\n\n\n\n\n\nA compact explanation of VQE and the parts needed to implement it.\n\n\n\n\n\n\nDecember 2, 2021\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/quantum/vqe-from-scratch/index.html",
+    "href": "posts/quantum/vqe-from-scratch/index.html",
+    "title": "Variational Quantum Eigensolver From Scratch",
+    "section": "",
+    "text": "VQE stands for Variational Quantum Eigensolver. It is a hybrid quantum-classical algorithm for estimating the lowest-energy eigenstate, or ground state, of a Hamiltonian.\nThis is a migrated and lightly cleaned version of my original Medium post.\nOriginal post: https://medium.com/analytics-vidhya/variational-quantum-eigensolver-from-scratch-finding-ground-state-energy-of-hamiltonian-a5c13d5268f1"
+  },
+  {
+    "objectID": "posts/quantum/vqe-from-scratch/index.html#variational-principle",
+    "href": "posts/quantum/vqe-from-scratch/index.html#variational-principle",
+    "title": "Variational Quantum Eigensolver From Scratch",
+    "section": "Variational Principle",
+    "text": "Variational Principle\nIf we have a Hamiltonian H with eigenstates and associated eigenvalues, then:\nH |psi> = lambda |psi>\nHere lambda is the energy for the state |psi>. For many possible states there are different energies, but one state has the smallest energy. That state is the ground state of the system. VQE gives us a practical way to search for that ground state.\nThe algorithm can be summarized in three parts:\n\nDecomposition.\nCircuit construction, including the ansatz and measurement basis.\nMeasurement and classical optimization."
+  },
+  {
+    "objectID": "posts/quantum/vqe-from-scratch/index.html#part-1-decomposition",
+    "href": "posts/quantum/vqe-from-scratch/index.html#part-1-decomposition",
+    "title": "Variational Quantum Eigensolver From Scratch",
+    "section": "Part 1: Decomposition",
+    "text": "Part 1: Decomposition\nThe first step is decomposing a Hamiltonian into Pauli matrices. Pauli matrices form a basis for the real vector space of 2 x 2 Hermitian matrices. That means any 2 x 2 Hermitian matrix can be written as a unique linear combination of Pauli matrices with real coefficients.\nFor a two-qubit Hamiltonian, we work with 4 x 4 Hermitian matrices and tensor products of Pauli terms. These terms tell us which basis to measure in, and their coefficients tell us how much weight each expectation value should receive in the final energy estimate.\nFor example, a decomposed two-qubit Hamiltonian may include terms such as:\n\nI tensor I\nX tensor X\nY tensor Y\nZ tensor Z\n\nEach term receives a coefficient from the decomposition."
+  },
+  {
+    "objectID": "posts/quantum/vqe-from-scratch/index.html#part-2-circuit",
+    "href": "posts/quantum/vqe-from-scratch/index.html#part-2-circuit",
+    "title": "Variational Quantum Eigensolver From Scratch",
+    "section": "Part 2: Circuit",
+    "text": "Part 2: Circuit\nOnce the Hamiltonian is decomposed, we create circuits for the terms in the decomposition. The circuit has two central pieces.\n\nAnsatz\nThe ansatz is a parameterized circuit that prepares the trial quantum state. In a VQE loop, the classical optimizer changes the ansatz parameters and the quantum circuit estimates the corresponding energy.\nIn the original experiment, the ansatz was chosen by trial and error. Different ansatz choices can produce similar performance, but the ansatz controls the set of states the algorithm can search.\n\n\nMeasurement basis\nQuantum computers measure in the computational, or Z, basis by default. If we need expectation values in another basis, we rotate the state before measurement.\nFor a Hamiltonian with terms like:\n\nI tensor I\nX tensor X\nY tensor Y\nZ tensor Z\n\nthe identity term does not need a circuit. The X tensor X term can be measured by rotating both qubits into the X basis. The Y tensor Y term can be measured by rotating both qubits into the Y basis. The Z tensor Z term can be measured directly after preparing the ansatz."
+  },
+  {
+    "objectID": "posts/quantum/vqe-from-scratch/index.html#part-3-measurement",
+    "href": "posts/quantum/vqe-from-scratch/index.html#part-3-measurement",
+    "title": "Variational Quantum Eigensolver From Scratch",
+    "section": "Part 3: Measurement",
+    "text": "Part 3: Measurement\nFor each circuit, we measure probabilities for outcomes such as |00>, |01>, |10>, and |11>.\nFor a single qubit, measuring |0> corresponds to eigenvalue +1, and measuring |1> corresponds to eigenvalue -1. For two qubits, the sign for a measurement is the product of the two eigenvalues. For example, |01> gives:\n(+1) x (-1) = -1\nThe expectation value is computed as:\nsum(sign * probability)\nAfter computing the expectation value for each circuit, we multiply by the corresponding Hamiltonian coefficient and add the terms together. That gives the current energy estimate."
+  },
+  {
+    "objectID": "posts/quantum/vqe-from-scratch/index.html#vqe-algorithm",
+    "href": "posts/quantum/vqe-from-scratch/index.html#vqe-algorithm",
+    "title": "Variational Quantum Eigensolver From Scratch",
+    "section": "VQE Algorithm",
+    "text": "VQE Algorithm\nThe VQE loop is:\n\nPick ansatz parameters.\nPrepare the ansatz state on the quantum circuit.\nMeasure each Hamiltonian term in the correct basis.\nEstimate the energy from expectation values.\nUse a classical optimizer to update the ansatz parameters.\nRepeat until the energy stops improving.\n\nIn the example from the original post, the lowest eigenvalue found was -1, corresponding to the ground-state estimate for the chosen Hamiltonian."
+  },
+  {
+    "objectID": "posts/quantum/vqe-from-scratch/index.html#end-note",
+    "href": "posts/quantum/vqe-from-scratch/index.html#end-note",
+    "title": "Variational Quantum Eigensolver From Scratch",
+    "section": "End Note",
+    "text": "End Note\nThe most important thing I learned from coding VQE from scratch is that the quantum and classical pieces are tightly coupled. The quantum circuit gives noisy energy estimates; the classical optimizer decides where to search next. The ansatz sits between them and determines which states are reachable."
+  },
+  {
+    "objectID": "posts/quantum/vqe-from-scratch/index.html#why-vqe-is-interesting",
+    "href": "posts/quantum/vqe-from-scratch/index.html#why-vqe-is-interesting",
+    "title": "Variational Quantum Eigensolver From Scratch",
+    "section": "Why VQE is interesting",
+    "text": "Why VQE is interesting\nVQE is designed for near-term quantum computers because it keeps the quantum circuit relatively shallow and uses a classical optimizer for the outer loop. That makes it a useful algorithm to study when learning hybrid quantum-classical machine learning."
+  },
+  {
+    "objectID": "posts/quantum/vqe-from-scratch/index.html#resources",
+    "href": "posts/quantum/vqe-from-scratch/index.html#resources",
+    "title": "Variational Quantum Eigensolver From Scratch",
+    "section": "Resources",
+    "text": "Resources\n\nOriginal Medium post\nGitHub"
+  },
+  {
+    "objectID": "projects/dynamic-individual-memory.html",
+    "href": "projects/dynamic-individual-memory.html",
+    "title": "Decision Making in Collectives With Dynamic Individual Memory",
+    "section": "",
+    "text": "Report | Poster"
+  },
+  {
+    "objectID": "projects/warehouse-mapf-pso.html",
+    "href": "projects/warehouse-mapf-pso.html",
+    "title": "Warehouse Space Distribution Using Particle Swarm Optimization",
+    "section": "",
+    "text": "Multi-Agent Path Finding (MAPF) asks how a group of agents can move from their current locations to destinations without colliding. In warehouses, narrow corridors and limited storage space make this especially difficult. This project used Particle Swarm Optimization and evolutionary search to optimize rack placement and reduce conflict during online path planning."
+  },
+  {
+    "objectID": "projects/optical-radiation-pressure.html",
+    "href": "projects/optical-radiation-pressure.html",
+    "title": "Optical Radiation Pressure Springs for Metrology",
+    "section": "",
+    "text": "Report"
+  },
+  {
+    "objectID": "projects/hybrid-quantum-covid.html",
+    "href": "projects/hybrid-quantum-covid.html",
+    "title": "Hybrid Quantum-Classical Machine Learning for COVID-19",
+    "section": "",
+    "text": "This project classified COVID-19 cases from clinical features such as hematocrit, hemoglobin, platelets, red blood cells, lymphocytes, and MCHC. The pipeline embedded classical data into quantum states and used a hybrid quantum-classical model for classification."
+  },
+  {
+    "objectID": "projects/mod-moving-depot.html",
+    "href": "projects/mod-moving-depot.html",
+    "title": "Moving Depot (MOD): Efficient Depot Motion for Multi-Robot Foraging",
+    "section": "",
+    "text": "This work was presented at ANTS 2024 and grew out of my broader interest in how simple local rules and spatial organization shape collective performance."
+  },
+  {
+    "objectID": "projects/hmm-pos-tagger.html",
+    "href": "projects/hmm-pos-tagger.html",
+    "title": "HMM POS Tagger for English",
+    "section": "",
+    "text": "Code"
+  },
+  {
+    "objectID": "projects/master-thesis-collective-robotics.html",
+    "href": "projects/master-thesis-collective-robotics.html",
+    "title": "Bio-inspired Collective Robotics: Multi-Robot Foraging and Division of Labour",
+    "section": "",
+    "text": "Supervisors: Simon Garnier and P. B. Sujit."
+  },
+  {
+    "objectID": "projects/soft-manipulation-surface.html",
+    "href": "projects/soft-manipulation-surface.html",
+    "title": "Soft Manipulation Surface With Reduced Actuator Density",
+    "section": "",
+    "text": "The work was published at IEEE RoboSoft 2025 and selected for oral presentation."
+  },
+  {
+    "objectID": "projects/uvc-disinfection-uav.html",
+    "href": "projects/uvc-disinfection-uav.html",
+    "title": "UVC Disinfection Aerial Robots",
+    "section": "",
+    "text": "This prototype explored an autonomous UAV for UVC disinfection in large enclosed spaces such as universities, hospitals, and public buildings. The project involved robot hardware, sensing, autonomous navigation, and safety-focused design for operating in shared indoor environments."
+  },
+  {
+    "objectID": "projects/quantum-influencer-agents.html",
+    "href": "projects/quantum-influencer-agents.html",
+    "title": "Identifying Influencer Agents in Swarms With Quantum Circuits",
+    "section": "",
+    "text": "Report"
+  },
+  {
+    "objectID": "projects/never-sinking-boats.html",
+    "href": "projects/never-sinking-boats.html",
+    "title": "Never Sinking Robotic Boats for Tackling Floods",
+    "section": "",
+    "text": "Report"
+  },
+  {
+    "objectID": "projects.html",
+    "href": "projects.html",
+    "title": "Projects",
+    "section": "",
+    "text": "Soft Manipulation Surface With Reduced Actuator Density\n\n\nA fabric-based manipulation surface for moving heterogeneous objects with fewer actuators.\n\n\n\nApril 22, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMoving Depot (MOD): Efficient Depot Motion for Multi-Robot Foraging\n\n\nA moving-depot strategy for improving foraging performance in multi-robot systems.\n\n\n\nSeptember 1, 2024\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBio-inspired Collective Robotics: Multi-Robot Foraging and Division of Labour\n\n\nMaster’s thesis on collective robotics, foraging, and division of labour.\n\n\n\nApril 1, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWarehouse Space Distribution Using Particle Swarm Optimization\n\n\nOptimizing warehouse layouts to reduce robot collisions during online path finding.\n\n\n\nApril 1, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDecision Making in Collectives With Dynamic Individual Memory\n\n\nA model of collective decision-making in dynamic environments.\n\n\n\nDecember 1, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIdentifying Influencer Agents in Swarms With Quantum Circuits\n\n\nUsing quantum circuits to explore influencer selection for flock control.\n\n\n\nMay 1, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHybrid Quantum-Classical Machine Learning for COVID-19\n\n\nA quantum-classical classifier using amplitude embedding and transfer learning.\n\n\n\nMarch 1, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUVC Disinfection Aerial Robots\n\n\nAn autonomous UAV prototype for disinfecting indoor spaces during COVID-19.\n\n\n\nJanuary 1, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNever Sinking Robotic Boats for Tackling Floods\n\n\nRobotic boats using superhydrophobic materials for flood-response applications.\n\n\n\nJuly 1, 2020\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHMM POS Tagger for English\n\n\nA hidden Markov model part-of-speech tagger trained on English text.\n\n\n\nDecember 1, 2019\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOptical Radiation Pressure Springs for Metrology\n\n\nA theoretical model using optical radiation pressure for precision force sensing.\n\n\n\nApril 1, 2019\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Pratik Ingle",
+    "section": "",
+    "text": "I am a PhD researcher in Computer Science at the IT University of Copenhagen, working in the REAL Lab with Kasper Stoy and Andres Faina. My research asks how robots can manipulate objects without grasping them, using soft deformable surfaces, modular hardware, and a mix of geometric control, learning, and system design.\n\nI am currently a visiting PhD researcher at University College London, working on tactile sensing with the CRISP lab. Before my PhD, I studied Electrical Engineering and Computer Science at IISER Bhopal, where I worked on swarm robotics, collective decision-making, and bio-inspired robot systems.\n\nPapers\nGoogle Scholar\nCV\nPDF + overview\nTalks\nConference presentations\nBlog\nResearch notes and tutorials\nEmail\nprin@itu.dk\n\n\nRecent: visiting PhD at UCL CRISP Lab (Mar-Aug 2026); arXiv preprint on scalable modular manipulation surfaces; RoboSoft/CASE 2025 papers on soft surface manipulation; PhD expected October 2026.\n\n\n\nSoft manipulation surfaces Grasp-free manipulation Learning and control Tactile sensing Swarm robotics Collective intelligence\n\n\n\n\n\nPratik Ingle, Jorn Lambertsen, Kasper Stoy, and Andres Faina. 2026.\narXiv:2601.21884\nA modular soft manipulation platform that coordinates object transfer across fabric-based modules while reducing actuator count from dense arrays to shared-boundary actuation.\n\n\n\nPratik Ingle, Kasper Stoy, and Andres Faina. 2025. IEEE CASE, pp. 1780-1787.\nDOI\nShows how simple linear control can position heterogeneous objects on a nonlinear soft surface.\n\n\n\nPratik Ingle, Kasper Stoy, and Andres Faina. 2025. IEEE RoboSoft, selected for oral presentation.\nDOI\nA reduced-actuator soft manipulation surface for moving diverse and fragile objects without conventional grippers.\n\n\n\n\nIT University of Copenhagen\nPhD, Computer Science, 2023-expected 2026. Dissertation: Learning and Control for grasp-free manipulation robots.\nUniversity College London\nVisiting PhD, Computer Science, Mar-Aug 2026. Tactile sensing and self-supervised learning with leapXela-style sensors.\nIndian Institute of Science Education and Research Bhopal\nIntegrated BS-MS, Electrical Engineering and Computer Science, 2017-2023. Minor in Data Science and Engineering.\n\n\n\n\nRoboSoft 2026: Scalable Surface-Based Manipulation Through Modularity and Inter-Module Object Transfer.\nCASE 2025: Heterogeneous object manipulation on nonlinear soft surface through linear controller.\nRoboSoft 2025: Soft Manipulation Surface With Reduced Actuator Density For Heterogeneous Object Manipulation.\nEI 2025: Harnessing Fabric Softness and Scalability for Object Manipulation.\nANTS 2024: Moving Depot (MOD): An Efficient Depot Motion Strategy for Multi-Robot Foraging.\n\n\n\n\nTeaching assistant for Deep Learning, Intelligent Robotics, Computer Vision, and Digital Image Processing and Applications in Bioimage Analysis. Volunteer at ALIFE 2024 and NeurIPS 2021."
+  },
+  {
+    "objectID": "cv.html",
+    "href": "cv.html",
+    "title": "CV",
+    "section": "",
+    "text": "Download the PDF"
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Title\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nAuthor\n\n\n\n\n\n\nJuly 29, 2026\n\n\nSimulating a Tactile Sensor in MuJoCo\n\n\n\n\n\n\nJuly 22, 2026\n\n\nNormal and Shear Forces in Tactile Sensing\n\n\n\n\n\n\nJuly 15, 2026\n\n\nMAE vs JEPA: Two Ways to Learn Representations Without Labels\n\n\n\n\n\n\nMarch 12, 2026\n\n\nScalable Surface-Based Manipulation Through Modularity\n\n\n\n\n\n\nAugust 17, 2025\n\n\nLinear Control on a Nonlinear Soft Surface\n\n\n\n\n\n\nApril 22, 2025\n\n\nSoft Manipulation With Fewer Actuators\n\n\n\n\n\n\nDecember 2, 2021\n\n\nVariational Quantum Eigensolver From Scratch\n\n\n\n\n\n\nDecember 1, 2021\n\n\nGetting Started With Webots\n\n\n\n\n\n\n\n\nNo matching items"
+  }
+]

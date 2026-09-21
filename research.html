@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Research on soft robotic manipulation surfaces, tactile learning, and swarm robotics.">
+
+<title>Pratik Ingle - Research</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./images/avatar5.jpg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YZLKD6JCSW"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-YZLKD6JCSW', { 'anonymize_ip': true});
+</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Pratik Ingle</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./research.html" aria-current="page">Research</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./projects.html">Projects</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./blog.html">Blog</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./cv.html">CV</a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#current-directions" id="toc-current-directions" class="nav-link active" data-scroll-target="#current-directions">Current Directions</a>
+  <ul class="collapse">
+  <li><a href="#soft-manipulation-surfaces" id="toc-soft-manipulation-surfaces" class="nav-link" data-scroll-target="#soft-manipulation-surfaces">Soft manipulation surfaces</a></li>
+  <li><a href="#modular-grasp-free-manipulation" id="toc-modular-grasp-free-manipulation" class="nav-link" data-scroll-target="#modular-grasp-free-manipulation">Modular grasp-free manipulation</a></li>
+  <li><a href="#tactile-sensing-and-self-supervised-learning" id="toc-tactile-sensing-and-self-supervised-learning" class="nav-link" data-scroll-target="#tactile-sensing-and-self-supervised-learning">Tactile sensing and self-supervised learning</a></li>
+  <li><a href="#earlier-work-swarm-robotics-and-collectives" id="toc-earlier-work-swarm-robotics-and-collectives" class="nav-link" data-scroll-target="#earlier-work-swarm-robotics-and-collectives">Earlier work: swarm robotics and collectives</a></li>
+  </ul></li>
+  <li><a href="#publications" id="toc-publications" class="nav-link" data-scroll-target="#publications">Publications</a></li>
+  <li><a href="#talks" id="toc-talks" class="nav-link" data-scroll-target="#talks">Talks</a></li>
+  <li><a href="#research-experience" id="toc-research-experience" class="nav-link" data-scroll-target="#research-experience">Research Experience</a></li>
+  <li><a href="#schools-and-workshops" id="toc-schools-and-workshops" class="nav-link" data-scroll-target="#schools-and-workshops">Schools and Workshops</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Research</h1>
+</div>
+
+<div>
+  <div class="description">
+    Research on soft robotic manipulation surfaces, tactile learning, and swarm robotics.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>My current work is about <strong>grasp-free manipulation</strong>: moving objects by shaping and controlling the surface beneath them rather than closing a gripper around them. This is useful when objects are fragile, irregular, soft, food-like, or too varied for a single end-effector to handle reliably.</p>
+<p><img src="images/research_view_sketch.svg" class="img-fluid" alt="Sketch of research interests" style="width:85.0%"></p>
+<section id="current-directions" class="level2">
+<h2 class="anchored" data-anchor-id="current-directions">Current Directions</h2>
+<section id="soft-manipulation-surfaces" class="level3">
+<h3 class="anchored" data-anchor-id="soft-manipulation-surfaces">Soft manipulation surfaces</h3>
+<p>Robotic manipulation surfaces deform underneath an object and move it by changing contact geometry. The central challenge is balancing three goals that often fight each other: precise control, hardware simplicity, and scalable workspace size.</p>
+<p>My PhD work explores fabric-based surfaces actuated by sparse, coordinated vertical actuators. Instead of treating manipulation as a grasping problem, I model how surface deformation can create usable object motion for positioning, transfer, and handling heterogeneous objects.</p>
+</section>
+<section id="modular-grasp-free-manipulation" class="level3">
+<h3 class="anchored" data-anchor-id="modular-grasp-free-manipulation">Modular grasp-free manipulation</h3>
+<p>A single soft surface is useful, but many applications need larger workspaces. Modular surfaces can expand the workspace, but transferring objects across module boundaries is difficult because neighboring modules mechanically interact through the surface.</p>
+<p>My recent work studies shared-boundary actuation, hierarchical planning, directional object passing, and compensation for passive-object disturbance caused by mechanically coupled modules.</p>
+</section>
+<section id="tactile-sensing-and-self-supervised-learning" class="level3">
+<h3 class="anchored" data-anchor-id="tactile-sensing-and-self-supervised-learning">Tactile sensing and self-supervised learning</h3>
+<p>During my UCL visit, I have been working on tactile sensing for in-hand object shape and quantity inference with a leapXela-style tactile robot setup. The project involves self-supervised representation learning with Masked Autoencoders (MAE) and Joint Embedding Predictive Architectures (JEPA), plus MuJoCo simulation of normal and shear tactile channels for data collection.</p>
+</section>
+<section id="earlier-work-swarm-robotics-and-collectives" class="level3">
+<h3 class="anchored" data-anchor-id="earlier-work-swarm-robotics-and-collectives">Earlier work: swarm robotics and collectives</h3>
+<p>Before my PhD, I worked on collective robotics and decision-making in dynamic environments. This included multi-robot foraging, moving depots, collective decision models, and quantum-inspired approaches to identifying influential agents in swarms.</p>
+</section>
+</section>
+<section id="publications" class="level2">
+<h2 class="anchored" data-anchor-id="publications">Publications</h2>
+<ol type="1">
+<li><p><strong>Pratik Ingle</strong>, Jorn Lambertsen, Kasper Stoy, and Andres Faina. 2026. <em>Scalable Surface-Based Manipulation Through Modularity and Inter-Module Object Transfer</em>. <a href="https://arxiv.org/abs/2601.21884">arXiv:2601.21884</a>.</p></li>
+<li><p><strong>Pratik Ingle</strong>, Kasper Stoy, and Andres Faina. 2025. <em>Heterogeneous object manipulation on nonlinear soft surface through linear controller</em>. IEEE 21st International Conference on Automation Science and Engineering (CASE), 1780-1787. <a href="https://doi.org/10.1109/CASE58245.2025.11163787">DOI</a>.</p></li>
+<li><p><strong>Pratik Ingle</strong>, Kasper Stoy, and Andres Faina. 2025. <em>Soft Manipulation Surface With Reduced Actuator Density For Heterogeneous Object Manipulation</em>. IEEE 8th International Conference on Soft Robotics (RoboSoft), selected for oral presentation. <a href="https://doi.org/10.1109/RoboSoft63089.2025.11020841">DOI</a>.</p></li>
+</ol>
+</section>
+<section id="talks" class="level2">
+<h2 class="anchored" data-anchor-id="talks">Talks</h2>
+<ul>
+<li><strong>RoboSoft 2026</strong>: <em>Scalable Surface-Based Manipulation Through Modularity and Inter-Module Object Transfer</em>.</li>
+<li><strong>CASE 2025</strong>: <em>Heterogeneous object manipulation on nonlinear soft surface through linear controller</em>.</li>
+<li><strong>RoboSoft 2025</strong>: <em>Soft Manipulation Surface With Reduced Actuator Density For Heterogeneous Object Manipulation</em>.</li>
+<li><strong>EI 2025</strong>: <em>Harnessing Fabric Softness and Scalability for Object Manipulation</em>.</li>
+<li><strong>ANTS 2024</strong>: <em>Moving Depot (MOD): An Efficient Depot Motion Strategy for Multi-Robot Foraging</em>.</li>
+</ul>
+</section>
+<section id="research-experience" class="level2">
+<h2 class="anchored" data-anchor-id="research-experience">Research Experience</h2>
+<p><strong>REAL Lab, IT University of Copenhagen</strong><br>
+PhD researcher, Oct 2023-present. Learning and control for grasp-free manipulation robots.</p>
+<p><strong>CRISP Lab, University College London</strong><br>
+Visiting PhD researcher, Mar-Aug 2026. Tactile sensing, leapXela-style robots, MAE/JEPA representation learning, and MuJoCo sensor simulation.</p>
+<p><strong>Swarm Lab, NJIT and IISER Bhopal</strong><br>
+Research on decision-making in collectives, dynamic environments, animal behaviour, and bio-inspired swarm robotics.</p>
+<p><strong>MOON Lab, IISER Bhopal</strong><br>
+Robotics hardware, ROS, UAVs, embedded systems, and swarm robotics.</p>
+</section>
+<section id="schools-and-workshops" class="level2">
+<h2 class="anchored" data-anchor-id="schools-and-workshops">Schools and Workshops</h2>
+<ul>
+<li>Advanced Course on Data Science and Machine Learning, 2025.</li>
+<li>IEEE RAS Summer School on Multi-Robot Systems, 2024.</li>
+<li>SCIoI and ISAB Summer School on Embodied Intelligence: Perception and Learning, 2023.</li>
+<li>COSMOS Summer School on Modeling Social and Collective Behavior, 2022.</li>
+<li>PRAIRIE/MIAI Artificial Intelligence Summer School, 2021.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp(/https:\/\/pratik-ingle\.github\.io/);
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+    var links = window.document.querySelectorAll('a:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2026, Pratik Ingle. Text and images licensed CC-BY-NC 4.0 unless noted.</div>   
+  </div>
+</footer>
+
+
+
+</body></html>

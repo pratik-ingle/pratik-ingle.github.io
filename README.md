@@ -2,13 +2,16 @@
 
 Source for <https://pratik-ingle.github.io/>.
 
-This site is built with [Quarto](https://quarto.org/) and renders to `docs/`, which should be selected as the GitHub Pages publish directory for the `main` branch.
+This site is built with [Quarto](https://quarto.org/) and renders to `docs/`.
+
+GitHub Pages for this `pratik-ingle.github.io` user site is currently configured as a legacy deployment from the repository root (`main` + `/`). Because of that, the rendered `docs/` output is mirrored into the repository root for deployment. If Pages is later switched to GitHub Actions or a `/docs` source, the root mirror can be removed.
 
 ## Local workflow
 
 ```bash
 quarto preview
 quarto render
+rsync -a docs/ ./
 ```
 
 ## Add a blog post

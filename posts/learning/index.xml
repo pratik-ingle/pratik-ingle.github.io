@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Pratik Ingle</title>
+<link>https://pratik-ingle.github.io/posts/learning/index.html</link>
+<atom:link href="https://pratik-ingle.github.io/posts/learning/index.xml" rel="self" type="application/rss+xml"/>
+<description>Notes on concepts, tools, and systems I am learning.</description>
+<generator>quarto-1.0.37</generator>
+<lastBuildDate>Tue, 28 Jul 2026 22:00:00 GMT</lastBuildDate>
+<item>
+  <title>Simulating a Tactile Sensor in MuJoCo</title>
+  <link>https://pratik-ingle.github.io/posts/learning/mujoco-tactile-sensor-simulation/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<p>One part of my UCL visit is about replicating a 3-channel tactile sensor in MuJoCo for data collection and training. The goal is not to build a perfect copy of the real sensor. The goal is to create a simulation that produces useful tactile structure for learning.</p>
+<section id="what-needs-to-be-simulated" class="level2">
+<h2 class="anchored" data-anchor-id="what-needs-to-be-simulated">What needs to be simulated</h2>
+<p>A useful tactile simulation needs at least:</p>
+<ul>
+<li>Contact location across the sensor surface.</li>
+<li>Normal force at contact points.</li>
+<li>Shear forces in two lateral directions.</li>
+<li>Temporal changes as objects move, slip, or press into the surface.</li>
+</ul>
+<p>The difficult part is matching the signal statistics closely enough that models trained on simulation learn transferable structure.</p>
+</section>
+<section id="the-modeling-tradeoff" class="level2">
+<h2 class="anchored" data-anchor-id="the-modeling-tradeoff">The modeling tradeoff</h2>
+<p>A high-fidelity tactile simulation can become expensive quickly. But a very simple proxy may miss the contact cues needed for downstream tasks. The practical question is where the approximation should live.</p>
+<p>For representation learning, it may be enough for the simulation to capture the relationships between contact, shape, and force dynamics, even if every taxel is not physically perfect.</p>
+</section>
+<section id="data-collection-loop" class="level2">
+<h2 class="anchored" data-anchor-id="data-collection-loop">Data collection loop</h2>
+<p>The imagined loop is:</p>
+<ol type="1">
+<li>Sample objects, poses, and interactions in simulation.</li>
+<li>Record normal and shear force maps over time.</li>
+<li>Train MAE/JEPA-style models on the generated tactile streams.</li>
+<li>Test whether the learned representation transfers to real tactile data.</li>
+</ol>
+</section>
+<section id="open-questions" class="level2">
+<h2 class="anchored" data-anchor-id="open-questions">Open questions</h2>
+<ul>
+<li>Which contact model best matches the real sensor behavior?</li>
+<li>How much domain randomization is useful?</li>
+<li>Should the network see raw forces or preprocessed tactile maps?</li>
+<li>What downstream task best measures whether the simulation is good enough?</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>learning</category>
+  <category>simulation</category>
+  <category>tactile sensing</category>
+  <category>MuJoCo</category>
+  <guid>https://pratik-ingle.github.io/posts/learning/mujoco-tactile-sensor-simulation/index.html</guid>
+  <pubDate>Tue, 28 Jul 2026 22:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Normal and Shear Forces in Tactile Sensing</title>
+  <link>https://pratik-ingle.github.io/posts/learning/tactile-sensing-normal-shear/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<p>Touch is not just pressure. A tactile sensor can measure how hard an object presses into the surface, but also how contact moves sideways. That sideways information is often the clue that an object is slipping, rotating, or changing contact state.</p>
+<section id="three-channels" class="level2">
+<h2 class="anchored" data-anchor-id="three-channels">Three channels</h2>
+<p>The tactile setup I am learning from uses three force channels:</p>
+<ol type="1">
+<li>Normal force: how strongly the object presses into the sensor.</li>
+<li>Shear-x: lateral force along one sensor axis.</li>
+<li>Shear-y: lateral force along the other sensor axis.</li>
+</ol>
+<p>Together, these channels describe richer contact mechanics than normal force alone.</p>
+</section>
+<section id="why-shear-matters" class="level2">
+<h2 class="anchored" data-anchor-id="why-shear-matters">Why shear matters</h2>
+<p>If the normal force stays similar but shear changes, the object may be sliding or rotating. For in-hand manipulation, that can reveal object pose changes before the object visually moves in an obvious way.</p>
+<p>This is especially relevant for shape and quantity inference. A pile of objects, a single larger object, and an object contacting at a different angle can produce different shear patterns even when the normal force magnitude is comparable.</p>
+</section>
+<section id="what-i-want-from-representations" class="level2">
+<h2 class="anchored" data-anchor-id="what-i-want-from-representations">What I want from representations</h2>
+<p>The representation should make contact events legible. It should capture where contact occurs, how force flows across the sensor, and how those patterns evolve over time.</p>
+<p>That is why tactile sensing is a good fit for self-supervised learning: the raw signal is rich, but the useful abstractions are not always obvious in advance.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>learning</category>
+  <category>tactile sensing</category>
+  <category>robotics</category>
+  <guid>https://pratik-ingle.github.io/posts/learning/tactile-sensing-normal-shear/index.html</guid>
+  <pubDate>Tue, 21 Jul 2026 22:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>MAE vs JEPA: Two Ways to Learn Representations Without Labels</title>
+  <link>https://pratik-ingle.github.io/posts/learning/mae-vs-jepa/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<p>I am using this post as a working note while learning self-supervised learning for tactile sensing. The two families I keep comparing are Masked Autoencoders (MAE) and Joint Embedding Predictive Architectures (JEPA).</p>
+<section id="the-shared-goal" class="level2">
+<h2 class="anchored" data-anchor-id="the-shared-goal">The shared goal</h2>
+<p>Both methods try to learn useful representations without requiring manual labels. Instead of asking a model to predict a human-provided class, we create a prediction problem from the data itself.</p>
+<p>For tactile sensing, this is appealing because labeled tactile data can be expensive. But the robot can collect lots of interaction data: normal forces, shear forces, contact patches, and temporal sequences.</p>
+</section>
+<section id="mae-intuition" class="level2">
+<h2 class="anchored" data-anchor-id="mae-intuition">MAE intuition</h2>
+<p>A Masked Autoencoder hides part of the input and trains the model to reconstruct what was removed. In vision, that means masking image patches. In tactile sensing, a similar idea could mask spatial taxels, temporal spans, or force channels.</p>
+<p>The reconstruction target keeps the training signal concrete: the model must recover missing data.</p>
+</section>
+<section id="jepa-intuition" class="level2">
+<h2 class="anchored" data-anchor-id="jepa-intuition">JEPA intuition</h2>
+<p>JEPA also predicts missing information, but it predicts in representation space rather than directly reconstructing pixels or sensor values. The model learns an embedding of visible context and predicts the embedding of the target.</p>
+<p>This can encourage more semantic or task-useful representations because the model is not forced to reproduce every low-level detail.</p>
+</section>
+<section id="the-question-i-care-about" class="level2">
+<h2 class="anchored" data-anchor-id="the-question-i-care-about">The question I care about</h2>
+<p>For tactile sensing, the right representation should preserve object-relevant properties: shape, contact distribution, slip, force direction, and possibly object count. I want to understand whether direct reconstruction or representation-space prediction gives better features for downstream inference.</p>
+</section>
+<section id="open-notes" class="level2">
+<h2 class="anchored" data-anchor-id="open-notes">Open notes</h2>
+<ul>
+<li>What should be masked: time, taxels, force channels, or spatial regions?</li>
+<li>Should shear and normal channels be treated symmetrically?</li>
+<li>How much of the tactile signal is useful low-level detail versus nuisance variation?</li>
+<li>Which downstream probe best reveals representation quality?</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>learning</category>
+  <category>self-supervised learning</category>
+  <category>representation learning</category>
+  <guid>https://pratik-ingle.github.io/posts/learning/mae-vs-jepa/index.html</guid>
+  <pubDate>Tue, 14 Jul 2026 22:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

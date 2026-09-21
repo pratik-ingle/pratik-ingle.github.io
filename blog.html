@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Research explanations, learning notes, and tutorials.">
+
+<title>Pratik Ingle - Blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./images/avatar5.jpg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-author',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YZLKD6JCSW"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-YZLKD6JCSW', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="alternate" type="application/rss+xml" title="Pratik Ingle" href="blog.xml"></head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Pratik Ingle</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./research.html">Research</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./projects.html">Projects</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./blog.html" aria-current="page">Blog</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./cv.html">CV</a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(8)</span></div><div class="category" data-category="MuJoCo">MuJoCo <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VQE">VQE <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Webots">Webots <span class="quarto-category-count">(1)</span></div><div class="category" data-category="control">control <span class="quarto-category-count">(1)</span></div><div class="category" data-category="hardware">hardware <span class="quarto-category-count">(1)</span></div><div class="category" data-category="learning">learning <span class="quarto-category-count">(3)</span></div><div class="category" data-category="manipulation">manipulation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="quantum">quantum <span class="quarto-category-count">(1)</span></div><div class="category" data-category="representation learning">representation learning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="research">research <span class="quarto-category-count">(3)</span></div><div class="category" data-category="robotics">robotics <span class="quarto-category-count">(2)</span></div><div class="category" data-category="self-supervised learning">self-supervised learning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="simulation">simulation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="soft robotics">soft robotics <span class="quarto-category-count">(3)</span></div><div class="category" data-category="tactile sensing">tactile sensing <span class="quarto-category-count">(2)</span></div><div class="category" data-category="tutorial">tutorial <span class="quarto-category-count">(1)</span></div><div class="category" data-category="tutorials">tutorials <span class="quarto-category-count">(1)</span></div></div></div>
+<!-- main -->
+<main class="content page-columns page-full column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Blog</h1>
+</div>
+
+<div>
+  <div class="description">
+    Research explanations, learning notes, and tutorials.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="column-page">
+<p>I use this space for longer notes: explaining papers after the work is done, writing down what I am learning while it is still messy, and keeping tutorials that I wish I had when starting a tool.</p>
+<section id="categories" class="level2">
+<h2 class="anchored" data-anchor-id="categories">Categories</h2>
+<div class="category-grid">
+<section id="research-notes" class="level3 category-card">
+<h3 class="anchored" data-anchor-id="research-notes"><a href="posts/research/">Research Notes</a></h3>
+<p>Posts that unpack my papers and research problems: soft manipulation surfaces, modular hardware, and control.</p>
+</section>
+<section id="learning-log" class="level3 category-card">
+<h3 class="anchored" data-anchor-id="learning-log"><a href="posts/learning/">Learning Log</a></h3>
+<p>Notes on concepts I am learning or using, especially tactile sensing, self-supervised learning, simulation, and robotics tooling.</p>
+</section>
+<section id="tutorials" class="level3 category-card">
+<h3 class="anchored" data-anchor-id="tutorials"><a href="posts/tutorials/">Tutorials</a></h3>
+<p>Hands-on guides and teaching material, including robotics simulation tutorials.</p>
+</section>
+<section id="quantum-notes" class="level3 category-card">
+<h3 class="anchored" data-anchor-id="quantum-notes"><a href="posts/quantum/">Quantum Notes</a></h3>
+<p>Older notes from learning quantum computing and hybrid quantum-classical machine learning.</p>
+</section>
+</div>
+</section>
+<section id="all-posts" class="level2">
+<h2 class="anchored" data-anchor-id="all-posts">All Posts</h2>
+</section>
+</div>
+
+
+
+
+<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
+         <option value="listing-title-sort" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-author" data-direction="asc">
+          Author
+        </option>
+     </select>
+  </div>
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filter">
+    </div>
+</div>
+
+<table class="quarto-listing-table table">
+<thead>
+<tr>
+<th>
+<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
+</th>
+<th>
+<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
+</th>
+<th>
+<a class="sort" data-sort="listing-author" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Author</a>
+</th>
+</tr>
+</thead>
+<tbody class="list">
+<tr data-index="0" data-categories="learning,simulation,tactile sensing,MuJoCo" data-listing-date-sort="1785276000000" data-listing-file-modified-sort="1789990050115" data-listing-reading-time-sort="1.175" data-listing-title-sort="Simulating a Tactile Sensor in MuJoCo" data-listing-filename-sort="index.qmd">
+<td class="listing-date">
+July 29, 2026
+</td>
+<td class="listing-title">
+<a href="./posts/learning/mujoco-tactile-sensor-simulation/index.html" class="title">Simulating a Tactile Sensor in MuJoCo</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
+<tr data-index="1" data-categories="learning,tactile sensing,robotics" data-listing-date-sort="1784671200000" data-listing-file-modified-sort="1789990050115" data-listing-reading-time-sort="1.075" data-listing-title-sort="Normal and Shear Forces in Tactile Sensing" data-listing-filename-sort="index.qmd">
+<td class="listing-date">
+July 22, 2026
+</td>
+<td class="listing-title">
+<a href="./posts/learning/tactile-sensing-normal-shear/index.html" class="title">Normal and Shear Forces in Tactile Sensing</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
+<tr data-index="2" data-categories="learning,self-supervised learning,representation learning" data-listing-date-sort="1784066400000" data-listing-file-modified-sort="1789990050114" data-listing-reading-time-sort="1.39" data-listing-title-sort="MAE vs JEPA: Two Ways to Learn Representations Without Labels" data-listing-filename-sort="index.qmd">
+<td class="listing-date">
+July 15, 2026
+</td>
+<td class="listing-title">
+<a href="./posts/learning/mae-vs-jepa/index.html" class="title">MAE vs JEPA: Two Ways to Learn Representations Without Labels</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
+<tr data-index="3" data-categories="research,soft robotics,manipulation" data-listing-date-sort="1773270000000" data-listing-file-modified-sort="1789990050113" data-listing-reading-time-sort="1.34" data-listing-title-sort="Scalable Surface-Based Manipulation Through Modularity" data-listing-filename-sort="index.qmd">
+<td class="listing-date">
+March 12, 2026
+</td>
+<td class="listing-title">
+<a href="./posts/research/scalable-surface-based-manipulation/index.html" class="title">Scalable Surface-Based Manipulation Through Modularity</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
+<tr data-index="4" data-categories="research,control,soft robotics" data-listing-date-sort="1755381600000" data-listing-file-modified-sort="1789990050114" data-listing-reading-time-sort="1.005" data-listing-title-sort="Linear Control on a Nonlinear Soft Surface" data-listing-filename-sort="index.qmd">
+<td class="listing-date">
+August 17, 2025
+</td>
+<td class="listing-title">
+<a href="./posts/research/linear-control-nonlinear-soft-surface/index.html" class="title">Linear Control on a Nonlinear Soft Surface</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
+<tr data-index="5" data-categories="research,soft robotics,hardware" data-listing-date-sort="1745272800000" data-listing-file-modified-sort="1789990050114" data-listing-reading-time-sort="1.095" data-listing-title-sort="Soft Manipulation With Fewer Actuators" data-listing-filename-sort="index.qmd">
+<td class="listing-date">
+April 22, 2025
+</td>
+<td class="listing-title">
+<a href="./posts/research/reduced-actuator-soft-manipulation-surface/index.html" class="title">Soft Manipulation With Fewer Actuators</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
+<tr data-index="6" data-categories="quantum,tutorial,VQE" data-listing-date-sort="1638399600000" data-listing-file-modified-sort="1789990141025" data-listing-reading-time-sort="3.325" data-listing-title-sort="Variational Quantum Eigensolver From Scratch" data-listing-filename-sort="index.qmd">
+<td class="listing-date">
+December 2, 2021
+</td>
+<td class="listing-title">
+<a href="./posts/quantum/vqe-from-scratch/index.html" class="title">Variational Quantum Eigensolver From Scratch</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
+<tr data-index="7" data-categories="tutorials,robotics,Webots" data-listing-date-sort="1638313200000" data-listing-file-modified-sort="1789990050115" data-listing-reading-time-sort="2.3" data-listing-title-sort="Getting Started With Webots" data-listing-filename-sort="index.qmd">
+<td class="listing-date">
+December 1, 2021
+</td>
+<td class="listing-title">
+<a href="./posts/tutorials/getting-started-with-webots/index.html" class="title">Getting Started With Webots</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
+</tbody>
+
+</table>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp(/https:\/\/pratik-ingle\.github\.io/);
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+    var links = window.document.querySelectorAll('a:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2026, Pratik Ingle. Text and images licensed CC-BY-NC 4.0 unless noted.</div>   
+  </div>
+</footer>
+
+
+
+</body></html>
