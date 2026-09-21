@@ -67,7 +67,7 @@ ul.task-list{list-style: none;}
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
+      valueNames: ['listing-date','listing-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
       
       searchColumns: ["listing-date","listing-title","listing-author"],
     };
@@ -220,9 +220,6 @@ gtag('config', 'G-YZLKD6JCSW', { 'anonymize_ip': true});
          <option value="listing-title-sort" data-direction="asc">
           Title
         </option>
-         <option value="listing-author" data-direction="asc">
-          Author
-        </option>
      </select>
   </div>
     <div class="input-group input-group-sm quarto-listing-filter">
@@ -240,9 +237,6 @@ gtag('config', 'G-YZLKD6JCSW', { 'anonymize_ip': true});
 <th>
 <a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
 </th>
-<th>
-<a class="sort" data-sort="listing-author" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Author</a>
-</th>
 </tr>
 </thead>
 <tbody class="list">
@@ -253,8 +247,6 @@ July 29, 2026
 <td class="listing-title">
 <a href="./posts/learning/mujoco-tactile-sensor-simulation/index.html" class="title">Simulating a Tactile Sensor in MuJoCo</a>
 </td>
-<td class="listing-author">
-</td>
 </tr>
 <tr data-index="1" data-categories="learning,tactile sensing,robotics" data-listing-date-sort="1784671200000" data-listing-file-modified-sort="1789990050115" data-listing-reading-time-sort="1.075" data-listing-title-sort="Normal and Shear Forces in Tactile Sensing" data-listing-filename-sort="index.qmd">
 <td class="listing-date">
@@ -262,8 +254,6 @@ July 22, 2026
 </td>
 <td class="listing-title">
 <a href="./posts/learning/tactile-sensing-normal-shear/index.html" class="title">Normal and Shear Forces in Tactile Sensing</a>
-</td>
-<td class="listing-author">
 </td>
 </tr>
 <tr data-index="2" data-categories="learning,self-supervised learning,representation learning" data-listing-date-sort="1784066400000" data-listing-file-modified-sort="1789990050114" data-listing-reading-time-sort="1.39" data-listing-title-sort="MAE vs JEPA: Two Ways to Learn Representations Without Labels" data-listing-filename-sort="index.qmd">
@@ -273,8 +263,6 @@ July 15, 2026
 <td class="listing-title">
 <a href="./posts/learning/mae-vs-jepa/index.html" class="title">MAE vs JEPA: Two Ways to Learn Representations Without Labels</a>
 </td>
-<td class="listing-author">
-</td>
 </tr>
 <tr data-index="3" data-categories="research,soft robotics,manipulation" data-listing-date-sort="1773270000000" data-listing-file-modified-sort="1789990050113" data-listing-reading-time-sort="1.34" data-listing-title-sort="Scalable Surface-Based Manipulation Through Modularity" data-listing-filename-sort="index.qmd">
 <td class="listing-date">
@@ -282,8 +270,6 @@ March 12, 2026
 </td>
 <td class="listing-title">
 <a href="./posts/research/scalable-surface-based-manipulation/index.html" class="title">Scalable Surface-Based Manipulation Through Modularity</a>
-</td>
-<td class="listing-author">
 </td>
 </tr>
 <tr data-index="4" data-categories="research,control,soft robotics" data-listing-date-sort="1755381600000" data-listing-file-modified-sort="1789990050114" data-listing-reading-time-sort="1.005" data-listing-title-sort="Linear Control on a Nonlinear Soft Surface" data-listing-filename-sort="index.qmd">
@@ -293,8 +279,6 @@ August 17, 2025
 <td class="listing-title">
 <a href="./posts/research/linear-control-nonlinear-soft-surface/index.html" class="title">Linear Control on a Nonlinear Soft Surface</a>
 </td>
-<td class="listing-author">
-</td>
 </tr>
 <tr data-index="5" data-categories="research,soft robotics,hardware" data-listing-date-sort="1745272800000" data-listing-file-modified-sort="1789990050114" data-listing-reading-time-sort="1.095" data-listing-title-sort="Soft Manipulation With Fewer Actuators" data-listing-filename-sort="index.qmd">
 <td class="listing-date">
@@ -302,8 +286,6 @@ April 22, 2025
 </td>
 <td class="listing-title">
 <a href="./posts/research/reduced-actuator-soft-manipulation-surface/index.html" class="title">Soft Manipulation With Fewer Actuators</a>
-</td>
-<td class="listing-author">
 </td>
 </tr>
 <tr data-index="6" data-categories="quantum,tutorial,VQE" data-listing-date-sort="1638399600000" data-listing-file-modified-sort="1789990141025" data-listing-reading-time-sort="3.325" data-listing-title-sort="Variational Quantum Eigensolver From Scratch" data-listing-filename-sort="index.qmd">
@@ -313,8 +295,6 @@ December 2, 2021
 <td class="listing-title">
 <a href="./posts/quantum/vqe-from-scratch/index.html" class="title">Variational Quantum Eigensolver From Scratch</a>
 </td>
-<td class="listing-author">
-</td>
 </tr>
 <tr data-index="7" data-categories="tutorials,robotics,Webots" data-listing-date-sort="1638313200000" data-listing-file-modified-sort="1789990050115" data-listing-reading-time-sort="2.3" data-listing-title-sort="Getting Started With Webots" data-listing-filename-sort="index.qmd">
 <td class="listing-date">
@@ -322,8 +302,6 @@ December 1, 2021
 </td>
 <td class="listing-title">
 <a href="./posts/tutorials/getting-started-with-webots/index.html" class="title">Getting Started With Webots</a>
-</td>
-<td class="listing-author">
 </td>
 </tr>
 </tbody>

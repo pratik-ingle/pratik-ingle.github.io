@@ -10,6 +10,7 @@ listing:
     - posts/quantum/*/index.qmd
   sort: "date desc"
   type: table
+  fields: [date, title]
   categories: true
   sort-ui: true
   filter-ui: true
