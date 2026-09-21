@@ -1,0 +1,33 @@
+---
+title: "Normal and Shear Forces in Tactile Sensing"
+date: 2026-07-22
+categories: [learning, tactile sensing, robotics]
+description: "Why 3-channel tactile sensors are useful for in-hand object inference."
+comments:
+  utterances:
+    repo: pratik-ingle/pratik-ingle.github.io
+---
+
+Touch is not just pressure. A tactile sensor can measure how hard an object presses into the surface, but also how contact moves sideways. That sideways information is often the clue that an object is slipping, rotating, or changing contact state.
+
+## Three channels
+
+The tactile setup I am learning from uses three force channels:
+
+1. Normal force: how strongly the object presses into the sensor.
+2. Shear-x: lateral force along one sensor axis.
+3. Shear-y: lateral force along the other sensor axis.
+
+Together, these channels describe richer contact mechanics than normal force alone.
+
+## Why shear matters
+
+If the normal force stays similar but shear changes, the object may be sliding or rotating. For in-hand manipulation, that can reveal object pose changes before the object visually moves in an obvious way.
+
+This is especially relevant for shape and quantity inference. A pile of objects, a single larger object, and an object contacting at a different angle can produce different shear patterns even when the normal force magnitude is comparable.
+
+## What I want from representations
+
+The representation should make contact events legible. It should capture where contact occurs, how force flows across the sensor, and how those patterns evolve over time.
+
+That is why tactile sensing is a good fit for self-supervised learning: the raw signal is rich, but the useful abstractions are not always obvious in advance.

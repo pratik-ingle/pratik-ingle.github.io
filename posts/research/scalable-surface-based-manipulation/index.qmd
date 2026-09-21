@@ -1,0 +1,41 @@
+---
+title: "Scalable Surface-Based Manipulation Through Modularity"
+date: 2026-03-12
+categories: [research, soft robotics, manipulation]
+description: "A plain-language explanation of my arXiv paper on modular soft manipulation surfaces."
+image: ../../../images/research_view_sketch.svg
+comments:
+  utterances:
+    repo: pratik-ingle/pratik-ingle.github.io
+---
+
+## The problem
+
+Robotic Manipulation Surfaces (RMS) move objects by deforming the surface they rest on. This makes them attractive for fragile, irregular, or food-like objects, where grasping can damage the item or require a specialized gripper. The difficulty is scale: dense actuator arrays can give fine control, but they become expensive and mechanically complex when the workspace grows.
+
+## The core idea
+
+The paper asks whether a manipulation surface can be made modular. Instead of building one very dense surface, we connect fabric-based modules and coordinate object movement across module boundaries. Adjacent modules share edge actuators, reducing actuator count from `4n^2` to `(n + 1)^2` for an `n x n` grid.
+
+In a `2 x 2` prototype, this gives a `1 x 1 m` workspace with only 9 actuators.
+
+## What makes it hard
+
+Sharing actuators is efficient, but it mechanically couples neighboring modules. Moving one module can disturb objects on another module. The platform therefore needs both high-level path planning and low-level compensation.
+
+Our framework combines:
+
+1. Manhattan-style conflict-free path planning.
+2. Directional object passing between modules.
+3. A geometric PID controller for positioning.
+4. Compensation strategies for passive-object disturbance.
+
+## Result
+
+The system achieves coordinated inter-module transfer and sub-centimeter positioning for heterogeneous objects, including fragile items. Compensation reduced passive-object displacement by 59-78% across the measured configurations.
+
+## Why I care about this
+
+For me, the interesting part is not only that a surface can move objects. It is that manipulation can be treated as a property of a distributed surface: hardware design, geometry, and control all contribute. That feels like a promising route toward scalable manipulation in logistics, food processing, and other settings where objects are too varied for one gripper.
+
+Paper: [arXiv:2601.21884](https://arxiv.org/abs/2601.21884)

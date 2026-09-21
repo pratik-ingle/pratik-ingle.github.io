@@ -1,0 +1,11 @@
+---
+title: "Quantum Notes"
+description: "Older notes from learning quantum computing and hybrid models."
+listing:
+  contents: "*/index.qmd"
+  sort: "date desc"
+  type: default
+  feed: true
+---
+
+Older notes from learning quantum computing and hybrid models.

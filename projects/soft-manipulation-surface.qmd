@@ -1,0 +1,11 @@
+---
+title: "Soft Manipulation Surface With Reduced Actuator Density"
+date: 2025-04-22
+categories: [soft robotics, manipulation]
+description: "A fabric-based manipulation surface for moving heterogeneous objects with fewer actuators."
+image: ../images/research_view_sketch.svg
+---
+
+This project investigates robotic manipulation without grippers. The surface is actuated from below, and objects move because the surface geometry changes around them. The goal is to handle heterogeneous and fragile objects while using fewer actuators than dense manipulation arrays.
+
+The work was published at IEEE RoboSoft 2025 and selected for oral presentation.

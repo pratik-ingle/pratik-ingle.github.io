@@ -1,0 +1,39 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Pratik Ingle"
+  site-url: "https://pratik-ingle.github.io"
+  description: "Robotics researcher working on soft manipulation surfaces, learning, control, and collective robot systems."
+  favicon: images/avatar5.jpg
+  google-analytics:
+    tracking-id: "G-YZLKD6JCSW"
+    anonymize-ip: true
+  navbar:
+    title: "Pratik Ingle"
+    right:
+      - text: Home
+        href: index.qmd
+      - text: Research
+        href: research.qmd
+      - text: Projects
+        href: projects.qmd
+      - text: Blog
+        href: blog.qmd
+      - text: CV
+        href: cv.qmd
+  page-footer:
+    left: "Copyright 2026, Pratik Ingle. Text and images licensed CC-BY-NC 4.0 unless noted."
+  search: true
+  reader-mode: true
+
+date-format: long
+
+format:
+  html:
+    theme: [cosmo, styles.scss]
+    toc: true
+    toc-location: right
+    code-copy: true
+    link-external-newwindow: true

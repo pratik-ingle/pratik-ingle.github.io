@@ -1,0 +1,9 @@
+---
+title: "Warehouse Space Distribution Using Particle Swarm Optimization"
+date: 2022-04-01
+categories: [optimization, multi-agent path finding]
+description: "Optimizing warehouse layouts to reduce robot collisions during online path finding."
+image: ../images/mapf.gif
+---
+
+Multi-Agent Path Finding (MAPF) asks how a group of agents can move from their current locations to destinations without colliding. In warehouses, narrow corridors and limited storage space make this especially difficult. This project used Particle Swarm Optimization and evolutionary search to optimize rack placement and reduce conflict during online path planning.

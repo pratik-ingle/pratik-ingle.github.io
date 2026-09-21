@@ -1,0 +1,11 @@
+---
+title: "Decision Making in Collectives With Dynamic Individual Memory"
+date: 2021-12-01
+categories: [collective behavior, modeling]
+description: "A model of collective decision-making in dynamic environments."
+image: ../images/cdm.png
+---
+
+This project revisited Bayesian decision models for animal collectives, especially how individuals use social and non-social information when choosing between options. I studied how dynamic individual memory affects consensus in changing environments and how heterogeneity in sensory information can shift group decisions.
+
+[Report](https://drive.google.com/file/d/1QIQK-W-1pOJJh8G5EIEYUAhfGCKJ3cAn/view?usp=sharing) | [Poster](../files/cosmos.pdf)

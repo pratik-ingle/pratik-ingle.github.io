@@ -1,0 +1,44 @@
+---
+title: "Simulating a Tactile Sensor in MuJoCo"
+date: 2026-07-29
+categories: [learning, simulation, tactile sensing, MuJoCo]
+description: "Notes on building a MuJoCo approximation of a 3-channel tactile sensor."
+comments:
+  utterances:
+    repo: pratik-ingle/pratik-ingle.github.io
+---
+
+One part of my UCL visit is about replicating a 3-channel tactile sensor in MuJoCo for data collection and training. The goal is not to build a perfect copy of the real sensor. The goal is to create a simulation that produces useful tactile structure for learning.
+
+## What needs to be simulated
+
+A useful tactile simulation needs at least:
+
+- Contact location across the sensor surface.
+- Normal force at contact points.
+- Shear forces in two lateral directions.
+- Temporal changes as objects move, slip, or press into the surface.
+
+The difficult part is matching the signal statistics closely enough that models trained on simulation learn transferable structure.
+
+## The modeling tradeoff
+
+A high-fidelity tactile simulation can become expensive quickly. But a very simple proxy may miss the contact cues needed for downstream tasks. The practical question is where the approximation should live.
+
+For representation learning, it may be enough for the simulation to capture the relationships between contact, shape, and force dynamics, even if every taxel is not physically perfect.
+
+## Data collection loop
+
+The imagined loop is:
+
+1. Sample objects, poses, and interactions in simulation.
+2. Record normal and shear force maps over time.
+3. Train MAE/JEPA-style models on the generated tactile streams.
+4. Test whether the learned representation transfers to real tactile data.
+
+## Open questions
+
+- Which contact model best matches the real sensor behavior?
+- How much domain randomization is useful?
+- Should the network see raw forces or preprocessed tactile maps?
+- What downstream task best measures whether the simulation is good enough?

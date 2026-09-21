@@ -1,0 +1,11 @@
+---
+title: "Optical Radiation Pressure Springs for Metrology"
+date: 2019-04-01
+categories: [physics, metrology]
+description: "A theoretical model using optical radiation pressure for precision force sensing."
+image: ../images/RPS.png
+---
+
+This theoretical project studied optical radiation pressure as a way to detect small forces and effects such as Casimir forces. The setup used high-intensity lasers and highly reflective mirrors to create measurable changes in interference patterns.
+
+[Report](https://drive.google.com/file/d/1or6s-u4VK6VQlXHrUqTfNqW8ZMBakTjO/view?usp=sharing)

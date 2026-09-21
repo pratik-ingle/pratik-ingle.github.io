@@ -1,0 +1,11 @@
+---
+title: "Never Sinking Robotic Boats for Tackling Floods"
+date: 2020-07-01
+categories: [robotics, materials]
+description: "Robotic boats using superhydrophobic materials for flood-response applications."
+image: ../images/shsv.png
+---
+
+This project explored superhydrophobic materials for robotic boats that resist sinking and can carry useful loads in flood response. Potential applications include basic healthcare delivery, evacuation support, temporary storage, transportation, and data collection.
+
+[Report](https://drive.google.com/file/d/18UjZQgY4yLUip7TlzwAXGu0W5XisyJh8/view?usp=sharing)

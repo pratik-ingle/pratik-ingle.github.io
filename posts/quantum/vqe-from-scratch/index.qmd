@@ -1,0 +1,114 @@
+---
+title: "Variational Quantum Eigensolver From Scratch"
+date: 2021-12-02
+categories: [quantum, tutorial, VQE]
+description: "A compact explanation of VQE and the parts needed to implement it."
+image: ../../../images/vqe.png
+comments:
+  utterances:
+    repo: pratik-ingle/pratik-ingle.github.io
+---
+
+VQE stands for **Variational Quantum Eigensolver**. It is a hybrid quantum-classical algorithm for estimating the lowest-energy eigenstate, or ground state, of a Hamiltonian.
+
+This is a migrated and lightly cleaned version of my original Medium post.
+
+Original post: <https://medium.com/analytics-vidhya/variational-quantum-eigensolver-from-scratch-finding-ground-state-energy-of-hamiltonian-a5c13d5268f1>
+
+## Variational Principle
+
+If we have a Hamiltonian `H` with eigenstates and associated eigenvalues, then:
+
+```text
+H |psi> = lambda |psi>
+```
+
+Here `lambda` is the energy for the state `|psi>`. For many possible states there are different energies, but one state has the smallest energy. That state is the **ground state** of the system. VQE gives us a practical way to search for that ground state.
+
+The algorithm can be summarized in three parts:
+
+1. Decomposition.
+2. Circuit construction, including the ansatz and measurement basis.
+3. Measurement and classical optimization.
+
+## Part 1: Decomposition
+
+The first step is decomposing a Hamiltonian into Pauli matrices. Pauli matrices form a basis for the real vector space of `2 x 2` Hermitian matrices. That means any `2 x 2` Hermitian matrix can be written as a unique linear combination of Pauli matrices with real coefficients.
+
+For a two-qubit Hamiltonian, we work with `4 x 4` Hermitian matrices and tensor products of Pauli terms. These terms tell us which basis to measure in, and their coefficients tell us how much weight each expectation value should receive in the final energy estimate.
+
+For example, a decomposed two-qubit Hamiltonian may include terms such as:
+
+- `I tensor I`
+- `X tensor X`
+- `Y tensor Y`
+- `Z tensor Z`
+
+Each term receives a coefficient from the decomposition.
+
+## Part 2: Circuit
+
+Once the Hamiltonian is decomposed, we create circuits for the terms in the decomposition. The circuit has two central pieces.
+
+### Ansatz
+
+The **ansatz** is a parameterized circuit that prepares the trial quantum state. In a VQE loop, the classical optimizer changes the ansatz parameters and the quantum circuit estimates the corresponding energy.
+
+In the original experiment, the ansatz was chosen by trial and error. Different ansatz choices can produce similar performance, but the ansatz controls the set of states the algorithm can search.
+
+### Measurement basis
+
+Quantum computers measure in the computational, or `Z`, basis by default. If we need expectation values in another basis, we rotate the state before measurement.
+
+For a Hamiltonian with terms like:
+
+- `I tensor I`
+- `X tensor X`
+- `Y tensor Y`
+- `Z tensor Z`
+
+the identity term does not need a circuit. The `X tensor X` term can be measured by rotating both qubits into the X basis. The `Y tensor Y` term can be measured by rotating both qubits into the Y basis. The `Z tensor Z` term can be measured directly after preparing the ansatz.
+
+## Part 3: Measurement
+
+For each circuit, we measure probabilities for outcomes such as `|00>`, `|01>`, `|10>`, and `|11>`.
+
+For a single qubit, measuring `|0>` corresponds to eigenvalue `+1`, and measuring `|1>` corresponds to eigenvalue `-1`. For two qubits, the sign for a measurement is the product of the two eigenvalues. For example, `|01>` gives:
+
+```text
+(+1) x (-1) = -1
+```
+
+The expectation value is computed as:
+
+```text
+sum(sign * probability)
+```
+
+After computing the expectation value for each circuit, we multiply by the corresponding Hamiltonian coefficient and add the terms together. That gives the current energy estimate.
+
+## VQE Algorithm
+
+The VQE loop is:
+
+1. Pick ansatz parameters.
+2. Prepare the ansatz state on the quantum circuit.
+3. Measure each Hamiltonian term in the correct basis.
+4. Estimate the energy from expectation values.
+5. Use a classical optimizer to update the ansatz parameters.
+6. Repeat until the energy stops improving.
+
+In the example from the original post, the lowest eigenvalue found was `-1`, corresponding to the ground-state estimate for the chosen Hamiltonian.
+
+## End Note
+
+The most important thing I learned from coding VQE from scratch is that the quantum and classical pieces are tightly coupled. The quantum circuit gives noisy energy estimates; the classical optimizer decides where to search next. The ansatz sits between them and determines which states are reachable.
+
+## Why VQE is interesting
+
+VQE is designed for near-term quantum computers because it keeps the quantum circuit relatively shallow and uses a classical optimizer for the outer loop. That makes it a useful algorithm to study when learning hybrid quantum-classical machine learning.
+
+## Resources
+
+- [Original Medium post](https://medium.com/analytics-vidhya/variational-quantum-eigensolver-from-scratch-finding-ground-state-energy-of-hamiltonian-a5c13d5268f1)
+- [GitHub](https://github.com/pratik-ingle)

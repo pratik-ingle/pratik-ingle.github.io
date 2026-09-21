@@ -1,0 +1,30 @@
+---
+title: "Soft Manipulation With Fewer Actuators"
+date: 2025-04-22
+categories: [research, soft robotics, hardware]
+description: "Why reduced actuator density matters for soft manipulation surfaces."
+image: ../../../images/research_goal_sketch.svg
+comments:
+  utterances:
+    repo: pratik-ingle/pratik-ingle.github.io
+---
+
+A common way to build a manipulation surface is to place many actuators under it. That can work, but it makes the platform expensive, mechanically dense, and difficult to scale.
+
+In our RoboSoft 2025 paper, we explored a different design: a soft surface actuated by fewer vertical actuators, spaced far enough apart that the object can be much smaller than the distance between actuators. This creates a control problem because the surface is nonlinear and continuous, but it also creates a hardware opportunity: fewer actuators can cover a larger area.
+
+## What the surface does
+
+The surface changes shape, and the object moves because gravity, contact geometry, and surface deformation combine into a controllable motion field. The robot does not grasp the object. It changes the world under the object.
+
+## Why heterogeneous objects matter
+
+Real applications rarely contain one perfect object. Objects differ in weight, shape, size, fragility, and friction. A manipulation surface should not need a new gripper for every case.
+
+That is why this line of work focuses on heterogeneous objects. The long-term question is whether a single soft surface can provide enough controllability while staying mechanically simple.
+
+## What I learned
+
+Hardware simplicity moves complexity into modeling, sensing, and control. That tradeoff is not automatically good, but it is interesting: if the surface can be controlled robustly, sparse actuation makes the system much easier to scale.
+
+Paper: [DOI](https://doi.org/10.1109/RoboSoft63089.2025.11020841)

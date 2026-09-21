@@ -1,0 +1,32 @@
+---
+title: "Linear Control on a Nonlinear Soft Surface"
+date: 2025-08-17
+categories: [research, control, soft robotics]
+description: "A note on using simple controllers for heterogeneous object manipulation on nonlinear soft surfaces."
+image: ../../../images/research.svg
+comments:
+  utterances:
+    repo: pratik-ingle/pratik-ingle.github.io
+---
+
+Soft robotic systems are nonlinear almost by definition: fabrics deform, objects slide and roll, friction changes, and contact geometry matters. It is tempting to assume the controller must also be complex.
+
+Our CASE 2025 paper explores a more pragmatic question: how far can a simple linear controller go on a nonlinear soft manipulation surface?
+
+## Why simple control is worth testing
+
+Simple controllers are easier to tune, debug, and deploy. When hardware is new, a controller that reveals the important system behavior can be more useful than an opaque controller that only works in a narrow setup.
+
+The goal was not to claim that the surface is linear. It was to test whether a linear controller can still produce useful manipulation when the actuation and object response are nonlinear.
+
+## The manipulation loop
+
+At a high level, the controller compares the current object position with the target, maps the error into actuator commands, and updates the surface shape. The soft surface then converts those changes into object motion.
+
+The interesting part is that the controller can remain relatively simple while the physical surface performs much of the transformation.
+
+## Takeaway
+
+For grasp-free manipulation, the controller and hardware should be designed together. The surface is not just a passive floor; it is part of the computation.
+
+Paper: [DOI](https://doi.org/10.1109/CASE58245.2025.11163787)

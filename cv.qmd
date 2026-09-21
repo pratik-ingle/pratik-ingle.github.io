@@ -1,0 +1,9 @@
+---
+title: "CV"
+description: "Pratik Ingle CV"
+toc: false
+---
+
+[Download the PDF](files/Pratik_CV.pdf){.btn .btn-primary}
+
+<iframe class="cv-frame" src="files/Pratik_CV.pdf" title="Pratik Ingle CV"></iframe>

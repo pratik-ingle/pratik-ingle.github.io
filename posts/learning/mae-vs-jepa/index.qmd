@@ -1,0 +1,40 @@
+---
+title: "MAE vs JEPA: Two Ways to Learn Representations Without Labels"
+date: 2026-07-15
+categories: [learning, self-supervised learning, representation learning]
+description: "Notes from learning Masked Autoencoders and Joint Embedding Predictive Architectures."
+comments:
+  utterances:
+    repo: pratik-ingle/pratik-ingle.github.io
+---
+
+I am using this post as a working note while learning self-supervised learning for tactile sensing. The two families I keep comparing are Masked Autoencoders (MAE) and Joint Embedding Predictive Architectures (JEPA).
+
+## The shared goal
+
+Both methods try to learn useful representations without requiring manual labels. Instead of asking a model to predict a human-provided class, we create a prediction problem from the data itself.
+
+For tactile sensing, this is appealing because labeled tactile data can be expensive. But the robot can collect lots of interaction data: normal forces, shear forces, contact patches, and temporal sequences.
+
+## MAE intuition
+
+A Masked Autoencoder hides part of the input and trains the model to reconstruct what was removed. In vision, that means masking image patches. In tactile sensing, a similar idea could mask spatial taxels, temporal spans, or force channels.
+
+The reconstruction target keeps the training signal concrete: the model must recover missing data.
+
+## JEPA intuition
+
+JEPA also predicts missing information, but it predicts in representation space rather than directly reconstructing pixels or sensor values. The model learns an embedding of visible context and predicts the embedding of the target.
+
+This can encourage more semantic or task-useful representations because the model is not forced to reproduce every low-level detail.
+
+## The question I care about
+
+For tactile sensing, the right representation should preserve object-relevant properties: shape, contact distribution, slip, force direction, and possibly object count. I want to understand whether direct reconstruction or representation-space prediction gives better features for downstream inference.
+
+## Open notes
+
+- What should be masked: time, taxels, force channels, or spatial regions?
+- Should shear and normal channels be treated symmetrically?
+- How much of the tactile signal is useful low-level detail versus nuisance variation?
+- Which downstream probe best reveals representation quality?

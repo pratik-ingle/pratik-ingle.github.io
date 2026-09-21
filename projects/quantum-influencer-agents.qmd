@@ -1,0 +1,11 @@
+---
+title: "Identifying Influencer Agents in Swarms With Quantum Circuits"
+date: 2021-05-01
+categories: [quantum computing, swarm robotics]
+description: "Using quantum circuits to explore influencer selection for flock control."
+image: ../images/qcc.png
+---
+
+The goal was to use quantum computing ideas for hard combinatorial problems in collective robotics. Given a communication or influence network, the task is to split agents into leaders and followers so that a small set of influencers can guide the flock while satisfying constraints.
+
+[Report](https://drive.google.com/file/d/11A0lVSGSxfU2zj12mpo1cDWkxILZDUsL/view?usp=sharing)

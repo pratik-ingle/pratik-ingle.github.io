@@ -1,0 +1,9 @@
+---
+title: "UVC Disinfection Aerial Robots"
+date: 2021-01-01
+categories: [UAV, robotics]
+description: "An autonomous UAV prototype for disinfecting indoor spaces during COVID-19."
+image: ../images/uav.gif
+---
+
+This prototype explored an autonomous UAV for UVC disinfection in large enclosed spaces such as universities, hospitals, and public buildings. The project involved robot hardware, sensing, autonomous navigation, and safety-focused design for operating in shared indoor environments.

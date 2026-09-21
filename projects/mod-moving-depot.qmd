@@ -1,0 +1,11 @@
+---
+title: "Moving Depot (MOD): Efficient Depot Motion for Multi-Robot Foraging"
+date: 2024-09-01
+categories: [swarm robotics, multi-robot systems]
+description: "A moving-depot strategy for improving foraging performance in multi-robot systems."
+image: ../images/mapf.gif
+---
+
+Multi-robot foraging usually assumes a fixed depot: robots travel between resources and a home location. In dynamic or spatially uneven environments, that fixed point can become a bottleneck. MOD moves the depot adaptively using a weighted centroid strategy and potential-field planning so that the depot follows useful structure in the environment.
+
+This work was presented at ANTS 2024 and grew out of my broader interest in how simple local rules and spatial organization shape collective performance.

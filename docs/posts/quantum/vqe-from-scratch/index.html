@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2021-12-02">
+<meta name="description" content="A compact explanation of VQE and the parts needed to implement it.">
+
+<title>Pratik Ingle - Variational Quantum Eigensolver From Scratch</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../images/avatar5.jpg" rel="icon" type="image/jpeg">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YZLKD6JCSW"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-YZLKD6JCSW', { 'anonymize_ip': true});
+</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Pratik Ingle</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../research.html">Research</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../projects.html">Projects</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blog.html">Blog</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cv.html">CV</a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#variational-principle" id="toc-variational-principle" class="nav-link active" data-scroll-target="#variational-principle">Variational Principle</a></li>
+  <li><a href="#part-1-decomposition" id="toc-part-1-decomposition" class="nav-link" data-scroll-target="#part-1-decomposition">Part 1: Decomposition</a></li>
+  <li><a href="#part-2-circuit" id="toc-part-2-circuit" class="nav-link" data-scroll-target="#part-2-circuit">Part 2: Circuit</a>
+  <ul class="collapse">
+  <li><a href="#ansatz" id="toc-ansatz" class="nav-link" data-scroll-target="#ansatz">Ansatz</a></li>
+  <li><a href="#measurement-basis" id="toc-measurement-basis" class="nav-link" data-scroll-target="#measurement-basis">Measurement basis</a></li>
+  </ul></li>
+  <li><a href="#part-3-measurement" id="toc-part-3-measurement" class="nav-link" data-scroll-target="#part-3-measurement">Part 3: Measurement</a></li>
+  <li><a href="#vqe-algorithm" id="toc-vqe-algorithm" class="nav-link" data-scroll-target="#vqe-algorithm">VQE Algorithm</a></li>
+  <li><a href="#end-note" id="toc-end-note" class="nav-link" data-scroll-target="#end-note">End Note</a></li>
+  <li><a href="#why-vqe-is-interesting" id="toc-why-vqe-is-interesting" class="nav-link" data-scroll-target="#why-vqe-is-interesting">Why VQE is interesting</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Variational Quantum Eigensolver From Scratch</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">quantum</div>
+    <div class="quarto-category">tutorial</div>
+    <div class="quarto-category">VQE</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    A compact explanation of VQE and the parts needed to implement it.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 2, 2021</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<p>VQE stands for <strong>Variational Quantum Eigensolver</strong>. It is a hybrid quantum-classical algorithm for estimating the lowest-energy eigenstate, or ground state, of a Hamiltonian.</p>
+<p>This is a migrated and lightly cleaned version of my original Medium post.</p>
+<p>Original post: <a href="https://medium.com/analytics-vidhya/variational-quantum-eigensolver-from-scratch-finding-ground-state-energy-of-hamiltonian-a5c13d5268f1" class="uri">https://medium.com/analytics-vidhya/variational-quantum-eigensolver-from-scratch-finding-ground-state-energy-of-hamiltonian-a5c13d5268f1</a></p>
+<section id="variational-principle" class="level2">
+<h2 class="anchored" data-anchor-id="variational-principle">Variational Principle</h2>
+<p>If we have a Hamiltonian <code>H</code> with eigenstates and associated eigenvalues, then:</p>
+<pre class="text"><code>H |psi&gt; = lambda |psi&gt;</code></pre>
+<p>Here <code>lambda</code> is the energy for the state <code>|psi&gt;</code>. For many possible states there are different energies, but one state has the smallest energy. That state is the <strong>ground state</strong> of the system. VQE gives us a practical way to search for that ground state.</p>
+<p>The algorithm can be summarized in three parts:</p>
+<ol type="1">
+<li>Decomposition.</li>
+<li>Circuit construction, including the ansatz and measurement basis.</li>
+<li>Measurement and classical optimization.</li>
+</ol>
+</section>
+<section id="part-1-decomposition" class="level2">
+<h2 class="anchored" data-anchor-id="part-1-decomposition">Part 1: Decomposition</h2>
+<p>The first step is decomposing a Hamiltonian into Pauli matrices. Pauli matrices form a basis for the real vector space of <code>2 x 2</code> Hermitian matrices. That means any <code>2 x 2</code> Hermitian matrix can be written as a unique linear combination of Pauli matrices with real coefficients.</p>
+<p>For a two-qubit Hamiltonian, we work with <code>4 x 4</code> Hermitian matrices and tensor products of Pauli terms. These terms tell us which basis to measure in, and their coefficients tell us how much weight each expectation value should receive in the final energy estimate.</p>
+<p>For example, a decomposed two-qubit Hamiltonian may include terms such as:</p>
+<ul>
+<li><code>I tensor I</code></li>
+<li><code>X tensor X</code></li>
+<li><code>Y tensor Y</code></li>
+<li><code>Z tensor Z</code></li>
+</ul>
+<p>Each term receives a coefficient from the decomposition.</p>
+</section>
+<section id="part-2-circuit" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-circuit">Part 2: Circuit</h2>
+<p>Once the Hamiltonian is decomposed, we create circuits for the terms in the decomposition. The circuit has two central pieces.</p>
+<section id="ansatz" class="level3">
+<h3 class="anchored" data-anchor-id="ansatz">Ansatz</h3>
+<p>The <strong>ansatz</strong> is a parameterized circuit that prepares the trial quantum state. In a VQE loop, the classical optimizer changes the ansatz parameters and the quantum circuit estimates the corresponding energy.</p>
+<p>In the original experiment, the ansatz was chosen by trial and error. Different ansatz choices can produce similar performance, but the ansatz controls the set of states the algorithm can search.</p>
+</section>
+<section id="measurement-basis" class="level3">
+<h3 class="anchored" data-anchor-id="measurement-basis">Measurement basis</h3>
+<p>Quantum computers measure in the computational, or <code>Z</code>, basis by default. If we need expectation values in another basis, we rotate the state before measurement.</p>
+<p>For a Hamiltonian with terms like:</p>
+<ul>
+<li><code>I tensor I</code></li>
+<li><code>X tensor X</code></li>
+<li><code>Y tensor Y</code></li>
+<li><code>Z tensor Z</code></li>
+</ul>
+<p>the identity term does not need a circuit. The <code>X tensor X</code> term can be measured by rotating both qubits into the X basis. The <code>Y tensor Y</code> term can be measured by rotating both qubits into the Y basis. The <code>Z tensor Z</code> term can be measured directly after preparing the ansatz.</p>
+</section>
+</section>
+<section id="part-3-measurement" class="level2">
+<h2 class="anchored" data-anchor-id="part-3-measurement">Part 3: Measurement</h2>
+<p>For each circuit, we measure probabilities for outcomes such as <code>|00&gt;</code>, <code>|01&gt;</code>, <code>|10&gt;</code>, and <code>|11&gt;</code>.</p>
+<p>For a single qubit, measuring <code>|0&gt;</code> corresponds to eigenvalue <code>+1</code>, and measuring <code>|1&gt;</code> corresponds to eigenvalue <code>-1</code>. For two qubits, the sign for a measurement is the product of the two eigenvalues. For example, <code>|01&gt;</code> gives:</p>
+<pre class="text"><code>(+1) x (-1) = -1</code></pre>
+<p>The expectation value is computed as:</p>
+<pre class="text"><code>sum(sign * probability)</code></pre>
+<p>After computing the expectation value for each circuit, we multiply by the corresponding Hamiltonian coefficient and add the terms together. That gives the current energy estimate.</p>
+</section>
+<section id="vqe-algorithm" class="level2">
+<h2 class="anchored" data-anchor-id="vqe-algorithm">VQE Algorithm</h2>
+<p>The VQE loop is:</p>
+<ol type="1">
+<li>Pick ansatz parameters.</li>
+<li>Prepare the ansatz state on the quantum circuit.</li>
+<li>Measure each Hamiltonian term in the correct basis.</li>
+<li>Estimate the energy from expectation values.</li>
+<li>Use a classical optimizer to update the ansatz parameters.</li>
+<li>Repeat until the energy stops improving.</li>
+</ol>
+<p>In the example from the original post, the lowest eigenvalue found was <code>-1</code>, corresponding to the ground-state estimate for the chosen Hamiltonian.</p>
+</section>
+<section id="end-note" class="level2">
+<h2 class="anchored" data-anchor-id="end-note">End Note</h2>
+<p>The most important thing I learned from coding VQE from scratch is that the quantum and classical pieces are tightly coupled. The quantum circuit gives noisy energy estimates; the classical optimizer decides where to search next. The ansatz sits between them and determines which states are reachable.</p>
+</section>
+<section id="why-vqe-is-interesting" class="level2">
+<h2 class="anchored" data-anchor-id="why-vqe-is-interesting">Why VQE is interesting</h2>
+<p>VQE is designed for near-term quantum computers because it keeps the quantum circuit relatively shallow and uses a classical optimizer for the outer loop. That makes it a useful algorithm to study when learning hybrid quantum-classical machine learning.</p>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<ul>
+<li><a href="https://medium.com/analytics-vidhya/variational-quantum-eigensolver-from-scratch-finding-ground-state-energy-of-hamiltonian-a5c13d5268f1">Original Medium post</a></li>
+<li><a href="https://github.com/pratik-ingle">GitHub</a></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp(/https:\/\/pratik-ingle\.github\.io/);
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+    var links = window.document.querySelectorAll('a:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="pratik-ingle/pratik-ingle.github.io" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2026, Pratik Ingle. Text and images licensed CC-BY-NC 4.0 unless noted.</div>   
+  </div>
+</footer>
+
+
+
+</body></html>

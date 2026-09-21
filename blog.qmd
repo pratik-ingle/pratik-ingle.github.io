@@ -1,0 +1,48 @@
+---
+title: "Blog"
+description: "Research explanations, learning notes, and tutorials."
+page-layout: full
+listing:
+  contents:
+    - posts/research/*/index.qmd
+    - posts/learning/*/index.qmd
+    - posts/tutorials/*/index.qmd
+    - posts/quantum/*/index.qmd
+  sort: "date desc"
+  type: table
+  categories: true
+  sort-ui: true
+  filter-ui: true
+  feed: true
+---
+
+::: {.column-page}
+I use this space for longer notes: explaining papers after the work is done, writing down what I am learning while it is still messy, and keeping tutorials that I wish I had when starting a tool.
+
+## Categories
+
+::: {.category-grid}
+::: {.category-card}
+### [Research Notes](posts/research/)
+Posts that unpack my papers and research problems: soft manipulation surfaces, modular hardware, and control.
+:::
+
+::: {.category-card}
+### [Learning Log](posts/learning/)
+Notes on concepts I am learning or using, especially tactile sensing, self-supervised learning, simulation, and robotics tooling.
+:::
+
+::: {.category-card}
+### [Tutorials](posts/tutorials/)
+Hands-on guides and teaching material, including robotics simulation tutorials.
+:::
+
+::: {.category-card}
+### [Quantum Notes](posts/quantum/)
+Older notes from learning quantum computing and hybrid quantum-classical machine learning.
+:::
+:::
+
+## All Posts
+
+:::

@@ -1,0 +1,11 @@
+---
+title: "Learning Log"
+description: "Notes on concepts, tools, and systems I am learning."
+listing:
+  contents: "*/index.qmd"
+  sort: "date desc"
+  type: default
+  feed: true
+---
+
+Notes on concepts, tools, and systems I am learning.

@@ -1,0 +1,9 @@
+---
+title: "Hybrid Quantum-Classical Machine Learning for COVID-19"
+date: 2021-03-01
+categories: [quantum machine learning, classification]
+description: "A quantum-classical classifier using amplitude embedding and transfer learning."
+image: ../images/qml.jpeg
+---
+
+This project classified COVID-19 cases from clinical features such as hematocrit, hemoglobin, platelets, red blood cells, lymphocytes, and MCHC. The pipeline embedded classical data into quantum states and used a hybrid quantum-classical model for classification.

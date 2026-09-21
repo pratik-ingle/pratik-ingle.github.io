@@ -1,0 +1,11 @@
+---
+title: "HMM POS Tagger for English"
+date: 2019-12-01
+categories: [nlp, probabilistic modeling]
+description: "A hidden Markov model part-of-speech tagger trained on English text."
+image: ../images/hmm.png
+---
+
+This project implemented a Hidden Markov Model for part-of-speech tagging. The model estimates emission probabilities for words given tags and transition probabilities between tags, then infers likely tag sequences for sentences.
+
+[Code](https://github.com/pratik-ingle/HMM-tagger)

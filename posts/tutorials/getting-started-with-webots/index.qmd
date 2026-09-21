@@ -1,0 +1,113 @@
+---
+title: "Getting Started With Webots"
+date: 2021-12-01
+categories: [tutorials, robotics, Webots]
+description: "A beginner tutorial for creating a Webots project, adding an e-puck robot, and writing simple controllers."
+image: ../../../images/webot.gif
+comments:
+  utterances:
+    repo: pratik-ingle/pratik-ingle.github.io
+---
+
+Webots is a simulation software package for rapidly prototyping mobile robots and autonomous systems. It provides a 3D physics-based environment with support for sensors, controllers, data visualization, and robot models.
+
+## What can Webots be used for?
+
+- Mobile robot prototyping for academic research and industry.
+- Robot locomotion research, including legged robots.
+- Multi-agent and swarm robotics.
+- Adaptive behavior experiments such as genetic algorithms.
+- Teaching robotics and running robot contests.
+
+## What you should know first
+
+You can use Webots with C, C++, Java, Python, or MATLAB. If you want to create custom robot models or environments, it also helps to know some 3D graphics concepts and the VRML97 descriptive language.
+
+A Webots simulation typically includes:
+
+1. A world file (`.wbt`) that defines robots and the environment.
+2. Controller programs that run the robot logic.
+3. Optional physics plugins for custom physics behavior.
+
+## Create the first project
+
+Open Webots and go to **Wizards > New Project Directory**. Name the project `bug`, name the world file `bug.wbt`, and select the options to add a rectangular arena.
+
+Before adding a robot, change the arena size from `1 x 1 m` to `2 x 2 m` by editing `RectangleArena > floorSize`.
+
+## Add an e-puck robot
+
+Click **Add** in the scene tree, then choose **PROTO nodes > robots > gctronic > e-puck > E-puck**. The robot should appear in the arena. Save the world before running the simulation.
+
+The e-puck has a default obstacle avoidance controller, so you can run the simulation immediately to see the robot move.
+
+## Create a simple controller
+
+Go to **Wizards > New Robot Controller**, choose Python, and name the controller `move_forward`.
+
+```python
+"""move_forward controller."""
+from controller import Robot
+
+robot = Robot()
+time_step = 32
+max_speed = 6.24
+
+left_motor = robot.getMotor("left wheel motor")
+right_motor = robot.getMotor("right wheel motor")
+
+left_motor.setPosition(float("inf"))
+right_motor.setPosition(float("inf"))
+left_motor.setVelocity(0.0)
+right_motor.setVelocity(0.0)
+
+while robot.step(time_step) != -1:
+    left_speed = max_speed * 0.5
+    right_speed = max_speed * 0.25
+
+    left_motor.setVelocity(left_speed)
+    right_motor.setVelocity(right_speed)
+```
+
+Set the e-puck controller to `move_forward` and run the simulation. Try changing the wheel speeds to make the robot move in a circular path.
+
+## Line following with IR sensors
+
+Add infrared ground sensors to the e-puck by using the `groundSensorsSlot`. Name two sensors `ir0` and `ir1`, then enable them in the controller.
+
+```python
+from controller import Robot
+
+robot = Robot()
+time_step = 32
+max_speed = 6.24
+
+left_motor = robot.getMotor("left wheel motor")
+right_motor = robot.getMotor("right wheel motor")
+left_motor.setPosition(float("inf"))
+right_motor.setPosition(float("inf"))
+left_motor.setVelocity(0.0)
+right_motor.setVelocity(0.0)
+
+left_ir = robot.getDistanceSensor("ir1")
+right_ir = robot.getDistanceSensor("ir0")
+left_ir.enable(time_step)
+right_ir.enable(time_step)
+
+while robot.step(time_step) != -1:
+    left_ir_value = left_ir.getValue()
+    right_ir_value = right_ir.getValue()
+
+    left_speed = max_speed * 0.25
+    right_speed = max_speed * 0.25
+
+    if left_ir_value > right_ir_value and 6 < left_ir_value < 15:
+        left_speed = -max_speed * 0.25
+    elif right_ir_value > left_ir_value and 6 < right_ir_value < 15:
+        right_speed = -max_speed * 0.25
+
+    left_motor.setVelocity(left_speed)
+    right_motor.setVelocity(right_speed)
+```
+
+Original standalone tutorial: <https://pratik-ingle.github.io/webots_tutorial/>

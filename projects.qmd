@@ -1,0 +1,15 @@
+---
+title: "Projects"
+description: "Selected robotics, machine learning, quantum computing, and collective behavior projects."
+page-layout: full
+listing:
+  contents: projects
+  sort: "date desc"
+  type: grid
+  fields: [image, title, date, description]
+  image-height: 190px
+---
+
+::: {.column-page}
+These projects span soft robotics, swarm robotics, collective behaviour, quantum computing, computer vision, and simulation. They are a mix of research projects, course projects, and prototypes built while learning new tools.
+:::

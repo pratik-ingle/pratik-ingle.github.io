@@ -1,0 +1,11 @@
+---
+title: "Bio-inspired Collective Robotics: Multi-Robot Foraging and Division of Labour"
+date: 2023-04-01
+categories: [swarm robotics, collective behavior]
+description: "Master's thesis on collective robotics, foraging, and division of labour."
+image: ../images/cdm.png
+---
+
+My master's thesis studied bio-inspired collective robotics with a focus on multi-robot foraging and division of labour. The project connected agent-based models of collective behaviour with robotic systems, asking how local decision rules can produce useful group-level outcomes.
+
+Supervisors: Simon Garnier and P. B. Sujit.
