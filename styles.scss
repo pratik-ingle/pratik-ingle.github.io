@@ -115,3 +115,292 @@ iframe.cv-frame {
   border: 1px solid var(--pi-border);
   border-radius: 12px;
 }
+
+/* ---------- Home: one-page card layout (natolambert-style) ---------- */
+.nl-page {
+  max-width: 900px;
+  margin: 1.5rem auto 2rem;
+  padding: 0 0.5rem;
+}
+
+.nl-card {
+  background: #fff;
+  border: 1px solid #d9dee6;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgb(15 23 42 / 0.06);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.nl-hero {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.nl-photo img {
+  width: 100%;
+  border-radius: 6px;
+  display: block;
+  margin: 0;
+}
+
+.nl-photo p,
+.nl-photo .quarto-figure {
+  margin: 0;
+}
+
+.nl-name {
+  margin: 0 0 0.6rem;
+  font-size: 2.2rem;
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #1d4e89;
+  line-height: 1.1;
+}
+
+.nl-intro > p {
+  margin-bottom: 0.9rem;
+}
+
+.nl-quicklinks ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  columns: 2;
+  column-gap: 1.5rem;
+}
+
+.nl-quicklinks li {
+  break-inside: avoid;
+  margin-bottom: 0.25rem;
+}
+
+.nl-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+  margin-top: 0.75rem;
+}
+
+.nl-icons p {
+  display: flex;
+  gap: 1.6rem;
+  margin: 0;
+}
+
+.nl-icons a {
+  color: #8a9199;
+  font-size: 1.7rem;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.nl-icons a:hover {
+  color: #1d4e89;
+}
+
+.nl-body h4 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+  margin: 1.4rem 0 0.5rem;
+  color: #1f2937;
+}
+
+.nl-body h4:first-of-type {
+  margin-top: 1rem;
+}
+
+.nl-body ul {
+  padding-left: 1.4rem;
+}
+
+.nl-body li {
+  margin-bottom: 0.3rem;
+}
+
+@media (max-width: 720px) {
+  .nl-hero {
+    grid-template-columns: 1fr;
+  }
+  .nl-photo img {
+    max-width: 260px;
+  }
+  .nl-quicklinks ul {
+    columns: 1;
+  }
+}
+
+/* ---------- Blog: aman.ai-style dark panel layout ---------- */
+.aman-page {
+  max-width: 1000px;
+  margin: 0 auto 3rem;
+  padding: 0 0.75rem;
+  color: #e5e7eb;
+}
+
+.aman-header {
+  text-align: center;
+  padding: 2.5rem 0 1.75rem;
+}
+
+.aman-title {
+  font-size: 2.6rem;
+  font-weight: 400;
+  color: #f3f4f6;
+  margin: 0 0 0.5rem;
+  letter-spacing: 0.01em;
+}
+
+.aman-tagline {
+  color: #d1d5db;
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.aman-panel {
+  background: #a3a3a3;
+  border-radius: 12px;
+  padding: 1.5rem 1.5rem 2rem;
+  margin-bottom: 2rem;
+}
+
+.aman-panel-title {
+  text-align: center;
+  color: #111;
+  font-weight: 700;
+  font-size: 1.6rem;
+  margin: 0 0 1.5rem;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.aman-featured {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.aman-featured .aman-card {
+  width: 100%;
+  max-width: 460px;
+}
+
+.aman-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .aman-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.aman-card {
+  background: #fff;
+  color: #111;
+  border-radius: 8px;
+  padding: 1rem 1.25rem 1.1rem;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.25);
+}
+
+.aman-card h3 {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0.25rem 0 0.35rem;
+  color: #111;
+}
+
+.aman-card-sub {
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin: 0 0 0.75rem;
+}
+
+.aman-card ul,
+.aman-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.aman-card li,
+.aman-list li {
+  font-size: 0.93rem;
+  margin: 0.15rem 0;
+  padding-left: 0.9rem;
+  position: relative;
+}
+
+.aman-card li::before,
+.aman-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #111;
+}
+
+.aman-card a {
+  color: #111;
+  text-decoration: none;
+}
+
+.aman-card a:hover {
+  color: #1d4e89;
+  text-decoration: underline;
+}
+
+.aman-card .aman-more {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: #1d4e89;
+}
+
+.aman-card > p:last-child {
+  margin-bottom: 0;
+}
+
+.aman-table {
+  overflow-x: auto;
+}
+
+.aman-table table {
+  margin-bottom: 0;
+  color: #111;
+}
+
+.aman-table td,
+.aman-table th {
+  color: #111;
+}
+
+.aman-table .listing-date {
+  white-space: nowrap;
+  color: #6b7280;
+}
+
+.aman-table .listing-categories .listing-category {
+  border-color: #d1d5db;
+  color: #374151;
+}
+
+.aman-table .quarto-listing-filter {
+  margin-bottom: 0.75rem;
+}
+
+.aman-page .quarto-listing-category-title,
+.aman-page .quarto-listing-category {
+  display: none;
+}

@@ -1,117 +1,117 @@
 ---
-title: "Pratik Ingle"
-about:
-  template: trestles
-  image: images/avatar5.jpg
-  image-width: 18em
-  links:
-    - icon: github
-      text: GitHub
-      href: https://github.com/pratik-ingle
-    - icon: google
-      text: Scholar
-      href: https://scholar.google.com/citations?hl=en&user=J_lEQ7kAAAAJ
-    - icon: linkedin
-      text: LinkedIn
-      href: https://www.linkedin.com/in/pratik-ingle-03034b152
-    - icon: twitter
-      text: X / Twitter
-      href: https://twitter.com/PratikIngle_
-    - icon: mastodon
-      text: Mastodon
-      href: https://ecoevo.social/@Pratik
-    - icon: envelope
-      text: Email
-      href: mailto:prin@itu.dk
+pagetitle: "Pratik Ingle"
 page-layout: full
 toc: false
 ---
 
-::: {.column-page}
+<style>
+body { background: #eef1f5; }
+</style>
 
-<div class="hero-note">
-I am a PhD researcher in Computer Science at the IT University of Copenhagen, working in the REAL Lab with Kasper Stoy and Andres Faina. My research asks how robots can manipulate objects without grasping them, using soft deformable surfaces, modular hardware, and a mix of geometric control, learning, and system design.
-</div>
+:::::: {.nl-page}
 
-I am currently a visiting PhD researcher at University College London, working on tactile sensing with the CRISP lab. Before my PhD, I studied Electrical Engineering and Computer Science at IISER Bhopal, where I worked on swarm robotics, collective decision-making, and bio-inspired robot systems.
+::::: {.nl-card .nl-hero}
 
-::: {.quick-links}
-[**Papers**  \
-Google Scholar](https://scholar.google.com/citations?hl=en&user=J_lEQ7kAAAAJ){.quick-link}
-
-[**CV**  \
-PDF + overview](cv.qmd){.quick-link}
-
-[**Talks**  \
-Conference presentations](research.qmd#talks){.quick-link}
-
-[**Blog**  \
-Research notes and tutorials](blog.qmd){.quick-link}
-
-[**Email**  \
-prin@itu.dk](mailto:prin@itu.dk){.quick-link}
+::: {.nl-photo}
+![](images/avatar5.jpg){fig-alt="Pratik Ingle"}
 :::
 
-::: {.recent-line}
-**Recent:** visiting PhD at UCL CRISP Lab (Mar-Aug 2026); arXiv preprint on scalable modular manipulation surfaces; RoboSoft/CASE 2025 papers on soft surface manipulation; PhD expected October 2026.
+:::: {.nl-intro}
+
+<h1 class="nl-name">Pratik Ingle</h1>
+
+Pratik is a **robotics researcher** working on grasp-free manipulation: moving objects by shaping and controlling soft, modular surfaces instead of gripping them. He is a PhD candidate at the IT University of Copenhagen (REAL Lab) and is currently a visiting researcher at University College London working on tactile sensing and self-supervised learning.
+
+::: {.nl-quicklinks}
+- **Papers** → [Google Scholar](https://scholar.google.com/citations?hl=en&user=J_lEQ7kAAAAJ) or [CV](cv.qmd)
+- **Talks** → [See list](#talks)
+- **Research** → [Overview](research.qmd)
+- **Projects** → [Portfolio](projects.qmd)
+- **Blog** → [Notes and tutorials](blog.qmd)
+- **Code** → [GitHub](https://github.com/pratik-ingle)
 :::
 
-## Research Themes
-
-<span class="research-pill">Soft manipulation surfaces</span>
-<span class="research-pill">Grasp-free manipulation</span>
-<span class="research-pill">Learning and control</span>
-<span class="research-pill">Tactile sensing</span>
-<span class="research-pill">Swarm robotics</span>
-<span class="research-pill">Collective intelligence</span>
-
-## Selected Publications
-
-::: {.paper-card}
-### Scalable Surface-Based Manipulation Through Modularity and Inter-Module Object Transfer
-**Pratik Ingle**, Jorn Lambertsen, Kasper Stoy, and Andres Faina. 2026.  
-[arXiv:2601.21884](https://arxiv.org/abs/2601.21884)
-
-A modular soft manipulation platform that coordinates object transfer across fabric-based modules while reducing actuator count from dense arrays to shared-boundary actuation.
+::: {.nl-icons}
+[<i class="bi bi-twitter"></i>](https://twitter.com/PratikIngle_ "X / Twitter")
+[<i class="bi bi-google"></i>](https://scholar.google.com/citations?hl=en&user=J_lEQ7kAAAAJ "Google Scholar")
+[<i class="bi bi-github"></i>](https://github.com/pratik-ingle "GitHub")
+[<i class="bi bi-linkedin"></i>](https://www.linkedin.com/in/pratik-ingle-03034b152 "LinkedIn")
+[<i class="bi bi-envelope-fill"></i>](mailto:prin@itu.dk "Email")
+[<i class="bi bi-mastodon"></i>](https://ecoevo.social/@Pratik "Mastodon")
+[<i class="bi bi-file-earmark-pdf"></i>](files/Pratik_CV.pdf "CV (PDF)")
 :::
 
-::: {.paper-card}
-### Heterogeneous Object Manipulation on Nonlinear Soft Surface Through Linear Controller
-**Pratik Ingle**, Kasper Stoy, and Andres Faina. 2025. IEEE CASE, pp. 1780-1787.  
-[DOI](https://doi.org/10.1109/CASE58245.2025.11163787)
+::::
 
-Shows how simple linear control can position heterogeneous objects on a nonlinear soft surface.
-:::
+:::::
 
-::: {.paper-card}
-### Soft Manipulation Surface With Reduced Actuator Density For Heterogeneous Object Manipulation
-**Pratik Ingle**, Kasper Stoy, and Andres Faina. 2025. IEEE RoboSoft, selected for oral presentation.  
-[DOI](https://doi.org/10.1109/RoboSoft63089.2025.11020841)
+::::: {.nl-card .nl-body}
 
-A reduced-actuator soft manipulation surface for moving diverse and fragile objects without conventional grippers.
-:::
+**Recent**: Our preprint on [scalable modular manipulation surfaces](https://arxiv.org/abs/2601.21884) is on arXiv and was presented at RoboSoft 2026. I spent Mar–Aug 2026 as a visiting PhD at UCL's CRISP Lab working on tactile sensing. PhD defence expected October 2026.
 
-## Education
+#### Publications
 
-**IT University of Copenhagen**  
-PhD, Computer Science, 2023-expected 2026. Dissertation: *Learning and Control for grasp-free manipulation robots*.
+Full list on [Google Scholar](https://scholar.google.com/citations?hl=en&user=J_lEQ7kAAAAJ) and the [research page](research.qmd).
 
-**University College London**  
-Visiting PhD, Computer Science, Mar-Aug 2026. Tactile sensing and self-supervised learning with leapXela-style sensors.
+- **2026**: [Scalable Surface-Based Manipulation Through Modularity and Inter-Module Object Transfer](https://arxiv.org/abs/2601.21884) - with J. Lambertsen, K. Støy, A. Faíña. arXiv:2601.21884. [Explainer post](posts/research/scalable-surface-based-manipulation/index.qmd).
+- **2025**: [Heterogeneous Object Manipulation on Nonlinear Soft Surface Through Linear Controller](https://doi.org/10.1109/CASE58245.2025.11163787) - IEEE CASE 2025. [Explainer post](posts/research/linear-control-nonlinear-soft-surface/index.qmd).
+- **2025**: [Soft Manipulation Surface With Reduced Actuator Density For Heterogeneous Object Manipulation](https://doi.org/10.1109/RoboSoft63089.2025.11020841) - IEEE RoboSoft 2025, oral presentation. [Explainer post](posts/research/reduced-actuator-soft-manipulation-surface/index.qmd).
 
-**Indian Institute of Science Education and Research Bhopal**  
-Integrated BS-MS, Electrical Engineering and Computer Science, 2017-2023. Minor in Data Science and Engineering.
+#### Talks {#talks}
 
-## Talks
+- **RoboSoft 2026** - Scalable Surface-Based Manipulation Through Modularity and Inter-Module Object Transfer.
+- **CASE 2025** - Heterogeneous object manipulation on nonlinear soft surface through linear controller.
+- **RoboSoft 2025** - Soft Manipulation Surface With Reduced Actuator Density For Heterogeneous Object Manipulation.
+- **EI 2025** - Harnessing Fabric Softness and Scalability for Object Manipulation.
+- **ANTS 2024** - Moving Depot (MOD): An Efficient Depot Motion Strategy for Multi-Robot Foraging.
 
-- RoboSoft 2026: *Scalable Surface-Based Manipulation Through Modularity and Inter-Module Object Transfer*.
-- CASE 2025: *Heterogeneous object manipulation on nonlinear soft surface through linear controller*.
-- RoboSoft 2025: *Soft Manipulation Surface With Reduced Actuator Density For Heterogeneous Object Manipulation*.
-- EI 2025: *Harnessing Fabric Softness and Scalability for Object Manipulation*.
-- ANTS 2024: *Moving Depot (MOD): An Efficient Depot Motion Strategy for Multi-Robot Foraging*.
+#### Research
 
-## Teaching and Service
+I work on robotic manipulation surfaces: soft, fabric-based platforms driven by sparse actuators that move heterogeneous and fragile objects without grasping. Current threads:
 
-Teaching assistant for Deep Learning, Intelligent Robotics, Computer Vision, and Digital Image Processing and Applications in Bioimage Analysis. Volunteer at ALIFE 2024 and NeurIPS 2021.
+- [Soft manipulation surfaces](research.qmd) - reduced actuator density, geometric control, heterogeneous objects.
+- [Modular manipulation](posts/research/scalable-surface-based-manipulation/index.qmd) - shared-boundary actuation and inter-module object transfer.
+- [Tactile sensing](posts/learning/index.qmd) - MAE/JEPA representation learning on normal and shear tactile channels, MuJoCo sensor simulation (UCL CRISP Lab).
+- Earlier: swarm robotics, multi-robot foraging, and collective decision-making.
 
-:::
+#### Experience
+
+- **REAL Lab, IT University of Copenhagen** - PhD researcher, Oct 2023–present. Supervisors: Kasper Støy and Andrés Faíña.
+- **CRISP Lab, University College London** - Visiting PhD researcher, Mar–Aug 2026.
+- **Swarm Lab, NJIT** and **MOON Lab, IISER Bhopal** - collective behaviour modelling, swarm robotics, UAVs (2020–2023).
+- **IISER Bhopal** - Integrated BS-MS, Electrical Engineering and Computer Science, minor in Data Science, 2017–2023.
+
+#### Selected Projects
+
+See the [full portfolio](projects.qmd).
+
+- [Moving Depot (MOD)](projects/mod-moving-depot.qmd) - adaptive depot motion for multi-robot foraging (ANTS 2024).
+- [Decision making in collectives](projects/dynamic-individual-memory.qmd) - dynamic individual memory and consensus in changing environments.
+- [Influencer agents with quantum circuits](projects/quantum-influencer-agents.qmd) - leader selection for flock control.
+- [UVC disinfection UAV](projects/uvc-disinfection-uav.qmd) - autonomous aerial robot built during COVID-19.
+
+#### Writing
+
+Recent posts from the [blog](blog.qmd).
+
+- [MAE vs JEPA](posts/learning/mae-vs-jepa/index.qmd) - two ways to learn representations without labels.
+- [Normal and shear forces in tactile sensing](posts/learning/tactile-sensing-normal-shear/index.qmd) - why 3-channel tactile sensors matter.
+- [Simulating a tactile sensor in MuJoCo](posts/learning/mujoco-tactile-sensor-simulation/index.qmd) - notes on sim-based data collection.
+- [Getting started with Webots](posts/tutorials/getting-started-with-webots/index.qmd) - a beginner tutorial.
+- [VQE from scratch](posts/quantum/vqe-from-scratch/index.qmd) - finding the ground-state energy of a Hamiltonian.
+
+#### Teaching and Service
+
+- Teaching assistant: Deep Learning, Intelligent Robotics, Computer Vision, Digital Image Processing and Bioimage Analysis (ITU).
+- Volunteer: ALIFE 2024, NeurIPS 2021.
+- Summer schools: IEEE RAS Multi-Robot Systems (2024), SCIoI/ISAB Embodied Intelligence (2023), COSMOS (2022), PRAIRIE/MIAI AI (2021).
+
+#### Other
+
+- [Contact](mailto:prin@itu.dk) - prin@itu.dk.
+- [CV](cv.qmd) - PDF and overview.
+- [Google Scholar](https://scholar.google.com/citations?hl=en&user=J_lEQ7kAAAAJ) · [GitHub](https://github.com/pratik-ingle) · [LinkedIn](https://www.linkedin.com/in/pratik-ingle-03034b152)
+
+:::::
+
+::::::

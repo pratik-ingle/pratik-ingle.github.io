@@ -1,49 +1,137 @@
 ---
-title: "Blog"
+pagetitle: "Pratik Ingle - Blog"
 description: "Research explanations, learning notes, and tutorials."
 page-layout: full
+toc: false
 listing:
-  contents:
-    - posts/research/*/index.qmd
-    - posts/learning/*/index.qmd
-    - posts/tutorials/*/index.qmd
-    - posts/quantum/*/index.qmd
-  sort: "date desc"
-  type: table
-  fields: [date, title]
-  categories: true
-  sort-ui: true
-  filter-ui: true
-  feed: true
+  - id: research-list
+    contents: posts/research/*/index.qmd
+    sort: "date desc"
+    template: _templates/post-list.ejs
+  - id: learning-list
+    contents: posts/learning/*/index.qmd
+    sort: "date desc"
+    template: _templates/post-list.ejs
+  - id: tutorials-list
+    contents: posts/tutorials/*/index.qmd
+    sort: "date desc"
+    template: _templates/post-list.ejs
+  - id: quantum-list
+    contents: posts/quantum/*/index.qmd
+    sort: "date desc"
+    template: _templates/post-list.ejs
+  - id: all-posts
+    contents:
+      - posts/research/*/index.qmd
+      - posts/learning/*/index.qmd
+      - posts/tutorials/*/index.qmd
+      - posts/quantum/*/index.qmd
+    sort: "date desc"
+    type: table
+    fields: [date, title, categories]
+    sort-ui: false
+    filter-ui: true
+    feed: true
 ---
 
-::: {.column-page}
-I use this space for longer notes: explaining papers after the work is done, writing down what I am learning while it is still messy, and keeping tutorials that I wish I had when starting a tool.
+<style>
+body { background: #1c1c1e; color: #e5e7eb; }
+</style>
 
-## Categories
+:::::: {.aman-page}
 
-::: {.category-grid}
-::: {.category-card}
-### [Research Notes](posts/research/)
-Posts that unpack my papers and research problems: soft manipulation surfaces, modular hardware, and control.
+::: {.aman-header}
+<h1 class="aman-title">pratik-ingle.github.io</h1>
+<p class="aman-tagline">notes on robots, learning, and control<br>one concept at a time</p>
 :::
 
-::: {.category-card}
-### [Learning Log](posts/learning/)
-Notes on concepts I am learning or using, especially tactile sensing, self-supervised learning, simulation, and robotics tooling.
-:::
+::::: {.aman-panel}
 
-::: {.category-card}
-### [Tutorials](posts/tutorials/)
-Hands-on guides and teaching material, including robotics simulation tutorials.
-:::
+<h2 class="aman-panel-title">Distilled Notes</h2>
 
-::: {.category-card}
-### [Quantum Notes](posts/quantum/)
-Older notes from learning quantum computing and hybrid quantum-classical machine learning.
+::: {.aman-featured}
+::: {.aman-card}
+<h3>Research Notes</h3>
+<p class="aman-card-sub">My papers, explained in plain language</p>
+::: {#research-list}
+:::
+[All research notes →](posts/research/index.qmd){.aman-more}
 :::
 :::
 
-## All Posts
+:::: {.aman-grid}
 
+::: {.aman-card}
+<h3>Learning Log</h3>
+<p class="aman-card-sub">Concepts I am learning or using right now</p>
+::: {#learning-list}
 :::
+[All learning posts →](posts/learning/index.qmd){.aman-more}
+:::
+
+::: {.aman-card}
+<h3>Tutorials</h3>
+<p class="aman-card-sub">Hands-on guides and teaching material</p>
+::: {#tutorials-list}
+:::
+[All tutorials →](posts/tutorials/index.qmd){.aman-more}
+:::
+
+::: {.aman-card}
+<h3>Quantum Notes</h3>
+<p class="aman-card-sub">Quantum computing and hybrid quantum-classical ML</p>
+::: {#quantum-list}
+:::
+[All quantum notes →](posts/quantum/index.qmd){.aman-more}
+:::
+
+::: {.aman-card}
+<h3>Research</h3>
+<p class="aman-card-sub">Papers and talks</p>
+- [Scalable Surface-Based Manipulation Through Modularity (arXiv 2026)](https://arxiv.org/abs/2601.21884)
+- [Heterogeneous Object Manipulation on Nonlinear Soft Surface (CASE 2025)](https://doi.org/10.1109/CASE58245.2025.11163787)
+- [Soft Manipulation Surface With Reduced Actuator Density (RoboSoft 2025)](https://doi.org/10.1109/RoboSoft63089.2025.11020841)
+
+[Research overview →](research.qmd){.aman-more}
+:::
+
+::::
+
+:::::
+
+::::: {.aman-panel}
+
+<h2 class="aman-panel-title">Elsewhere</h2>
+
+:::: {.aman-grid}
+
+::: {.aman-card}
+<h3>Tools and Simulators</h3>
+- [Webots tutorial (original site)](https://pratik-ingle.github.io/webots_tutorial/)
+- [HMM POS tagger code](https://github.com/pratik-ingle/HMM-tagger)
+- [GitHub](https://github.com/pratik-ingle)
+:::
+
+::: {.aman-card}
+<h3>Older Writing</h3>
+- [VQE from scratch on Medium](https://medium.com/analytics-vidhya/variational-quantum-eigensolver-from-scratch-finding-ground-state-energy-of-hamiltonian-a5c13d5268f1)
+- [Projects portfolio](projects.qmd)
+- [RSS feed](blog.xml)
+:::
+
+::::
+
+:::::
+
+::::: {.aman-panel}
+
+<h2 class="aman-panel-title">All Posts</h2>
+
+::: {.aman-card .aman-table}
+::: {#all-posts}
+:::
+:::
+
+:::::
+
+::::::
