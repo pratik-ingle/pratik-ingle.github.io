@@ -60,34 +60,6 @@ ul.task-list{list-style: none;}
 <script>
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-research-list .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-date','listing-categories','listing-description','listing-image','listing-comments','listing-path','listing-author','listing-filename','listing-file-modified','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] }],
-      
-      searchColumns: ["listing-title","listing-date","listing-categories","listing-description","listing-image","listing-comments","listing-path","listing-author","listing-filename","listing-file-modified","listing-reading-time"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-research-list'] = new List('listing-research-list', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
     const listingTargetEl = window.document.querySelector('#listing-learning-list .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
@@ -277,32 +249,6 @@ Distilled Notes
 <div class="aman-featured">
 <div class="aman-card">
 <h3 class="anchored">
-Research Notes
-</h3>
-<p class="aman-card-sub">
-My papers, explained in plain language
-</p>
-<div id="listing-research-list" class="quarto-listing quarto-listing-container-custom">
-<ul class="aman-list">
-<li>
-<a href="./posts/research/scalable-surface-based-manipulation/index.html">Scalable Surface-Based Manipulation Through Modularity</a>
-</li>
-<li>
-<a href="./posts/research/linear-control-nonlinear-soft-surface/index.html">Linear Control on a Nonlinear Soft Surface</a>
-</li>
-<li>
-<a href="./posts/research/reduced-actuator-soft-manipulation-surface/index.html">Soft Manipulation With Fewer Actuators</a>
-</li>
-</ul>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div>
-</div>
-</div>
-<div class="aman-grid">
-<div class="aman-card">
-<h3 class="anchored">
 Learning Log
 </h3>
 <p class="aman-card-sub">
@@ -325,6 +271,8 @@ No matching items
 </div>
 </div>
 </div>
+</div>
+<div class="aman-grid">
 <div class="aman-card">
 <h3 class="anchored">
 Tutorials
@@ -360,20 +308,6 @@ Quantum computing and hybrid quantum-classical ML
 No matching items
 </div>
 </div>
-</div>
-<div class="aman-card">
-<h3 class="anchored">
-Research
-</h3>
-<p class="aman-card-sub">
-Papers and talks
-</p>
-<ul>
-<li><a href="https://arxiv.org/abs/2601.21884">Scalable Surface-Based Manipulation Through Modularity (arXiv 2026)</a></li>
-<li><a href="https://doi.org/10.1109/CASE58245.2025.11163787">Heterogeneous Object Manipulation on Nonlinear Soft Surface (CASE 2025)</a></li>
-<li><a href="https://doi.org/10.1109/RoboSoft63089.2025.11020841">Soft Manipulation Surface With Reduced Actuator Density (RoboSoft 2025)</a></li>
-</ul>
-<p><a href="./research.html" class="aman-more">Research overview →</a></p>
 </div>
 </div>
 </div>
@@ -465,40 +399,7 @@ July 15, 2026
 learning,self-supervised learning,representation learning
 </td>
 </tr>
-<tr data-index="3" data-categories="research,soft robotics,manipulation" data-listing-date-sort="1773270000000" data-listing-file-modified-sort="1789990050113" data-listing-reading-time-sort="1.34" data-listing-title-sort="Scalable Surface-Based Manipulation Through Modularity" data-listing-filename-sort="index.qmd">
-<td class="listing-date">
-March 12, 2026
-</td>
-<td class="listing-title">
-<a href="./posts/research/scalable-surface-based-manipulation/index.html" class="title">Scalable Surface-Based Manipulation Through Modularity</a>
-</td>
-<td class="listing-categories">
-research,soft robotics,manipulation
-</td>
-</tr>
-<tr data-index="4" data-categories="research,control,soft robotics" data-listing-date-sort="1755381600000" data-listing-file-modified-sort="1789990050114" data-listing-reading-time-sort="1.005" data-listing-title-sort="Linear Control on a Nonlinear Soft Surface" data-listing-filename-sort="index.qmd">
-<td class="listing-date">
-August 17, 2025
-</td>
-<td class="listing-title">
-<a href="./posts/research/linear-control-nonlinear-soft-surface/index.html" class="title">Linear Control on a Nonlinear Soft Surface</a>
-</td>
-<td class="listing-categories">
-research,control,soft robotics
-</td>
-</tr>
-<tr data-index="5" data-categories="research,soft robotics,hardware" data-listing-date-sort="1745272800000" data-listing-file-modified-sort="1789990050114" data-listing-reading-time-sort="1.095" data-listing-title-sort="Soft Manipulation With Fewer Actuators" data-listing-filename-sort="index.qmd">
-<td class="listing-date">
-April 22, 2025
-</td>
-<td class="listing-title">
-<a href="./posts/research/reduced-actuator-soft-manipulation-surface/index.html" class="title">Soft Manipulation With Fewer Actuators</a>
-</td>
-<td class="listing-categories">
-research,soft robotics,hardware
-</td>
-</tr>
-<tr data-index="6" data-categories="quantum,tutorial,VQE" data-listing-date-sort="1638399600000" data-listing-file-modified-sort="1789990141025" data-listing-reading-time-sort="3.325" data-listing-title-sort="Variational Quantum Eigensolver From Scratch" data-listing-filename-sort="index.qmd">
+<tr data-index="3" data-categories="quantum,tutorial,VQE" data-listing-date-sort="1638399600000" data-listing-file-modified-sort="1789990141025" data-listing-reading-time-sort="3.325" data-listing-title-sort="Variational Quantum Eigensolver From Scratch" data-listing-filename-sort="index.qmd">
 <td class="listing-date">
 December 2, 2021
 </td>
@@ -509,7 +410,7 @@ December 2, 2021
 quantum,tutorial,VQE
 </td>
 </tr>
-<tr data-index="7" data-categories="tutorials,robotics,Webots" data-listing-date-sort="1638313200000" data-listing-file-modified-sort="1789990050115" data-listing-reading-time-sort="2.3" data-listing-title-sort="Getting Started With Webots" data-listing-filename-sort="index.qmd">
+<tr data-index="4" data-categories="tutorials,robotics,Webots" data-listing-date-sort="1638313200000" data-listing-file-modified-sort="1789990050115" data-listing-reading-time-sort="2.3" data-listing-title-sort="Getting Started With Webots" data-listing-filename-sort="index.qmd">
 <td class="listing-date">
 December 1, 2021
 </td>

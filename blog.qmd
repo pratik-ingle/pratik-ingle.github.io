@@ -4,10 +4,6 @@ description: "Research explanations, learning notes, and tutorials."
 page-layout: full
 toc: false
 listing:
-  - id: research-list
-    contents: posts/research/*/index.qmd
-    sort: "date desc"
-    template: _templates/post-list.ejs
   - id: learning-list
     contents: posts/learning/*/index.qmd
     sort: "date desc"
@@ -22,7 +18,6 @@ listing:
     template: _templates/post-list.ejs
   - id: all-posts
     contents:
-      - posts/research/*/index.qmd
       - posts/learning/*/index.qmd
       - posts/tutorials/*/index.qmd
       - posts/quantum/*/index.qmd
@@ -51,21 +46,14 @@ body { background: #1c1c1e; color: #e5e7eb; }
 
 ::: {.aman-featured}
 ::: {.aman-card}
-<h3>Research Notes</h3>
-<p class="aman-card-sub">My papers, explained in plain language</p>
-::: {#research-list}
-:::
-:::
-:::
-
-:::: {.aman-grid}
-
-::: {.aman-card}
 <h3>Learning Log</h3>
 <p class="aman-card-sub">Concepts I am learning or using right now</p>
 ::: {#learning-list}
 :::
 :::
+:::
+
+:::: {.aman-grid}
 
 ::: {.aman-card}
 <h3>Tutorials</h3>
@@ -79,16 +67,6 @@ body { background: #1c1c1e; color: #e5e7eb; }
 <p class="aman-card-sub">Quantum computing and hybrid quantum-classical ML</p>
 ::: {#quantum-list}
 :::
-:::
-
-::: {.aman-card}
-<h3>Research</h3>
-<p class="aman-card-sub">Papers and talks</p>
-- [Scalable Surface-Based Manipulation Through Modularity (arXiv 2026)](https://arxiv.org/abs/2601.21884)
-- [Heterogeneous Object Manipulation on Nonlinear Soft Surface (CASE 2025)](https://doi.org/10.1109/CASE58245.2025.11163787)
-- [Soft Manipulation Surface With Reduced Actuator Density (RoboSoft 2025)](https://doi.org/10.1109/RoboSoft63089.2025.11020841)
-
-[Research overview →](research.qmd){.aman-more}
 :::
 
 ::::
