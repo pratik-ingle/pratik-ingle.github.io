@@ -8,4 +8,4 @@ image: ../images/hmm.png
 
 This project implemented a Hidden Markov Model for part-of-speech tagging. The model estimates emission probabilities for words given tags and transition probabilities between tags, then infers likely tag sequences for sentences.
 
-[Code](https://github.com/pratik-ingle/HMM-tagger)
+[Code](https://github.com/pratik-ingle/HMM-tagger) · [Write-up](../posts/tutorials/hmm-pos-tagger/index.qmd)

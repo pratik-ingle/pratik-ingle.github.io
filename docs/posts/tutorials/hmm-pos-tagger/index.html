@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2019-12-01">
+<meta name="description" content="Implementing a Hidden Markov Model part-of-speech tagger in Python from scratch: counting frequencies, estimating emission and transition probabilities, and decoding with the Viterbi algorithm.">
+
+<title>Pratik Ingle - HMM-Based POS Tagger on the Brown Corpus</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../images/avatar5.jpg" rel="icon" type="image/jpeg">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YZLKD6JCSW"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-YZLKD6JCSW', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Pratik Ingle</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blog.html">Blog</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cv.html">CV</a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
+  <li><a href="#mathematical-model" id="toc-mathematical-model" class="nav-link" data-scroll-target="#mathematical-model">Mathematical model</a>
+  <ul class="collapse">
+  <li><a href="#training" id="toc-training" class="nav-link" data-scroll-target="#training">Training</a></li>
+  <li><a href="#viterbi-algorithm" id="toc-viterbi-algorithm" class="nav-link" data-scroll-target="#viterbi-algorithm">Viterbi algorithm</a></li>
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
+  </ul></li>
+  <li><a href="#procedure" id="toc-procedure" class="nav-link" data-scroll-target="#procedure">Procedure</a>
+  <ul class="collapse">
+  <li><a href="#split-the-corpus" id="toc-split-the-corpus" class="nav-link" data-scroll-target="#split-the-corpus">1. Split the corpus</a></li>
+  <li><a href="#count-patterns-in-the-training-set" id="toc-count-patterns-in-the-training-set" class="nav-link" data-scroll-target="#count-patterns-in-the-training-set">2. Count patterns in the training set</a></li>
+  <li><a href="#turn-counts-into-probabilities" id="toc-turn-counts-into-probabilities" class="nav-link" data-scroll-target="#turn-counts-into-probabilities">3. Turn counts into probabilities</a></li>
+  <li><a href="#viterbi-decoding" id="toc-viterbi-decoding" class="nav-link" data-scroll-target="#viterbi-decoding">4. Viterbi decoding</a></li>
+  <li><a href="#accuracy" id="toc-accuracy" class="nav-link" data-scroll-target="#accuracy">5. Accuracy</a></li>
+  </ul></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#unknown-words" id="toc-unknown-words" class="nav-link" data-scroll-target="#unknown-words">Unknown words</a></li>
+  <li><a href="#comparison-with-other-taggers" id="toc-comparison-with-other-taggers" class="nav-link" data-scroll-target="#comparison-with-other-taggers">Comparison with other taggers</a></li>
+  <li><a href="#hmm-and-ambiguity" id="toc-hmm-and-ambiguity" class="nav-link" data-scroll-target="#hmm-and-ambiguity">HMM and ambiguity</a></li>
+  <li><a href="#further-work" id="toc-further-work" class="nav-link" data-scroll-target="#further-work">Further work</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">HMM-Based POS Tagger on the Brown Corpus</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">tutorials</div>
+    <div class="quarto-category">nlp</div>
+    <div class="quarto-category">HMM</div>
+    <div class="quarto-category">Viterbi</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Implementing a Hidden Markov Model part-of-speech tagger in Python from scratch: counting frequencies, estimating emission and transition probabilities, and decoding with the Viterbi algorithm.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 1, 2019</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="objective" class="level2">
+<h2 class="anchored" data-anchor-id="objective">Objective</h2>
+<p>Write a program in Python to implement an HMM-based part-of-speech (POS) tagger for English.</p>
+<p><strong>Dataset</strong>: the Brown corpus (via NLTK), which contains words paired with their POS tags.</p>
+<p>Code: <a href="https://github.com/pratik-ingle/HMM-tagger" class="uri">https://github.com/pratik-ingle/HMM-tagger</a></p>
+</section>
+<section id="mathematical-model" class="level2">
+<h2 class="anchored" data-anchor-id="mathematical-model">Mathematical model</h2>
+<p>An HMM tagger is a special case of Bayesian inference. We model <span class="math inline">\(P(Y \mid X)\)</span>, the probability of a tag sequence given a word sequence, using two kinds of probabilities:</p>
+<ul>
+<li><strong>Emission probability</strong>: the likelihood of a word <span class="math inline">\(w_i\)</span> given a tag <span class="math inline">\(t_i\)</span>, <span class="math inline">\(P(w_i \mid t_i)\)</span>.</li>
+<li><strong>Transition probability</strong>: the likelihood of a tag given the previous tags, <span class="math inline">\(P(t_i \mid t_{i-1}, t_{i-2}, \dots, t_{i-k})\)</span>.</li>
+</ul>
+<p>The best tag sequence is</p>
+<p><span class="math display">\[
+\hat{T} = \arg\max_T \prod_i P(w_i \mid t_i)\, P(t_i \mid t_{i-1}).
+\]</span></p>
+<section id="training" class="level3">
+<h3 class="anchored" data-anchor-id="training">Training</h3>
+<p>Both probabilities are estimated from counts in the training set:</p>
+<p><span class="math display">\[
+P(t_i \mid t_{i-1}) = \frac{C(t_{i-1}, t_i)}{C(t_{i-1})}, \qquad
+P(w_i \mid t_i) = \frac{C(t_i, w_i)}{C(t_i)}.
+\]</span></p>
+</section>
+<section id="viterbi-algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="viterbi-algorithm">Viterbi algorithm</h3>
+<p><span class="math display">\[
+V_t(j) = \max_i V_{t-1}(i)\, a_{ij}\, b_j(o_t)
+\]</span></p>
+<p>where <span class="math inline">\(V_{t-1}(i)\)</span> is the previous Viterbi path probability, <span class="math inline">\(a_{ij}\)</span> the transition probability, and <span class="math inline">\(b_j(o_t)\)</span> the state observation (emission) likelihood.</p>
+<p>The total number of possible tag sequences is <span class="math inline">\(T^W\)</span> for <span class="math inline">\(T\)</span> tags and <span class="math inline">\(W\)</span> words, which is why dynamic programming is needed.</p>
+</section>
+<section id="assumptions" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
+<ol type="1">
+<li>The probability of a word depends only on its POS tag, and is independent of other words and tags.</li>
+<li>The probability of a tag depends only on the previous tag (bigram assumption).</li>
+</ol>
+</section>
+</section>
+<section id="procedure" class="level2">
+<h2 class="anchored" data-anchor-id="procedure">Procedure</h2>
+<p><img src="../../../images/hmm-procedure.png" class="img-fluid" alt="Flow of the HMM tagger: split corpus, count frequencies, compute probabilities, run Viterbi, evaluate."></p>
+<section id="split-the-corpus" class="level3">
+<h3 class="anchored" data-anchor-id="split-the-corpus">1. Split the corpus</h3>
+<p>Insert start <code>&lt;s&gt;</code> and end <code>&lt;\s&gt;</code> symbols in each sentence, then hold out the first 10 sentences for testing.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.corpus <span class="im">import</span> brown</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> brown.tagged_sents()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>brown_corpus <span class="op">=</span> []</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> p:</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    i.insert(<span class="dv">0</span>, (<span class="st">'&lt;s&gt;'</span>, <span class="st">'&lt;s&gt;'</span>))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    i.insert(<span class="bu">len</span>(i), (<span class="st">'&lt;</span><span class="ch">\\</span><span class="st">s&gt;'</span>, <span class="st">'&lt;</span><span class="ch">\\</span><span class="st">s&gt;'</span>))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    brown_corpus.append(i)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>brown_test <span class="op">=</span> []</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>brown_train <span class="op">=</span> []</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>sen <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> brown_corpus:</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    sen <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> sen <span class="op">&lt;=</span> <span class="dv">10</span>:</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        brown_test.append(i)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        brown_train.append(i)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="count-patterns-in-the-training-set" class="level3">
+<h3 class="anchored" data-anchor-id="count-patterns-in-the-training-set">2. Count patterns in the training set</h3>
+<p>We need three frequency tables:</p>
+<ul>
+<li><code>fre_wordtag</code>: frequency of each (word, tag) pair</li>
+<li><code>fre_tag</code>: frequency of each tag</li>
+<li><code>fre_bi_tag</code>: frequency of each tag given its previous tag</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fre(x):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    types <span class="op">=</span> Counter(<span class="bu">tuple</span>(item) <span class="cf">for</span> item <span class="kw">in</span> x)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    freq <span class="op">=</span> <span class="bu">list</span>(types.items())</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    freq.sort(key<span class="op">=</span><span class="kw">lambda</span> f: f[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> freq</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># flatten training sentences into (word, tag) pairs</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>brown_words_tag <span class="op">=</span> [j <span class="cf">for</span> i <span class="kw">in</span> brown_train <span class="cf">for</span> j <span class="kw">in</span> i]</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>fre_wordtag <span class="op">=</span> fre(brown_words_tag)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># tag frequencies</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>brown_tag <span class="op">=</span> [j[<span class="dv">1</span>] <span class="cf">for</span> i <span class="kw">in</span> brown_train <span class="cf">for</span> j <span class="kw">in</span> i]</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>fre_tag <span class="op">=</span> <span class="bu">list</span>(Counter(brown_tag).items())</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>fre_tag.sort(key<span class="op">=</span><span class="kw">lambda</span> f: f[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="turn-counts-into-probabilities" class="level3">
+<h3 class="anchored" data-anchor-id="turn-counts-into-probabilities">3. Turn counts into probabilities</h3>
+<p>Emission probabilities <span class="math inline">\(P(w_i \mid t_i) = C(t_i, w_i) / C(t_i)\)</span>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>probWiti <span class="op">=</span> []</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> fre_wordtag:</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> fre_tag:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i[<span class="dv">0</span>][<span class="dv">1</span>] <span class="op">==</span> j[<span class="dv">0</span>]:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>            probWiti.append([i[<span class="dv">0</span>], i[<span class="dv">1</span>] <span class="op">/</span> j[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Transition probabilities <span class="math inline">\(P(t_i \mid t_{i-1}) = C(t_{i-1}, t_i) / C(t_{i-1})\)</span>, built from tag bigrams (skipping the <code>&lt;\s&gt;</code> → <code>&lt;s&gt;</code> sentence boundary):</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bi_tag <span class="op">=</span> []</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="bu">len</span>(brown_words_tag)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(x <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    temp <span class="op">=</span> [brown_words_tag[j][<span class="dv">1</span>], brown_words_tag[j <span class="op">+</span> <span class="dv">1</span>][<span class="dv">1</span>]]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> temp <span class="op">!=</span> [<span class="st">'&lt;</span><span class="ch">\\</span><span class="st">s&gt;'</span>, <span class="st">'&lt;s&gt;'</span>]:</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        bi_tag.append(temp)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>fre_bi_tag <span class="op">=</span> fre(bi_tag)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>probbitag <span class="op">=</span> []</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> fre_bi_tag:</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> fre_tag:</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i[<span class="dv">0</span>][<span class="dv">0</span>] <span class="op">==</span> j[<span class="dv">0</span>]:</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>            probbitag.append([i[<span class="dv">0</span>], i[<span class="dv">1</span>] <span class="op">/</span> j[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The set of all tags seen in training is simply:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pos_tag <span class="op">=</span> [i[<span class="dv">0</span>] <span class="cf">for</span> i <span class="kw">in</span> fre_tag]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Because a word’s probability depends on its tag and a tag’s probability depends on the previous tag, there is no <code>UNK</code> tag in the tagger itself; unknown words are handled separately below.</p>
+</section>
+<section id="viterbi-decoding" class="level3">
+<h3 class="anchored" data-anchor-id="viterbi-decoding">4. Viterbi decoding</h3>
+<p>With the probabilities in hand we build, for one test sentence, an emission lattice (only entries with non-zero emission probability, since a zero would zero out the whole path) and the set of transition probabilities among the tags that sentence can take.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sentance <span class="op">=</span> brown_test[<span class="dv">4</span>]   <span class="co"># pick any of the first 10 test sentences</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> <span class="bu">len</span>(sentance)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>lattic_emission <span class="op">=</span> [[] <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(l)]</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>sen_tag <span class="op">=</span> []</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(l):</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> probWiti:</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> sentance[i][<span class="dv">0</span>] <span class="op">==</span> j[<span class="dv">0</span>][<span class="dv">0</span>]:</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            lattic_emission[i].append(j)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> j[<span class="dv">0</span>][<span class="dv">1</span>] <span class="kw">not</span> <span class="kw">in</span> sen_tag:</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                sen_tag.append(j[<span class="dv">0</span>][<span class="dv">1</span>])</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(lattic_emission[i]) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># unknown word: treat as 'NN' with probability 0.11</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        lattic_emission[i].append([(sentance[i][<span class="dv">0</span>], <span class="st">'NN'</span>), <span class="fl">0.11</span>])</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># transition probabilities restricted to tags that appear in this sentence</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>tran_tag <span class="op">=</span> [(i, j) <span class="cf">for</span> i <span class="kw">in</span> sen_tag <span class="cf">for</span> j <span class="kw">in</span> sen_tag]</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>tran_pro <span class="op">=</span> [j <span class="cf">for</span> i <span class="kw">in</span> tran_tag <span class="cf">for</span> j <span class="kw">in</span> probbitag <span class="cf">if</span> i <span class="op">==</span> j[<span class="dv">0</span>]]</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># keep the highest-emission tag for each word, then chain transitions</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>max_emission <span class="op">=</span> []</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>sequence <span class="op">=</span> []</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> lattic_emission:</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    i.sort(key<span class="op">=</span><span class="kw">lambda</span> e: e[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    max_emission.append(i)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>vi <span class="op">=</span> []</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(max_emission) <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    vi.append((max_emission[i][<span class="dv">0</span>][<span class="dv">0</span>][<span class="dv">1</span>], max_emission[i <span class="op">+</span> <span class="dv">1</span>][<span class="dv">0</span>][<span class="dv">0</span>][<span class="dv">1</span>]))</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    sequence.append(max_emission[i][<span class="dv">0</span>][<span class="dv">0</span>])</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>sequence.append((<span class="st">'&lt;</span><span class="ch">\\</span><span class="st">s&gt;'</span>, <span class="st">'&lt;</span><span class="ch">\\</span><span class="st">s&gt;'</span>))</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>Vj <span class="op">=</span> []</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(vi)):</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> tran_pro:</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> vi[i] <span class="op">==</span> j[<span class="dv">0</span>]:</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>            Vj.append(max_emission[i][<span class="dv">0</span>][<span class="dv">1</span>] <span class="op">*</span> j[<span class="dv">1</span>])</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> viterbi(Vj):</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> x <span class="kw">in</span> Vj:</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>        result <span class="op">*=</span> x</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sequence, <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>, viterbi(Vj))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="accuracy" class="level3">
+<h3 class="anchored" data-anchor-id="accuracy">5. Accuracy</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(sentance)):</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> sentance[i] <span class="op">==</span> sequence[i]:</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        count <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> count <span class="op">/</span> <span class="bu">len</span>(sentance) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"accuracy of HMM tagger for given sentence is"</span>, accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<p>For sentence 4 of the test set:</p>
+<pre class="text"><code>[('&lt;s&gt;', '&lt;s&gt;'), ('The', 'AT-TL'), ('jury', 'NN-HL'), ('said', 'VBD'), ('it', 'PPS-HL'),
+ ('did', 'DOD-NC'), ('find', 'VB'), ('that', 'WPS-NC'), ('many', 'AP-NC'), ('of', 'IN-TL'),
+ ("Georgia's", 'NP$'), ('registration', 'NN'), ('and', 'CC-HL'), ('election', 'NN'),
+ ('laws', 'NNS'), ('``', '``'), ('are', 'BER-HL'), ('outmoded', 'JJ'), ('or', 'CC-NC'),
+ ('inadequate', 'JJ'), ('and', 'CC-HL'), ('often', 'RB'), ('ambiguous', 'JJ'), ("''", "''"),
+ ('.', '.-HL'), ('&lt;\s&gt;', '&lt;\s&gt;')]
+5.0121351597188597e-33
+accuracy of HMM tagger for given sentence is
+53.84615384615385</code></pre>
+<p>Viterbi returns the most probable tag sequence with a sentence probability of about <span class="math inline">\(5 \times 10^{-33}\)</span>. Compared against the gold tags, accuracy on this sentence is only 53.8%, lower than the unigram and bigram taggers from earlier assignments. Two reasons: the Brown tagset is very fine-grained (phrase-level suffixes such as <code>-HL</code>, <code>-TL</code>, <code>-NC</code> split what would otherwise be one tag), and the corpus is case sensitive, so the same word gets different tags depending on capitalisation. The HMM does, however, do a better job at identifying phrases.</p>
+</section>
+<section id="unknown-words" class="level2">
+<h2 class="anchored" data-anchor-id="unknown-words">Unknown words</h2>
+<p>Words not seen in training are tagged <code>NN</code>, since most training words are nouns. In earlier assignments tagging everything as <code>NN</code> gave about 11% accuracy, so unknown words are given an emission probability of 0.11 in the Viterbi product.</p>
+</section>
+<section id="comparison-with-other-taggers" class="level2">
+<h2 class="anchored" data-anchor-id="comparison-with-other-taggers">Comparison with other taggers</h2>
+<p>Exhaustive HMM decoding is expensive: with <span class="math inline">\(n\)</span> tags and <span class="math inline">\(m\)</span> words there are <span class="math inline">\(n^m\)</span> tag sequences, which is why the Viterbi dynamic-programming algorithm is used to find the optimal one.</p>
+<p>Like other stochastic taggers, an HMM tagger finds the most likely tag for a word or sequence of words. Unlike greedy taggers that tag one word at a time, the HMM tags a whole sentence at once, choosing the sequence that maximises</p>
+<pre class="text"><code>P(word | tag) * P(tag | previous n tags)</code></pre>
+<p>The HMM outperforms the simpler taggers here, but it is not the most accurate option: an interpolated tagger can do better.</p>
+</section>
+<section id="hmm-and-ambiguity" class="level2">
+<h2 class="anchored" data-anchor-id="hmm-and-ambiguity">HMM and ambiguity</h2>
+<p>Because the HMM considers the whole sentence, it can surface ambiguity: an ambiguous sentence gets different probabilities for its different tag sequences, and the most plausible reading is the one with the highest probability.</p>
+</section>
+<section id="further-work" class="level2">
+<h2 class="anchored" data-anchor-id="further-work">Further work</h2>
+<ul>
+<li>Extend the transition model to depend on three or more previous tags (trigram or higher-order HMM).</li>
+<li>Replace the count-based model with a neural sequence tagger.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp(/https:\/\/pratik-ingle\.github\.io/);
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+    var links = window.document.querySelectorAll('a:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="pratik-ingle/pratik-ingle.github.io" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2026, Pratik Ingle. Text and images licensed CC-BY-NC 4.0 unless noted.</div>   
+  </div>
+</footer>
+
+
+
+</body></html>

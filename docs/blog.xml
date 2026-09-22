@@ -365,5 +365,241 @@
   <pubDate>Tue, 30 Nov 2021 23:00:00 GMT</pubDate>
   <media:content url="https://pratik-ingle.github.io/images/webot.gif" medium="image" type="image/gif"/>
 </item>
+<item>
+  <title>HMM-Based POS Tagger on the Brown Corpus</title>
+  <link>https://pratik-ingle.github.io/posts/tutorials/hmm-pos-tagger/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="objective" class="level2">
+<h2 class="anchored" data-anchor-id="objective">Objective</h2>
+<p>Write a program in Python to implement an HMM-based part-of-speech (POS) tagger for English.</p>
+<p><strong>Dataset</strong>: the Brown corpus (via NLTK), which contains words paired with their POS tags.</p>
+<p>Code: <a href="https://github.com/pratik-ingle/HMM-tagger" class="uri">https://github.com/pratik-ingle/HMM-tagger</a></p>
+</section>
+<section id="mathematical-model" class="level2">
+<h2 class="anchored" data-anchor-id="mathematical-model">Mathematical model</h2>
+<p>An HMM tagger is a special case of Bayesian inference. We model <img src="https://latex.codecogs.com/png.latex?P(Y%20%5Cmid%20X)">, the probability of a tag sequence given a word sequence, using two kinds of probabilities:</p>
+<ul>
+<li><strong>Emission probability</strong>: the likelihood of a word <img src="https://latex.codecogs.com/png.latex?w_i"> given a tag <img src="https://latex.codecogs.com/png.latex?t_i">, <img src="https://latex.codecogs.com/png.latex?P(w_i%20%5Cmid%20t_i)">.</li>
+<li><strong>Transition probability</strong>: the likelihood of a tag given the previous tags, <img src="https://latex.codecogs.com/png.latex?P(t_i%20%5Cmid%20t_%7Bi-1%7D,%20t_%7Bi-2%7D,%20%5Cdots,%20t_%7Bi-k%7D)">.</li>
+</ul>
+<p>The best tag sequence is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Chat%7BT%7D%20=%20%5Carg%5Cmax_T%20%5Cprod_i%20P(w_i%20%5Cmid%20t_i)%5C,%20P(t_i%20%5Cmid%20t_%7Bi-1%7D).%0A"></p>
+<section id="training" class="level3">
+<h3 class="anchored" data-anchor-id="training">Training</h3>
+<p>Both probabilities are estimated from counts in the training set:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AP(t_i%20%5Cmid%20t_%7Bi-1%7D)%20=%20%5Cfrac%7BC(t_%7Bi-1%7D,%20t_i)%7D%7BC(t_%7Bi-1%7D)%7D,%20%5Cqquad%0AP(w_i%20%5Cmid%20t_i)%20=%20%5Cfrac%7BC(t_i,%20w_i)%7D%7BC(t_i)%7D.%0A"></p>
+</section>
+<section id="viterbi-algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="viterbi-algorithm">Viterbi algorithm</h3>
+<p><img src="https://latex.codecogs.com/png.latex?%0AV_t(j)%20=%20%5Cmax_i%20V_%7Bt-1%7D(i)%5C,%20a_%7Bij%7D%5C,%20b_j(o_t)%0A"></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?V_%7Bt-1%7D(i)"> is the previous Viterbi path probability, <img src="https://latex.codecogs.com/png.latex?a_%7Bij%7D"> the transition probability, and <img src="https://latex.codecogs.com/png.latex?b_j(o_t)"> the state observation (emission) likelihood.</p>
+<p>The total number of possible tag sequences is <img src="https://latex.codecogs.com/png.latex?T%5EW"> for <img src="https://latex.codecogs.com/png.latex?T"> tags and <img src="https://latex.codecogs.com/png.latex?W"> words, which is why dynamic programming is needed.</p>
+</section>
+<section id="assumptions" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
+<ol type="1">
+<li>The probability of a word depends only on its POS tag, and is independent of other words and tags.</li>
+<li>The probability of a tag depends only on the previous tag (bigram assumption).</li>
+</ol>
+</section>
+</section>
+<section id="procedure" class="level2">
+<h2 class="anchored" data-anchor-id="procedure">Procedure</h2>
+<p><img src="https://pratik-ingle.github.io/images/hmm-procedure.png" class="img-fluid" alt="Flow of the HMM tagger: split corpus, count frequencies, compute probabilities, run Viterbi, evaluate."></p>
+<section id="split-the-corpus" class="level3">
+<h3 class="anchored" data-anchor-id="split-the-corpus">1. Split the corpus</h3>
+<p>Insert start <code>&lt;s&gt;</code> and end <code>&lt;\s&gt;</code> symbols in each sentence, then hold out the first 10 sentences for testing.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;">from</span> nltk.corpus <span class="im" style="color: #00769E;">import</span> brown</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">p <span class="op" style="color: #5E5E5E;">=</span> brown.tagged_sents()</span>
+<span id="cb1-4">brown_corpus <span class="op" style="color: #5E5E5E;">=</span> []</span>
+<span id="cb1-5"><span class="cf" style="color: #003B4F;">for</span> i <span class="kw" style="color: #003B4F;">in</span> p:</span>
+<span id="cb1-6">    i.insert(<span class="dv" style="color: #AD0000;">0</span>, (<span class="st" style="color: #20794D;">'&lt;s&gt;'</span>, <span class="st" style="color: #20794D;">'&lt;s&gt;'</span>))</span>
+<span id="cb1-7">    i.insert(<span class="bu" style="color: null;">len</span>(i), (<span class="st" style="color: #20794D;">'&lt;</span><span class="ch" style="color: #20794D;">\\</span><span class="st" style="color: #20794D;">s&gt;'</span>, <span class="st" style="color: #20794D;">'&lt;</span><span class="ch" style="color: #20794D;">\\</span><span class="st" style="color: #20794D;">s&gt;'</span>))</span>
+<span id="cb1-8">    brown_corpus.append(i)</span>
+<span id="cb1-9"></span>
+<span id="cb1-10">brown_test <span class="op" style="color: #5E5E5E;">=</span> []</span>
+<span id="cb1-11">brown_train <span class="op" style="color: #5E5E5E;">=</span> []</span>
+<span id="cb1-12">sen <span class="op" style="color: #5E5E5E;">=</span> <span class="dv" style="color: #AD0000;">0</span></span>
+<span id="cb1-13"><span class="cf" style="color: #003B4F;">for</span> i <span class="kw" style="color: #003B4F;">in</span> brown_corpus:</span>
+<span id="cb1-14">    sen <span class="op" style="color: #5E5E5E;">+=</span> <span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb1-15">    <span class="cf" style="color: #003B4F;">if</span> sen <span class="op" style="color: #5E5E5E;">&lt;=</span> <span class="dv" style="color: #AD0000;">10</span>:</span>
+<span id="cb1-16">        brown_test.append(i)</span>
+<span id="cb1-17">    <span class="cf" style="color: #003B4F;">else</span>:</span>
+<span id="cb1-18">        brown_train.append(i)</span></code></pre></div>
+</section>
+<section id="count-patterns-in-the-training-set" class="level3">
+<h3 class="anchored" data-anchor-id="count-patterns-in-the-training-set">2. Count patterns in the training set</h3>
+<p>We need three frequency tables:</p>
+<ul>
+<li><code>fre_wordtag</code>: frequency of each (word, tag) pair</li>
+<li><code>fre_tag</code>: frequency of each tag</li>
+<li><code>fre_bi_tag</code>: frequency of each tag given its previous tag</li>
+</ul>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;">from</span> collections <span class="im" style="color: #00769E;">import</span> Counter</span>
+<span id="cb2-2"></span>
+<span id="cb2-3"><span class="kw" style="color: #003B4F;">def</span> fre(x):</span>
+<span id="cb2-4">    types <span class="op" style="color: #5E5E5E;">=</span> Counter(<span class="bu" style="color: null;">tuple</span>(item) <span class="cf" style="color: #003B4F;">for</span> item <span class="kw" style="color: #003B4F;">in</span> x)</span>
+<span id="cb2-5">    freq <span class="op" style="color: #5E5E5E;">=</span> <span class="bu" style="color: null;">list</span>(types.items())</span>
+<span id="cb2-6">    freq.sort(key<span class="op" style="color: #5E5E5E;">=</span><span class="kw" style="color: #003B4F;">lambda</span> f: f[<span class="dv" style="color: #AD0000;">1</span>], reverse<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>)</span>
+<span id="cb2-7">    <span class="cf" style="color: #003B4F;">return</span> freq</span>
+<span id="cb2-8"></span>
+<span id="cb2-9"><span class="co" style="color: #5E5E5E;"># flatten training sentences into (word, tag) pairs</span></span>
+<span id="cb2-10">brown_words_tag <span class="op" style="color: #5E5E5E;">=</span> [j <span class="cf" style="color: #003B4F;">for</span> i <span class="kw" style="color: #003B4F;">in</span> brown_train <span class="cf" style="color: #003B4F;">for</span> j <span class="kw" style="color: #003B4F;">in</span> i]</span>
+<span id="cb2-11">fre_wordtag <span class="op" style="color: #5E5E5E;">=</span> fre(brown_words_tag)</span>
+<span id="cb2-12"></span>
+<span id="cb2-13"><span class="co" style="color: #5E5E5E;"># tag frequencies</span></span>
+<span id="cb2-14">brown_tag <span class="op" style="color: #5E5E5E;">=</span> [j[<span class="dv" style="color: #AD0000;">1</span>] <span class="cf" style="color: #003B4F;">for</span> i <span class="kw" style="color: #003B4F;">in</span> brown_train <span class="cf" style="color: #003B4F;">for</span> j <span class="kw" style="color: #003B4F;">in</span> i]</span>
+<span id="cb2-15">fre_tag <span class="op" style="color: #5E5E5E;">=</span> <span class="bu" style="color: null;">list</span>(Counter(brown_tag).items())</span>
+<span id="cb2-16">fre_tag.sort(key<span class="op" style="color: #5E5E5E;">=</span><span class="kw" style="color: #003B4F;">lambda</span> f: f[<span class="dv" style="color: #AD0000;">1</span>], reverse<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>)</span></code></pre></div>
+</section>
+<section id="turn-counts-into-probabilities" class="level3">
+<h3 class="anchored" data-anchor-id="turn-counts-into-probabilities">3. Turn counts into probabilities</h3>
+<p>Emission probabilities <img src="https://latex.codecogs.com/png.latex?P(w_i%20%5Cmid%20t_i)%20=%20C(t_i,%20w_i)%20/%20C(t_i)">:</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">probWiti <span class="op" style="color: #5E5E5E;">=</span> []</span>
+<span id="cb3-2"><span class="cf" style="color: #003B4F;">for</span> i <span class="kw" style="color: #003B4F;">in</span> fre_wordtag:</span>
+<span id="cb3-3">    <span class="cf" style="color: #003B4F;">for</span> j <span class="kw" style="color: #003B4F;">in</span> fre_tag:</span>
+<span id="cb3-4">        <span class="cf" style="color: #003B4F;">if</span> i[<span class="dv" style="color: #AD0000;">0</span>][<span class="dv" style="color: #AD0000;">1</span>] <span class="op" style="color: #5E5E5E;">==</span> j[<span class="dv" style="color: #AD0000;">0</span>]:</span>
+<span id="cb3-5">            probWiti.append([i[<span class="dv" style="color: #AD0000;">0</span>], i[<span class="dv" style="color: #AD0000;">1</span>] <span class="op" style="color: #5E5E5E;">/</span> j[<span class="dv" style="color: #AD0000;">1</span>]])</span></code></pre></div>
+<p>Transition probabilities <img src="https://latex.codecogs.com/png.latex?P(t_i%20%5Cmid%20t_%7Bi-1%7D)%20=%20C(t_%7Bi-1%7D,%20t_i)%20/%20C(t_%7Bi-1%7D)">, built from tag bigrams (skipping the <code>&lt;\s&gt;</code> → <code>&lt;s&gt;</code> sentence boundary):</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">bi_tag <span class="op" style="color: #5E5E5E;">=</span> []</span>
+<span id="cb4-2">x <span class="op" style="color: #5E5E5E;">=</span> <span class="bu" style="color: null;">len</span>(brown_words_tag)</span>
+<span id="cb4-3"><span class="cf" style="color: #003B4F;">for</span> j <span class="kw" style="color: #003B4F;">in</span> <span class="bu" style="color: null;">range</span>(x <span class="op" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>):</span>
+<span id="cb4-4">    temp <span class="op" style="color: #5E5E5E;">=</span> [brown_words_tag[j][<span class="dv" style="color: #AD0000;">1</span>], brown_words_tag[j <span class="op" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>][<span class="dv" style="color: #AD0000;">1</span>]]</span>
+<span id="cb4-5">    <span class="cf" style="color: #003B4F;">if</span> temp <span class="op" style="color: #5E5E5E;">!=</span> [<span class="st" style="color: #20794D;">'&lt;</span><span class="ch" style="color: #20794D;">\\</span><span class="st" style="color: #20794D;">s&gt;'</span>, <span class="st" style="color: #20794D;">'&lt;s&gt;'</span>]:</span>
+<span id="cb4-6">        bi_tag.append(temp)</span>
+<span id="cb4-7"></span>
+<span id="cb4-8">fre_bi_tag <span class="op" style="color: #5E5E5E;">=</span> fre(bi_tag)</span>
+<span id="cb4-9"></span>
+<span id="cb4-10">probbitag <span class="op" style="color: #5E5E5E;">=</span> []</span>
+<span id="cb4-11"><span class="cf" style="color: #003B4F;">for</span> i <span class="kw" style="color: #003B4F;">in</span> fre_bi_tag:</span>
+<span id="cb4-12">    <span class="cf" style="color: #003B4F;">for</span> j <span class="kw" style="color: #003B4F;">in</span> fre_tag:</span>
+<span id="cb4-13">        <span class="cf" style="color: #003B4F;">if</span> i[<span class="dv" style="color: #AD0000;">0</span>][<span class="dv" style="color: #AD0000;">0</span>] <span class="op" style="color: #5E5E5E;">==</span> j[<span class="dv" style="color: #AD0000;">0</span>]:</span>
+<span id="cb4-14">            probbitag.append([i[<span class="dv" style="color: #AD0000;">0</span>], i[<span class="dv" style="color: #AD0000;">1</span>] <span class="op" style="color: #5E5E5E;">/</span> j[<span class="dv" style="color: #AD0000;">1</span>]])</span></code></pre></div>
+<p>The set of all tags seen in training is simply:</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">pos_tag <span class="op" style="color: #5E5E5E;">=</span> [i[<span class="dv" style="color: #AD0000;">0</span>] <span class="cf" style="color: #003B4F;">for</span> i <span class="kw" style="color: #003B4F;">in</span> fre_tag]</span></code></pre></div>
+<p>Because a word’s probability depends on its tag and a tag’s probability depends on the previous tag, there is no <code>UNK</code> tag in the tagger itself; unknown words are handled separately below.</p>
+</section>
+<section id="viterbi-decoding" class="level3">
+<h3 class="anchored" data-anchor-id="viterbi-decoding">4. Viterbi decoding</h3>
+<p>With the probabilities in hand we build, for one test sentence, an emission lattice (only entries with non-zero emission probability, since a zero would zero out the whole path) and the set of transition probabilities among the tags that sentence can take.</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">sentance <span class="op" style="color: #5E5E5E;">=</span> brown_test[<span class="dv" style="color: #AD0000;">4</span>]   <span class="co" style="color: #5E5E5E;"># pick any of the first 10 test sentences</span></span>
+<span id="cb6-2">l <span class="op" style="color: #5E5E5E;">=</span> <span class="bu" style="color: null;">len</span>(sentance)</span>
+<span id="cb6-3"></span>
+<span id="cb6-4">lattic_emission <span class="op" style="color: #5E5E5E;">=</span> [[] <span class="cf" style="color: #003B4F;">for</span> _ <span class="kw" style="color: #003B4F;">in</span> <span class="bu" style="color: null;">range</span>(l)]</span>
+<span id="cb6-5">sen_tag <span class="op" style="color: #5E5E5E;">=</span> []</span>
+<span id="cb6-6"><span class="cf" style="color: #003B4F;">for</span> i <span class="kw" style="color: #003B4F;">in</span> <span class="bu" style="color: null;">range</span>(l):</span>
+<span id="cb6-7">    <span class="cf" style="color: #003B4F;">for</span> j <span class="kw" style="color: #003B4F;">in</span> probWiti:</span>
+<span id="cb6-8">        <span class="cf" style="color: #003B4F;">if</span> sentance[i][<span class="dv" style="color: #AD0000;">0</span>] <span class="op" style="color: #5E5E5E;">==</span> j[<span class="dv" style="color: #AD0000;">0</span>][<span class="dv" style="color: #AD0000;">0</span>]:</span>
+<span id="cb6-9">            lattic_emission[i].append(j)</span>
+<span id="cb6-10">            <span class="cf" style="color: #003B4F;">if</span> j[<span class="dv" style="color: #AD0000;">0</span>][<span class="dv" style="color: #AD0000;">1</span>] <span class="kw" style="color: #003B4F;">not</span> <span class="kw" style="color: #003B4F;">in</span> sen_tag:</span>
+<span id="cb6-11">                sen_tag.append(j[<span class="dv" style="color: #AD0000;">0</span>][<span class="dv" style="color: #AD0000;">1</span>])</span>
+<span id="cb6-12">    <span class="cf" style="color: #003B4F;">if</span> <span class="bu" style="color: null;">len</span>(lattic_emission[i]) <span class="op" style="color: #5E5E5E;">==</span> <span class="dv" style="color: #AD0000;">0</span>:</span>
+<span id="cb6-13">        <span class="co" style="color: #5E5E5E;"># unknown word: treat as 'NN' with probability 0.11</span></span>
+<span id="cb6-14">        lattic_emission[i].append([(sentance[i][<span class="dv" style="color: #AD0000;">0</span>], <span class="st" style="color: #20794D;">'NN'</span>), <span class="fl" style="color: #AD0000;">0.11</span>])</span>
+<span id="cb6-15"></span>
+<span id="cb6-16"><span class="co" style="color: #5E5E5E;"># transition probabilities restricted to tags that appear in this sentence</span></span>
+<span id="cb6-17">tran_tag <span class="op" style="color: #5E5E5E;">=</span> [(i, j) <span class="cf" style="color: #003B4F;">for</span> i <span class="kw" style="color: #003B4F;">in</span> sen_tag <span class="cf" style="color: #003B4F;">for</span> j <span class="kw" style="color: #003B4F;">in</span> sen_tag]</span>
+<span id="cb6-18">tran_pro <span class="op" style="color: #5E5E5E;">=</span> [j <span class="cf" style="color: #003B4F;">for</span> i <span class="kw" style="color: #003B4F;">in</span> tran_tag <span class="cf" style="color: #003B4F;">for</span> j <span class="kw" style="color: #003B4F;">in</span> probbitag <span class="cf" style="color: #003B4F;">if</span> i <span class="op" style="color: #5E5E5E;">==</span> j[<span class="dv" style="color: #AD0000;">0</span>]]</span>
+<span id="cb6-19"></span>
+<span id="cb6-20"><span class="co" style="color: #5E5E5E;"># keep the highest-emission tag for each word, then chain transitions</span></span>
+<span id="cb6-21">max_emission <span class="op" style="color: #5E5E5E;">=</span> []</span>
+<span id="cb6-22">sequence <span class="op" style="color: #5E5E5E;">=</span> []</span>
+<span id="cb6-23"><span class="cf" style="color: #003B4F;">for</span> i <span class="kw" style="color: #003B4F;">in</span> lattic_emission:</span>
+<span id="cb6-24">    i.sort(key<span class="op" style="color: #5E5E5E;">=</span><span class="kw" style="color: #003B4F;">lambda</span> e: e[<span class="dv" style="color: #AD0000;">1</span>], reverse<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>)</span>
+<span id="cb6-25">    max_emission.append(i)</span>
+<span id="cb6-26"></span>
+<span id="cb6-27">vi <span class="op" style="color: #5E5E5E;">=</span> []</span>
+<span id="cb6-28"><span class="cf" style="color: #003B4F;">for</span> i <span class="kw" style="color: #003B4F;">in</span> <span class="bu" style="color: null;">range</span>(<span class="bu" style="color: null;">len</span>(max_emission) <span class="op" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>):</span>
+<span id="cb6-29">    vi.append((max_emission[i][<span class="dv" style="color: #AD0000;">0</span>][<span class="dv" style="color: #AD0000;">0</span>][<span class="dv" style="color: #AD0000;">1</span>], max_emission[i <span class="op" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>][<span class="dv" style="color: #AD0000;">0</span>][<span class="dv" style="color: #AD0000;">0</span>][<span class="dv" style="color: #AD0000;">1</span>]))</span>
+<span id="cb6-30">    sequence.append(max_emission[i][<span class="dv" style="color: #AD0000;">0</span>][<span class="dv" style="color: #AD0000;">0</span>])</span>
+<span id="cb6-31">sequence.append((<span class="st" style="color: #20794D;">'&lt;</span><span class="ch" style="color: #20794D;">\\</span><span class="st" style="color: #20794D;">s&gt;'</span>, <span class="st" style="color: #20794D;">'&lt;</span><span class="ch" style="color: #20794D;">\\</span><span class="st" style="color: #20794D;">s&gt;'</span>))</span>
+<span id="cb6-32"></span>
+<span id="cb6-33">Vj <span class="op" style="color: #5E5E5E;">=</span> []</span>
+<span id="cb6-34"><span class="cf" style="color: #003B4F;">for</span> i <span class="kw" style="color: #003B4F;">in</span> <span class="bu" style="color: null;">range</span>(<span class="bu" style="color: null;">len</span>(vi)):</span>
+<span id="cb6-35">    <span class="cf" style="color: #003B4F;">for</span> j <span class="kw" style="color: #003B4F;">in</span> tran_pro:</span>
+<span id="cb6-36">        <span class="cf" style="color: #003B4F;">if</span> vi[i] <span class="op" style="color: #5E5E5E;">==</span> j[<span class="dv" style="color: #AD0000;">0</span>]:</span>
+<span id="cb6-37">            Vj.append(max_emission[i][<span class="dv" style="color: #AD0000;">0</span>][<span class="dv" style="color: #AD0000;">1</span>] <span class="op" style="color: #5E5E5E;">*</span> j[<span class="dv" style="color: #AD0000;">1</span>])</span>
+<span id="cb6-38"></span>
+<span id="cb6-39"><span class="kw" style="color: #003B4F;">def</span> viterbi(Vj):</span>
+<span id="cb6-40">    result <span class="op" style="color: #5E5E5E;">=</span> <span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb6-41">    <span class="cf" style="color: #003B4F;">for</span> x <span class="kw" style="color: #003B4F;">in</span> Vj:</span>
+<span id="cb6-42">        result <span class="op" style="color: #5E5E5E;">*=</span> x</span>
+<span id="cb6-43">    <span class="cf" style="color: #003B4F;">return</span> result</span>
+<span id="cb6-44"></span>
+<span id="cb6-45"><span class="bu" style="color: null;">print</span>(sequence, <span class="st" style="color: #20794D;">'</span><span class="ch" style="color: #20794D;">\n</span><span class="st" style="color: #20794D;">'</span>, viterbi(Vj))</span></code></pre></div>
+</section>
+<section id="accuracy" class="level3">
+<h3 class="anchored" data-anchor-id="accuracy">5. Accuracy</h3>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">count <span class="op" style="color: #5E5E5E;">=</span> <span class="dv" style="color: #AD0000;">0</span></span>
+<span id="cb7-2"><span class="cf" style="color: #003B4F;">for</span> i <span class="kw" style="color: #003B4F;">in</span> <span class="bu" style="color: null;">range</span>(<span class="bu" style="color: null;">len</span>(sentance)):</span>
+<span id="cb7-3">    <span class="cf" style="color: #003B4F;">if</span> sentance[i] <span class="op" style="color: #5E5E5E;">==</span> sequence[i]:</span>
+<span id="cb7-4">        count <span class="op" style="color: #5E5E5E;">+=</span> <span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb7-5">accuracy <span class="op" style="color: #5E5E5E;">=</span> count <span class="op" style="color: #5E5E5E;">/</span> <span class="bu" style="color: null;">len</span>(sentance) <span class="op" style="color: #5E5E5E;">*</span> <span class="dv" style="color: #AD0000;">100</span></span>
+<span id="cb7-6"><span class="bu" style="color: null;">print</span>(<span class="st" style="color: #20794D;">"accuracy of HMM tagger for given sentence is"</span>, accuracy)</span></code></pre></div>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<p>For sentence 4 of the test set:</p>
+<pre class="text"><code>[('&lt;s&gt;', '&lt;s&gt;'), ('The', 'AT-TL'), ('jury', 'NN-HL'), ('said', 'VBD'), ('it', 'PPS-HL'),
+ ('did', 'DOD-NC'), ('find', 'VB'), ('that', 'WPS-NC'), ('many', 'AP-NC'), ('of', 'IN-TL'),
+ ("Georgia's", 'NP
+  <category>tutorials</category>
+  <category>nlp</category>
+  <category>HMM</category>
+  <category>Viterbi</category>
+  <guid>https://pratik-ingle.github.io/posts/tutorials/hmm-pos-tagger/index.html</guid>
+  <pubDate>Sat, 30 Nov 2019 23:00:00 GMT</pubDate>
+  <media:content url="https://pratik-ingle.github.io/images/hmm.png" medium="image" type="image/png" height="140" width="144"/>
+</item>
+</channel>
+</rss>
+), ('registration', 'NN'), ('and', 'CC-HL'), ('election', 'NN'),
+ ('laws', 'NNS'), ('``', '``'), ('are', 'BER-HL'), ('outmoded', 'JJ'), ('or', 'CC-NC'),
+ ('inadequate', 'JJ'), ('and', 'CC-HL'), ('often', 'RB'), ('ambiguous', 'JJ'), ("''", "''"),
+ ('.', '.-HL'), ('&lt;\s&gt;', '&lt;\s&gt;')]
+5.0121351597188597e-33
+accuracy of HMM tagger for given sentence is
+53.84615384615385</code></pre>
+<p>Viterbi returns the most probable tag sequence with a sentence probability of about <img src="https://latex.codecogs.com/png.latex?5%20%5Ctimes%2010%5E%7B-33%7D">. Compared against the gold tags, accuracy on this sentence is only 53.8%, lower than the unigram and bigram taggers from earlier assignments. Two reasons: the Brown tagset is very fine-grained (phrase-level suffixes such as <code>-HL</code>, <code>-TL</code>, <code>-NC</code> split what would otherwise be one tag), and the corpus is case sensitive, so the same word gets different tags depending on capitalisation. The HMM does, however, do a better job at identifying phrases.</p>
+</section>
+<section id="unknown-words" class="level2">
+<h2 class="anchored" data-anchor-id="unknown-words">Unknown words</h2>
+<p>Words not seen in training are tagged <code>NN</code>, since most training words are nouns. In earlier assignments tagging everything as <code>NN</code> gave about 11% accuracy, so unknown words are given an emission probability of 0.11 in the Viterbi product.</p>
+</section>
+<section id="comparison-with-other-taggers" class="level2">
+<h2 class="anchored" data-anchor-id="comparison-with-other-taggers">Comparison with other taggers</h2>
+<p>Exhaustive HMM decoding is expensive: with <img src="https://latex.codecogs.com/png.latex?n"> tags and <img src="https://latex.codecogs.com/png.latex?m"> words there are <img src="https://latex.codecogs.com/png.latex?n%5Em"> tag sequences, which is why the Viterbi dynamic-programming algorithm is used to find the optimal one.</p>
+<p>Like other stochastic taggers, an HMM tagger finds the most likely tag for a word or sequence of words. Unlike greedy taggers that tag one word at a time, the HMM tags a whole sentence at once, choosing the sequence that maximises</p>
+<pre class="text"><code>P(word | tag) * P(tag | previous n tags)</code></pre>
+<p>The HMM outperforms the simpler taggers here, but it is not the most accurate option: an interpolated tagger can do better.</p>
+</section>
+<section id="hmm-and-ambiguity" class="level2">
+<h2 class="anchored" data-anchor-id="hmm-and-ambiguity">HMM and ambiguity</h2>
+<p>Because the HMM considers the whole sentence, it can surface ambiguity: an ambiguous sentence gets different probabilities for its different tag sequences, and the most plausible reading is the one with the highest probability.</p>
+</section>
+<section id="further-work" class="level2">
+<h2 class="anchored" data-anchor-id="further-work">Further work</h2>
+<ul>
+<li>Extend the transition model to depend on three or more previous tags (trigram or higher-order HMM).</li>
+<li>Replace the count-based model with a neural sequence tagger.</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>tutorials</category>
+  <category>nlp</category>
+  <category>HMM</category>
+  <category>Viterbi</category>
+  <guid>https://pratik-ingle.github.io/posts/tutorials/hmm-pos-tagger/index.html</guid>
+  <pubDate>Sat, 30 Nov 2019 23:00:00 GMT</pubDate>
+  <media:content url="https://pratik-ingle.github.io/images/hmm.png" medium="image" type="image/png" height="140" width="144"/>
+</item>
 </channel>
 </rss>

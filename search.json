@@ -287,6 +287,62 @@
     "text": "Line following with IR sensors\nAdd infrared ground sensors to the e-puck by using the groundSensorsSlot. Name two sensors ir0 and ir1, then enable them in the controller.\nfrom controller import Robot\n\nrobot = Robot()\ntime_step = 32\nmax_speed = 6.24\n\nleft_motor = robot.getMotor(\"left wheel motor\")\nright_motor = robot.getMotor(\"right wheel motor\")\nleft_motor.setPosition(float(\"inf\"))\nright_motor.setPosition(float(\"inf\"))\nleft_motor.setVelocity(0.0)\nright_motor.setVelocity(0.0)\n\nleft_ir = robot.getDistanceSensor(\"ir1\")\nright_ir = robot.getDistanceSensor(\"ir0\")\nleft_ir.enable(time_step)\nright_ir.enable(time_step)\n\nwhile robot.step(time_step) != -1:\n    left_ir_value = left_ir.getValue()\n    right_ir_value = right_ir.getValue()\n\n    left_speed = max_speed * 0.25\n    right_speed = max_speed * 0.25\n\n    if left_ir_value > right_ir_value and 6 < left_ir_value < 15:\n        left_speed = -max_speed * 0.25\n    elif right_ir_value > left_ir_value and 6 < right_ir_value < 15:\n        right_speed = -max_speed * 0.25\n\n    left_motor.setVelocity(left_speed)\n    right_motor.setVelocity(right_speed)\nOriginal standalone tutorial: https://pratik-ingle.github.io/webots_tutorial/"
   },
   {
+    "objectID": "posts/tutorials/hmm-pos-tagger/index.html",
+    "href": "posts/tutorials/hmm-pos-tagger/index.html",
+    "title": "HMM-Based POS Tagger on the Brown Corpus",
+    "section": "",
+    "text": "Write a program in Python to implement an HMM-based part-of-speech (POS) tagger for English.\nDataset: the Brown corpus (via NLTK), which contains words paired with their POS tags.\nCode: https://github.com/pratik-ingle/HMM-tagger"
+  },
+  {
+    "objectID": "posts/tutorials/hmm-pos-tagger/index.html#mathematical-model",
+    "href": "posts/tutorials/hmm-pos-tagger/index.html#mathematical-model",
+    "title": "HMM-Based POS Tagger on the Brown Corpus",
+    "section": "Mathematical model",
+    "text": "Mathematical model\nAn HMM tagger is a special case of Bayesian inference. We model \\(P(Y \\mid X)\\), the probability of a tag sequence given a word sequence, using two kinds of probabilities:\n\nEmission probability: the likelihood of a word \\(w_i\\) given a tag \\(t_i\\), \\(P(w_i \\mid t_i)\\).\nTransition probability: the likelihood of a tag given the previous tags, \\(P(t_i \\mid t_{i-1}, t_{i-2}, \\dots, t_{i-k})\\).\n\nThe best tag sequence is\n\\[\n\\hat{T} = \\arg\\max_T \\prod_i P(w_i \\mid t_i)\\, P(t_i \\mid t_{i-1}).\n\\]\n\nTraining\nBoth probabilities are estimated from counts in the training set:\n\\[\nP(t_i \\mid t_{i-1}) = \\frac{C(t_{i-1}, t_i)}{C(t_{i-1})}, \\qquad\nP(w_i \\mid t_i) = \\frac{C(t_i, w_i)}{C(t_i)}.\n\\]\n\n\nViterbi algorithm\n\\[\nV_t(j) = \\max_i V_{t-1}(i)\\, a_{ij}\\, b_j(o_t)\n\\]\nwhere \\(V_{t-1}(i)\\) is the previous Viterbi path probability, \\(a_{ij}\\) the transition probability, and \\(b_j(o_t)\\) the state observation (emission) likelihood.\nThe total number of possible tag sequences is \\(T^W\\) for \\(T\\) tags and \\(W\\) words, which is why dynamic programming is needed.\n\n\nAssumptions\n\nThe probability of a word depends only on its POS tag, and is independent of other words and tags.\nThe probability of a tag depends only on the previous tag (bigram assumption)."
+  },
+  {
+    "objectID": "posts/tutorials/hmm-pos-tagger/index.html#procedure",
+    "href": "posts/tutorials/hmm-pos-tagger/index.html#procedure",
+    "title": "HMM-Based POS Tagger on the Brown Corpus",
+    "section": "Procedure",
+    "text": "Procedure\n\n\n1. Split the corpus\nInsert start <s> and end <\\s> symbols in each sentence, then hold out the first 10 sentences for testing.\nfrom nltk.corpus import brown\n\np = brown.tagged_sents()\nbrown_corpus = []\nfor i in p:\n    i.insert(0, ('<s>', '<s>'))\n    i.insert(len(i), ('<\\\\s>', '<\\\\s>'))\n    brown_corpus.append(i)\n\nbrown_test = []\nbrown_train = []\nsen = 0\nfor i in brown_corpus:\n    sen += 1\n    if sen <= 10:\n        brown_test.append(i)\n    else:\n        brown_train.append(i)\n\n\n2. Count patterns in the training set\nWe need three frequency tables:\n\nfre_wordtag: frequency of each (word, tag) pair\nfre_tag: frequency of each tag\nfre_bi_tag: frequency of each tag given its previous tag\n\nfrom collections import Counter\n\ndef fre(x):\n    types = Counter(tuple(item) for item in x)\n    freq = list(types.items())\n    freq.sort(key=lambda f: f[1], reverse=True)\n    return freq\n\n# flatten training sentences into (word, tag) pairs\nbrown_words_tag = [j for i in brown_train for j in i]\nfre_wordtag = fre(brown_words_tag)\n\n# tag frequencies\nbrown_tag = [j[1] for i in brown_train for j in i]\nfre_tag = list(Counter(brown_tag).items())\nfre_tag.sort(key=lambda f: f[1], reverse=True)\n\n\n3. Turn counts into probabilities\nEmission probabilities \\(P(w_i \\mid t_i) = C(t_i, w_i) / C(t_i)\\):\nprobWiti = []\nfor i in fre_wordtag:\n    for j in fre_tag:\n        if i[0][1] == j[0]:\n            probWiti.append([i[0], i[1] / j[1]])\nTransition probabilities \\(P(t_i \\mid t_{i-1}) = C(t_{i-1}, t_i) / C(t_{i-1})\\), built from tag bigrams (skipping the <\\s> → <s> sentence boundary):\nbi_tag = []\nx = len(brown_words_tag)\nfor j in range(x - 1):\n    temp = [brown_words_tag[j][1], brown_words_tag[j + 1][1]]\n    if temp != ['<\\\\s>', '<s>']:\n        bi_tag.append(temp)\n\nfre_bi_tag = fre(bi_tag)\n\nprobbitag = []\nfor i in fre_bi_tag:\n    for j in fre_tag:\n        if i[0][0] == j[0]:\n            probbitag.append([i[0], i[1] / j[1]])\nThe set of all tags seen in training is simply:\npos_tag = [i[0] for i in fre_tag]\nBecause a word’s probability depends on its tag and a tag’s probability depends on the previous tag, there is no UNK tag in the tagger itself; unknown words are handled separately below.\n\n\n4. Viterbi decoding\nWith the probabilities in hand we build, for one test sentence, an emission lattice (only entries with non-zero emission probability, since a zero would zero out the whole path) and the set of transition probabilities among the tags that sentence can take.\nsentance = brown_test[4]   # pick any of the first 10 test sentences\nl = len(sentance)\n\nlattic_emission = [[] for _ in range(l)]\nsen_tag = []\nfor i in range(l):\n    for j in probWiti:\n        if sentance[i][0] == j[0][0]:\n            lattic_emission[i].append(j)\n            if j[0][1] not in sen_tag:\n                sen_tag.append(j[0][1])\n    if len(lattic_emission[i]) == 0:\n        # unknown word: treat as 'NN' with probability 0.11\n        lattic_emission[i].append([(sentance[i][0], 'NN'), 0.11])\n\n# transition probabilities restricted to tags that appear in this sentence\ntran_tag = [(i, j) for i in sen_tag for j in sen_tag]\ntran_pro = [j for i in tran_tag for j in probbitag if i == j[0]]\n\n# keep the highest-emission tag for each word, then chain transitions\nmax_emission = []\nsequence = []\nfor i in lattic_emission:\n    i.sort(key=lambda e: e[1], reverse=True)\n    max_emission.append(i)\n\nvi = []\nfor i in range(len(max_emission) - 1):\n    vi.append((max_emission[i][0][0][1], max_emission[i + 1][0][0][1]))\n    sequence.append(max_emission[i][0][0])\nsequence.append(('<\\\\s>', '<\\\\s>'))\n\nVj = []\nfor i in range(len(vi)):\n    for j in tran_pro:\n        if vi[i] == j[0]:\n            Vj.append(max_emission[i][0][1] * j[1])\n\ndef viterbi(Vj):\n    result = 1\n    for x in Vj:\n        result *= x\n    return result\n\nprint(sequence, '\\n', viterbi(Vj))\n\n\n5. Accuracy\ncount = 0\nfor i in range(len(sentance)):\n    if sentance[i] == sequence[i]:\n        count += 1\naccuracy = count / len(sentance) * 100\nprint(\"accuracy of HMM tagger for given sentence is\", accuracy)"
+  },
+  {
+    "objectID": "posts/tutorials/hmm-pos-tagger/index.html#results",
+    "href": "posts/tutorials/hmm-pos-tagger/index.html#results",
+    "title": "HMM-Based POS Tagger on the Brown Corpus",
+    "section": "Results",
+    "text": "Results\nFor sentence 4 of the test set:\n[('<s>', '<s>'), ('The', 'AT-TL'), ('jury', 'NN-HL'), ('said', 'VBD'), ('it', 'PPS-HL'),\n ('did', 'DOD-NC'), ('find', 'VB'), ('that', 'WPS-NC'), ('many', 'AP-NC'), ('of', 'IN-TL'),\n (\"Georgia's\", 'NP$'), ('registration', 'NN'), ('and', 'CC-HL'), ('election', 'NN'),\n ('laws', 'NNS'), ('``', '``'), ('are', 'BER-HL'), ('outmoded', 'JJ'), ('or', 'CC-NC'),\n ('inadequate', 'JJ'), ('and', 'CC-HL'), ('often', 'RB'), ('ambiguous', 'JJ'), (\"''\", \"''\"),\n ('.', '.-HL'), ('<\\s>', '<\\s>')]\n5.0121351597188597e-33\naccuracy of HMM tagger for given sentence is\n53.84615384615385\nViterbi returns the most probable tag sequence with a sentence probability of about \\(5 \\times 10^{-33}\\). Compared against the gold tags, accuracy on this sentence is only 53.8%, lower than the unigram and bigram taggers from earlier assignments. Two reasons: the Brown tagset is very fine-grained (phrase-level suffixes such as -HL, -TL, -NC split what would otherwise be one tag), and the corpus is case sensitive, so the same word gets different tags depending on capitalisation. The HMM does, however, do a better job at identifying phrases."
+  },
+  {
+    "objectID": "posts/tutorials/hmm-pos-tagger/index.html#unknown-words",
+    "href": "posts/tutorials/hmm-pos-tagger/index.html#unknown-words",
+    "title": "HMM-Based POS Tagger on the Brown Corpus",
+    "section": "Unknown words",
+    "text": "Unknown words\nWords not seen in training are tagged NN, since most training words are nouns. In earlier assignments tagging everything as NN gave about 11% accuracy, so unknown words are given an emission probability of 0.11 in the Viterbi product."
+  },
+  {
+    "objectID": "posts/tutorials/hmm-pos-tagger/index.html#comparison-with-other-taggers",
+    "href": "posts/tutorials/hmm-pos-tagger/index.html#comparison-with-other-taggers",
+    "title": "HMM-Based POS Tagger on the Brown Corpus",
+    "section": "Comparison with other taggers",
+    "text": "Comparison with other taggers\nExhaustive HMM decoding is expensive: with \\(n\\) tags and \\(m\\) words there are \\(n^m\\) tag sequences, which is why the Viterbi dynamic-programming algorithm is used to find the optimal one.\nLike other stochastic taggers, an HMM tagger finds the most likely tag for a word or sequence of words. Unlike greedy taggers that tag one word at a time, the HMM tags a whole sentence at once, choosing the sequence that maximises\nP(word | tag) * P(tag | previous n tags)\nThe HMM outperforms the simpler taggers here, but it is not the most accurate option: an interpolated tagger can do better."
+  },
+  {
+    "objectID": "posts/tutorials/hmm-pos-tagger/index.html#hmm-and-ambiguity",
+    "href": "posts/tutorials/hmm-pos-tagger/index.html#hmm-and-ambiguity",
+    "title": "HMM-Based POS Tagger on the Brown Corpus",
+    "section": "HMM and ambiguity",
+    "text": "HMM and ambiguity\nBecause the HMM considers the whole sentence, it can surface ambiguity: an ambiguous sentence gets different probabilities for its different tag sequences, and the most plausible reading is the one with the highest probability."
+  },
+  {
+    "objectID": "posts/tutorials/hmm-pos-tagger/index.html#further-work",
+    "href": "posts/tutorials/hmm-pos-tagger/index.html#further-work",
+    "title": "HMM-Based POS Tagger on the Brown Corpus",
+    "section": "Further work",
+    "text": "Further work\n\nExtend the transition model to depend on three or more previous tags (trigram or higher-order HMM).\nReplace the count-based model with a neural sequence tagger."
+  },
+  {
     "objectID": "posts/quantum/vqe-from-scratch/index.html",
     "href": "posts/quantum/vqe-from-scratch/index.html",
     "title": "Variational Quantum Eigensolver From Scratch",
@@ -389,7 +445,7 @@
     "href": "projects/hmm-pos-tagger.html",
     "title": "HMM POS Tagger for English",
     "section": "",
-    "text": "Code"
+    "text": "Code · Write-up"
   },
   {
     "objectID": "projects/master-thesis-collective-robotics.html",
@@ -452,13 +508,6 @@
     "href": "blog.html",
     "title": "Pratik Ingle",
     "section": "",
-    "text": "notes on robots, learning, and controlone concept at a time\n\n\n\n\n\n\n\n\nConcepts I am learning or using right now\n\n\n\n\nSimulating a Tactile Sensor in MuJoCo\n\n\nNormal and Shear Forces in Tactile Sensing\n\n\nMAE vs JEPA: Two Ways to Learn Representations Without Labels\n\n\n\nNo matching items\n\n\n\n\n\n\n\n\nHands-on guides and teaching material\n\n\n\n\nGetting Started With Webots\n\n\n\nNo matching items\n\n\n\n\n\n\nQuantum computing and hybrid quantum-classical ML\n\n\n\n\nVariational Quantum Eigensolver From Scratch\n\n\n\nNo matching items\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nCategories\n\n\n\n\n\n\nJuly 29, 2026\n\n\nSimulating a Tactile Sensor in MuJoCo\n\n\nlearning, simulation, tactile sensing, MuJoCo\n\n\n\n\nJuly 22, 2026\n\n\nNormal and Shear Forces in Tactile Sensing\n\n\nlearning, tactile sensing, robotics\n\n\n\n\nJuly 15, 2026\n\n\nMAE vs JEPA: Two Ways to Learn Representations Without Labels\n\n\nlearning, self-supervised learning, representation learning\n\n\n\n\nDecember 2, 2021\n\n\nVariational Quantum Eigensolver From Scratch\n\n\nquantum, tutorial, VQE\n\n\n\n\nDecember 1, 2021\n\n\nGetting Started With Webots\n\n\ntutorials, robotics, Webots\n\n\n\n\n\n\nNo matching items\n\n\n\n\nRSS feed · GitHub · Projects"
-  },
-  {
-    "objectID": "zz-dbg.html",
-    "href": "zz-dbg.html",
-    "title": "dbg",
-    "section": "",
-    "text": "[\"title\",\"date\",\"categories\",\"description\",\"comments\",\"path\",\"author\",\"image\",\"image-alt\",\"filename\",\"file-modified\",\"reading-time\",\"sortableValues\"] | \"July 15, 2026\" | string\n[\"title\",\"date\",\"categories\",\"description\",\"comments\",\"path\",\"author\",\"image\",\"image-alt\",\"filename\",\"file-modified\",\"reading-time\",\"sortableValues\"] | \"July 22, 2026\" | string\n[\"title\",\"date\",\"categories\",\"description\",\"comments\",\"path\",\"author\",\"image\",\"image-alt\",\"filename\",\"file-modified\",\"reading-time\",\"sortableValues\"] | \"July 29, 2026\" | string\n\n\nNo matching items"
+    "text": "notes on robots, learning, and controlone concept at a time\n\n\n\n\n\n\n\n\nConcepts I am learning or using right now\n\n\n\n\nSimulating a Tactile Sensor in MuJoCo\n\n\nNormal and Shear Forces in Tactile Sensing\n\n\nMAE vs JEPA: Two Ways to Learn Representations Without Labels\n\n\n\nNo matching items\n\n\n\n\n\n\n\n\nHands-on guides and teaching material\n\n\n\n\nGetting Started With Webots\n\n\nHMM-Based POS Tagger on the Brown Corpus\n\n\n\nNo matching items\n\n\n\n\n\n\nQuantum computing and hybrid quantum-classical ML\n\n\n\n\nVariational Quantum Eigensolver From Scratch\n\n\n\nNo matching items\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nCategories\n\n\n\n\n\n\nJuly 29, 2026\n\n\nSimulating a Tactile Sensor in MuJoCo\n\n\nlearning, simulation, tactile sensing, MuJoCo\n\n\n\n\nJuly 22, 2026\n\n\nNormal and Shear Forces in Tactile Sensing\n\n\nlearning, tactile sensing, robotics\n\n\n\n\nJuly 15, 2026\n\n\nMAE vs JEPA: Two Ways to Learn Representations Without Labels\n\n\nlearning, self-supervised learning, representation learning\n\n\n\n\nDecember 2, 2021\n\n\nVariational Quantum Eigensolver From Scratch\n\n\nquantum, tutorial, VQE\n\n\n\n\nDecember 1, 2021\n\n\nGetting Started With Webots\n\n\ntutorials, robotics, Webots\n\n\n\n\nDecember 1, 2019\n\n\nHMM-Based POS Tagger on the Brown Corpus\n\n\ntutorials, nlp, HMM, Viterbi\n\n\n\n\n\n\nNo matching items\n\n\n\n\nRSS feed · GitHub · Projects"
   }
 ]
