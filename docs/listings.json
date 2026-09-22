@@ -1,33 +1,5 @@
 [
   {
-    "listing": "/posts/research/index.html",
-    "items": [
-      "/posts/research/scalable-surface-based-manipulation/index.html",
-      "/posts/research/linear-control-nonlinear-soft-surface/index.html",
-      "/posts/research/reduced-actuator-soft-manipulation-surface/index.html"
-    ]
-  },
-  {
-    "listing": "/posts/learning/index.html",
-    "items": [
-      "/posts/learning/mujoco-tactile-sensor-simulation/index.html",
-      "/posts/learning/tactile-sensing-normal-shear/index.html",
-      "/posts/learning/mae-vs-jepa/index.html"
-    ]
-  },
-  {
-    "listing": "/posts/tutorials/index.html",
-    "items": [
-      "/posts/tutorials/getting-started-with-webots/index.html"
-    ]
-  },
-  {
-    "listing": "/posts/quantum/index.html",
-    "items": [
-      "/posts/quantum/vqe-from-scratch/index.html"
-    ]
-  },
-  {
     "listing": "/projects.html",
     "items": [
       "/projects/soft-manipulation-surface.html",

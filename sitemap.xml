@@ -2,114 +2,98 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://pratik-ingle.github.io/research.html</loc>
-    <lastmod>2026-09-21T11:57:32.646Z</lastmod>
+    <lastmod>2026-09-22T08:42:47.453Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/posts/research/scalable-surface-based-manipulation/index.html</loc>
-    <lastmod>2026-09-21T11:57:33.131Z</lastmod>
+    <lastmod>2026-09-22T08:42:47.960Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/posts/research/reduced-actuator-soft-manipulation-surface/index.html</loc>
-    <lastmod>2026-09-21T11:57:33.640Z</lastmod>
+    <lastmod>2026-09-22T08:42:48.360Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/posts/research/linear-control-nonlinear-soft-surface/index.html</loc>
-    <lastmod>2026-09-21T11:57:34.066Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pratik-ingle.github.io/posts/research/index.html</loc>
-    <lastmod>2026-09-21T11:57:34.505Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pratik-ingle.github.io/posts/learning/index.html</loc>
-    <lastmod>2026-09-21T11:57:34.921Z</lastmod>
+    <lastmod>2026-09-22T08:42:48.823Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/posts/learning/mae-vs-jepa/index.html</loc>
-    <lastmod>2026-09-21T11:57:35.260Z</lastmod>
+    <lastmod>2026-09-22T08:42:49.268Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/posts/learning/tactile-sensing-normal-shear/index.html</loc>
-    <lastmod>2026-09-21T11:57:35.587Z</lastmod>
+    <lastmod>2026-09-22T08:42:49.625Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/posts/learning/mujoco-tactile-sensor-simulation/index.html</loc>
-    <lastmod>2026-09-21T11:57:35.919Z</lastmod>
+    <lastmod>2026-09-22T08:42:49.994Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/posts/tutorials/getting-started-with-webots/index.html</loc>
-    <lastmod>2026-09-21T11:57:36.313Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pratik-ingle.github.io/posts/tutorials/index.html</loc>
-    <lastmod>2026-09-21T11:57:36.663Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pratik-ingle.github.io/posts/quantum/index.html</loc>
-    <lastmod>2026-09-21T11:57:37.118Z</lastmod>
+    <lastmod>2026-09-22T08:42:50.421Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/posts/quantum/vqe-from-scratch/index.html</loc>
-    <lastmod>2026-09-21T11:57:37.911Z</lastmod>
+    <lastmod>2026-09-22T08:42:51.264Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/projects/dynamic-individual-memory.html</loc>
-    <lastmod>2026-09-21T11:57:38.314Z</lastmod>
+    <lastmod>2026-09-22T08:42:51.616Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/projects/warehouse-mapf-pso.html</loc>
-    <lastmod>2026-09-21T11:57:38.641Z</lastmod>
+    <lastmod>2026-09-22T08:42:51.979Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/projects/optical-radiation-pressure.html</loc>
-    <lastmod>2026-09-21T11:57:38.956Z</lastmod>
+    <lastmod>2026-09-22T08:42:52.328Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/projects/hybrid-quantum-covid.html</loc>
-    <lastmod>2026-09-21T11:57:39.278Z</lastmod>
+    <lastmod>2026-09-22T08:42:52.647Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/projects/mod-moving-depot.html</loc>
-    <lastmod>2026-09-21T11:57:39.598Z</lastmod>
+    <lastmod>2026-09-22T08:42:52.967Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/projects/hmm-pos-tagger.html</loc>
-    <lastmod>2026-09-21T11:57:40.092Z</lastmod>
+    <lastmod>2026-09-22T08:42:53.282Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/projects/master-thesis-collective-robotics.html</loc>
-    <lastmod>2026-09-21T11:57:40.510Z</lastmod>
+    <lastmod>2026-09-22T08:42:53.602Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/projects/soft-manipulation-surface.html</loc>
-    <lastmod>2026-09-21T11:57:40.924Z</lastmod>
+    <lastmod>2026-09-22T08:42:53.929Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/projects/uvc-disinfection-uav.html</loc>
-    <lastmod>2026-09-21T11:57:41.263Z</lastmod>
+    <lastmod>2026-09-22T08:42:54.357Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/projects/quantum-influencer-agents.html</loc>
-    <lastmod>2026-09-21T11:57:41.606Z</lastmod>
+    <lastmod>2026-09-22T08:42:54.776Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/projects/never-sinking-boats.html</loc>
-    <lastmod>2026-09-21T11:57:42.064Z</lastmod>
+    <lastmod>2026-09-22T08:42:55.251Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/projects.html</loc>
-    <lastmod>2026-09-21T11:57:42.592Z</lastmod>
+    <lastmod>2026-09-22T08:42:55.791Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/index.html</loc>
-    <lastmod>2026-09-21T11:57:43.026Z</lastmod>
+    <lastmod>2026-09-22T08:42:56.196Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/cv.html</loc>
-    <lastmod>2026-09-21T11:57:43.397Z</lastmod>
+    <lastmod>2026-09-22T08:42:56.509Z</lastmod>
   </url>
   <url>
     <loc>https://pratik-ingle.github.io/blog.html</loc>
-    <lastmod>2026-09-21T11:57:44.089Z</lastmod>
+    <lastmod>2026-09-22T08:42:57.161Z</lastmod>
   </url>
 </urlset>

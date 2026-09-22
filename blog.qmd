@@ -55,7 +55,6 @@ body { background: #1c1c1e; color: #e5e7eb; }
 <p class="aman-card-sub">My papers, explained in plain language</p>
 ::: {#research-list}
 :::
-[All research notes →](posts/research/index.qmd){.aman-more}
 :::
 :::
 
@@ -66,7 +65,6 @@ body { background: #1c1c1e; color: #e5e7eb; }
 <p class="aman-card-sub">Concepts I am learning or using right now</p>
 ::: {#learning-list}
 :::
-[All learning posts →](posts/learning/index.qmd){.aman-more}
 :::
 
 ::: {.aman-card}
@@ -74,7 +72,6 @@ body { background: #1c1c1e; color: #e5e7eb; }
 <p class="aman-card-sub">Hands-on guides and teaching material</p>
 ::: {#tutorials-list}
 :::
-[All tutorials →](posts/tutorials/index.qmd){.aman-more}
 :::
 
 ::: {.aman-card}
@@ -82,7 +79,6 @@ body { background: #1c1c1e; color: #e5e7eb; }
 <p class="aman-card-sub">Quantum computing and hybrid quantum-classical ML</p>
 ::: {#quantum-list}
 :::
-[All quantum notes →](posts/quantum/index.qmd){.aman-more}
 :::
 
 ::: {.aman-card}

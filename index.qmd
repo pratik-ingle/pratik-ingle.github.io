@@ -71,7 +71,7 @@ I work on robotic manipulation surfaces: soft, fabric-based platforms driven by 
 
 - [Soft manipulation surfaces](research.qmd) - reduced actuator density, geometric control, heterogeneous objects.
 - [Modular manipulation](posts/research/scalable-surface-based-manipulation/index.qmd) - shared-boundary actuation and inter-module object transfer.
-- [Tactile sensing](posts/learning/index.qmd) - MAE/JEPA representation learning on normal and shear tactile channels, MuJoCo sensor simulation (UCL CRISP Lab).
+- [Tactile sensing](posts/learning/tactile-sensing-normal-shear/index.qmd) - MAE/JEPA representation learning on normal and shear tactile channels, MuJoCo sensor simulation (UCL CRISP Lab).
 - Earlier: swarm robotics, multi-robot foraging, and collective decision-making.
 
 #### Experience

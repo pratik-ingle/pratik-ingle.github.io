@@ -133,20 +133,6 @@
     "text": "Takeaway\nFor grasp-free manipulation, the controller and hardware should be designed together. The surface is not just a passive floor; it is part of the computation.\nPaper: DOI"
   },
   {
-    "objectID": "posts/research/index.html",
-    "href": "posts/research/index.html",
-    "title": "Research Notes",
-    "section": "",
-    "text": "Scalable Surface-Based Manipulation Through Modularity\n\n\n\n\n\nA plain-language explanation of my arXiv paper on modular soft manipulation surfaces.\n\n\n\n\n\n\nMarch 12, 2026\n\n\n\n\n\n\n  \n\n\n\n\nLinear Control on a Nonlinear Soft Surface\n\n\n\n\n\nA note on using simple controllers for heterogeneous object manipulation on nonlinear soft surfaces.\n\n\n\n\n\n\nAugust 17, 2025\n\n\n\n\n\n\n  \n\n\n\n\nSoft Manipulation With Fewer Actuators\n\n\n\n\n\nWhy reduced actuator density matters for soft manipulation surfaces.\n\n\n\n\n\n\nApril 22, 2025\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "posts/learning/index.html",
-    "href": "posts/learning/index.html",
-    "title": "Learning Log",
-    "section": "",
-    "text": "Simulating a Tactile Sensor in MuJoCo\n\n\n\n\n\nNotes on building a MuJoCo approximation of a 3-channel tactile sensor.\n\n\n\n\n\n\nJuly 29, 2026\n\n\n\n\n\n\n\n\nNormal and Shear Forces in Tactile Sensing\n\n\n\n\n\nWhy 3-channel tactile sensors are useful for in-hand object inference.\n\n\n\n\n\n\nJuly 22, 2026\n\n\n\n\n\n\n\n\nMAE vs JEPA: Two Ways to Learn Representations Without Labels\n\n\n\n\n\nNotes from learning Masked Autoencoders and Joint Embedding Predictive Architectures.\n\n\n\n\n\n\nJuly 15, 2026\n\n\n\n\n\n\nNo matching items"
-  },
-  {
     "objectID": "posts/learning/mae-vs-jepa/index.html",
     "href": "posts/learning/mae-vs-jepa/index.html",
     "title": "MAE vs JEPA: Two Ways to Learn Representations Without Labels",
@@ -299,20 +285,6 @@
     "title": "Getting Started With Webots",
     "section": "Line following with IR sensors",
     "text": "Line following with IR sensors\nAdd infrared ground sensors to the e-puck by using the groundSensorsSlot. Name two sensors ir0 and ir1, then enable them in the controller.\nfrom controller import Robot\n\nrobot = Robot()\ntime_step = 32\nmax_speed = 6.24\n\nleft_motor = robot.getMotor(\"left wheel motor\")\nright_motor = robot.getMotor(\"right wheel motor\")\nleft_motor.setPosition(float(\"inf\"))\nright_motor.setPosition(float(\"inf\"))\nleft_motor.setVelocity(0.0)\nright_motor.setVelocity(0.0)\n\nleft_ir = robot.getDistanceSensor(\"ir1\")\nright_ir = robot.getDistanceSensor(\"ir0\")\nleft_ir.enable(time_step)\nright_ir.enable(time_step)\n\nwhile robot.step(time_step) != -1:\n    left_ir_value = left_ir.getValue()\n    right_ir_value = right_ir.getValue()\n\n    left_speed = max_speed * 0.25\n    right_speed = max_speed * 0.25\n\n    if left_ir_value > right_ir_value and 6 < left_ir_value < 15:\n        left_speed = -max_speed * 0.25\n    elif right_ir_value > left_ir_value and 6 < right_ir_value < 15:\n        right_speed = -max_speed * 0.25\n\n    left_motor.setVelocity(left_speed)\n    right_motor.setVelocity(right_speed)\nOriginal standalone tutorial: https://pratik-ingle.github.io/webots_tutorial/"
-  },
-  {
-    "objectID": "posts/tutorials/index.html",
-    "href": "posts/tutorials/index.html",
-    "title": "Tutorials",
-    "section": "",
-    "text": "Getting Started With Webots\n\n\n\n\n\nA beginner tutorial for creating a Webots project, adding an e-puck robot, and writing simple controllers.\n\n\n\n\n\n\nDecember 1, 2021\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "posts/quantum/index.html",
-    "href": "posts/quantum/index.html",
-    "title": "Quantum Notes",
-    "section": "",
-    "text": "Variational Quantum Eigensolver From Scratch\n\n\n\n\n\nA compact explanation of VQE and the parts needed to implement it.\n\n\n\n\n\n\nDecember 2, 2021\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/quantum/vqe-from-scratch/index.html",
@@ -480,6 +452,6 @@
     "href": "blog.html",
     "title": "Pratik Ingle",
     "section": "",
-    "text": "notes on robots, learning, and controlone concept at a time\n\n\n\n\n\n\n\n\nMy papers, explained in plain language\n\n\n\n\nScalable Surface-Based Manipulation Through Modularity\n\n\nLinear Control on a Nonlinear Soft Surface\n\n\nSoft Manipulation With Fewer Actuators\n\n\n\nNo matching items\n\n\nAll research notes →\n\n\n\n\n\n\nConcepts I am learning or using right now\n\n\n\n\nSimulating a Tactile Sensor in MuJoCo\n\n\nNormal and Shear Forces in Tactile Sensing\n\n\nMAE vs JEPA: Two Ways to Learn Representations Without Labels\n\n\n\nNo matching items\n\n\nAll learning posts →\n\n\n\n\nHands-on guides and teaching material\n\n\n\n\nGetting Started With Webots\n\n\n\nNo matching items\n\n\nAll tutorials →\n\n\n\n\nQuantum computing and hybrid quantum-classical ML\n\n\n\n\nVariational Quantum Eigensolver From Scratch\n\n\n\nNo matching items\n\n\nAll quantum notes →\n\n\n\n\nPapers and talks\n\n\nScalable Surface-Based Manipulation Through Modularity (arXiv 2026)\nHeterogeneous Object Manipulation on Nonlinear Soft Surface (CASE 2025)\nSoft Manipulation Surface With Reduced Actuator Density (RoboSoft 2025)\n\nResearch overview →\n\n\n\n\n\n\n\n\n\nWebots tutorial (original site)\nHMM POS tagger code\nGitHub\n\n\n\n\n\nVQE from scratch on Medium\nProjects portfolio\nRSS feed\n\n\n\n\n\n\n\n\n\n    \n      \n      \n    \n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nCategories\n\n\n\n\n\n\nJuly 29, 2026\n\n\nSimulating a Tactile Sensor in MuJoCo\n\n\nlearning,simulation,tactile sensing,MuJoCo\n\n\n\n\nJuly 22, 2026\n\n\nNormal and Shear Forces in Tactile Sensing\n\n\nlearning,tactile sensing,robotics\n\n\n\n\nJuly 15, 2026\n\n\nMAE vs JEPA: Two Ways to Learn Representations Without Labels\n\n\nlearning,self-supervised learning,representation learning\n\n\n\n\nMarch 12, 2026\n\n\nScalable Surface-Based Manipulation Through Modularity\n\n\nresearch,soft robotics,manipulation\n\n\n\n\nAugust 17, 2025\n\n\nLinear Control on a Nonlinear Soft Surface\n\n\nresearch,control,soft robotics\n\n\n\n\nApril 22, 2025\n\n\nSoft Manipulation With Fewer Actuators\n\n\nresearch,soft robotics,hardware\n\n\n\n\nDecember 2, 2021\n\n\nVariational Quantum Eigensolver From Scratch\n\n\nquantum,tutorial,VQE\n\n\n\n\nDecember 1, 2021\n\n\nGetting Started With Webots\n\n\ntutorials,robotics,Webots\n\n\n\n\n\n\nNo matching items"
+    "text": "notes on robots, learning, and controlone concept at a time\n\n\n\n\n\n\n\n\nMy papers, explained in plain language\n\n\n\n\nScalable Surface-Based Manipulation Through Modularity\n\n\nLinear Control on a Nonlinear Soft Surface\n\n\nSoft Manipulation With Fewer Actuators\n\n\n\nNo matching items\n\n\n\n\n\n\n\n\nConcepts I am learning or using right now\n\n\n\n\nSimulating a Tactile Sensor in MuJoCo\n\n\nNormal and Shear Forces in Tactile Sensing\n\n\nMAE vs JEPA: Two Ways to Learn Representations Without Labels\n\n\n\nNo matching items\n\n\n\n\n\n\nHands-on guides and teaching material\n\n\n\n\nGetting Started With Webots\n\n\n\nNo matching items\n\n\n\n\n\n\nQuantum computing and hybrid quantum-classical ML\n\n\n\n\nVariational Quantum Eigensolver From Scratch\n\n\n\nNo matching items\n\n\n\n\n\n\nPapers and talks\n\n\nScalable Surface-Based Manipulation Through Modularity (arXiv 2026)\nHeterogeneous Object Manipulation on Nonlinear Soft Surface (CASE 2025)\nSoft Manipulation Surface With Reduced Actuator Density (RoboSoft 2025)\n\nResearch overview →\n\n\n\n\n\n\n\n\n\nWebots tutorial (original site)\nHMM POS tagger code\nGitHub\n\n\n\n\n\nVQE from scratch on Medium\nProjects portfolio\nRSS feed\n\n\n\n\n\n\n\n\n\n    \n      \n      \n    \n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nCategories\n\n\n\n\n\n\nJuly 29, 2026\n\n\nSimulating a Tactile Sensor in MuJoCo\n\n\nlearning,simulation,tactile sensing,MuJoCo\n\n\n\n\nJuly 22, 2026\n\n\nNormal and Shear Forces in Tactile Sensing\n\n\nlearning,tactile sensing,robotics\n\n\n\n\nJuly 15, 2026\n\n\nMAE vs JEPA: Two Ways to Learn Representations Without Labels\n\n\nlearning,self-supervised learning,representation learning\n\n\n\n\nMarch 12, 2026\n\n\nScalable Surface-Based Manipulation Through Modularity\n\n\nresearch,soft robotics,manipulation\n\n\n\n\nAugust 17, 2025\n\n\nLinear Control on a Nonlinear Soft Surface\n\n\nresearch,control,soft robotics\n\n\n\n\nApril 22, 2025\n\n\nSoft Manipulation With Fewer Actuators\n\n\nresearch,soft robotics,hardware\n\n\n\n\nDecember 2, 2021\n\n\nVariational Quantum Eigensolver From Scratch\n\n\nquantum,tutorial,VQE\n\n\n\n\nDecember 1, 2021\n\n\nGetting Started With Webots\n\n\ntutorials,robotics,Webots\n\n\n\n\n\n\nNo matching items"
   }
 ]
