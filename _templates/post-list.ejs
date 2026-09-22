@@ -1,5 +1,6 @@
 <ul class="aman-list">
 <% for (const item of items) { %>
-  <li><a href="<%- item.path %>"><%= item.title %></a></li>
+  <% const href = item['external-url'] || item.path; %>
+  <li><a href="<%- href %>"<% if (item['external-url']) { %> target="_blank" rel="noopener"<% } %>><%= item.title %></a></li>
 <% } %>
 </ul>

@@ -22,10 +22,7 @@ listing:
       - posts/tutorials/*/index.qmd
       - posts/quantum/*/index.qmd
     sort: "date desc"
-    type: table
-    fields: [date, title, categories]
-    sort-ui: false
-    filter-ui: true
+    template: _templates/post-table.ejs
     feed: true
 ---
 
@@ -75,36 +72,14 @@ body { background: #1c1c1e; color: #e5e7eb; }
 
 ::::: {.aman-panel}
 
-<h2 class="aman-panel-title">Elsewhere</h2>
-
-:::: {.aman-grid}
-
-::: {.aman-card}
-<h3>Tools and Simulators</h3>
-- [Webots tutorial (original site)](https://pratik-ingle.github.io/webots_tutorial/)
-- [HMM POS tagger code](https://github.com/pratik-ingle/HMM-tagger)
-- [GitHub](https://github.com/pratik-ingle)
-:::
-
-::: {.aman-card}
-<h3>Older Writing</h3>
-- [VQE from scratch on Medium](https://medium.com/analytics-vidhya/variational-quantum-eigensolver-from-scratch-finding-ground-state-energy-of-hamiltonian-a5c13d5268f1)
-- [Projects portfolio](projects.qmd)
-- [RSS feed](blog.xml)
-:::
-
-::::
-
-:::::
-
-::::: {.aman-panel}
-
 <h2 class="aman-panel-title">All Posts</h2>
 
 ::: {.aman-card .aman-table}
 ::: {#all-posts}
 :::
 :::
+
+<p class="aman-footlinks">[RSS feed](blog.xml) · [GitHub](https://github.com/pratik-ingle) · [Projects](projects.qmd)</p>
 
 :::::
 

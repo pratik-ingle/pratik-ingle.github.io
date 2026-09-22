@@ -24,5 +24,13 @@
       "/posts/tutorials/getting-started-with-webots/index.html",
       "/posts/quantum/vqe-from-scratch/index.html"
     ]
+  },
+  {
+    "listing": "/zz-dbg.html",
+    "items": [
+      "/posts/learning/mae-vs-jepa/index.html",
+      "/posts/learning/tactile-sensing-normal-shear/index.html",
+      "/posts/learning/mujoco-tactile-sensor-simulation/index.html"
+    ]
   }
 ]

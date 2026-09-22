@@ -95,9 +95,9 @@ ul.task-list{list-style: none;}
     }
 
     const options = {
-      valueNames: ['listing-title','listing-date','listing-categories','listing-description','listing-image','listing-comments','listing-path','listing-author','listing-filename','listing-file-modified','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] }],
+      valueNames: ['listing-title','listing-date','listing-categories','listing-description','listing-image','listing-external-url','listing-comments','listing-path','listing-author','listing-filename','listing-file-modified','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] }],
       
-      searchColumns: ["listing-title","listing-date","listing-categories","listing-description","listing-image","listing-comments","listing-path","listing-author","listing-filename","listing-file-modified","listing-reading-time"],
+      searchColumns: ["listing-title","listing-date","listing-categories","listing-description","listing-image","listing-external-url","listing-comments","listing-path","listing-author","listing-filename","listing-file-modified","listing-reading-time"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -123,9 +123,9 @@ ul.task-list{list-style: none;}
     }
 
     const options = {
-      valueNames: ['listing-title','listing-date','listing-categories','listing-description','listing-image','listing-comments','listing-path','listing-author','listing-filename','listing-file-modified','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] }],
+      valueNames: ['listing-title','listing-date','listing-categories','listing-description','listing-image','listing-external-url','listing-comments','listing-path','listing-author','listing-filename','listing-file-modified','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] }],
       
-      searchColumns: ["listing-title","listing-date","listing-categories","listing-description","listing-image","listing-comments","listing-path","listing-author","listing-filename","listing-file-modified","listing-reading-time"],
+      searchColumns: ["listing-title","listing-date","listing-categories","listing-description","listing-image","listing-external-url","listing-comments","listing-path","listing-author","listing-filename","listing-file-modified","listing-reading-time"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -151,9 +151,9 @@ ul.task-list{list-style: none;}
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
+      valueNames: ['listing-title','listing-date','listing-categories','listing-description','listing-comments','listing-path','listing-author','listing-filename','listing-file-modified','listing-reading-time','listing-image','listing-external-url',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author"],
+      searchColumns: ["listing-title","listing-date","listing-categories","listing-description","listing-comments","listing-path","listing-author","listing-filename","listing-file-modified","listing-reading-time","listing-image","listing-external-url"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -283,7 +283,7 @@ Hands-on guides and teaching material
 <div id="listing-tutorials-list" class="quarto-listing quarto-listing-container-custom">
 <ul class="aman-list">
 <li>
-<a href="./posts/tutorials/getting-started-with-webots/index.html">Getting Started With Webots</a>
+<a href="https://pratik-ingle.github.io/webots_tutorial/" target="_blank" rel="noopener">Getting Started With Webots</a>
 </li>
 </ul>
 <div class="listing-no-matching d-none">
@@ -301,7 +301,7 @@ Quantum computing and hybrid quantum-classical ML
 <div id="listing-quantum-list" class="quarto-listing quarto-listing-container-custom">
 <ul class="aman-list">
 <li>
-<a href="./posts/quantum/vqe-from-scratch/index.html">Variational Quantum Eigensolver From Scratch</a>
+<a href="https://medium.com/analytics-vidhya/variational-quantum-eigensolver-from-scratch-finding-ground-state-energy-of-hamiltonian-a5c13d5268f1" target="_blank" rel="noopener">Variational Quantum Eigensolver From Scratch</a>
 </li>
 </ul>
 <div class="listing-no-matching d-none">
@@ -313,45 +313,12 @@ No matching items
 </div>
 <div class="aman-panel">
 <h2 class="aman-panel-title anchored">
-Elsewhere
-</h2>
-<div class="aman-grid">
-<div class="aman-card">
-<h3 class="anchored">
-Tools and Simulators
-</h3>
-<ul>
-<li><a href="https://pratik-ingle.github.io/webots_tutorial/">Webots tutorial (original site)</a></li>
-<li><a href="https://github.com/pratik-ingle/HMM-tagger">HMM POS tagger code</a></li>
-<li><a href="https://github.com/pratik-ingle">GitHub</a></li>
-</ul>
-</div>
-<div class="aman-card">
-<h3 class="anchored">
-Older Writing
-</h3>
-<ul>
-<li><a href="https://medium.com/analytics-vidhya/variational-quantum-eigensolver-from-scratch-finding-ground-state-energy-of-hamiltonian-a5c13d5268f1">VQE from scratch on Medium</a></li>
-<li><a href="./projects.html">Projects portfolio</a></li>
-<li><a href="blog.xml">RSS feed</a></li>
-</ul>
-</div>
-</div>
-</div>
-<div class="aman-panel">
-<h2 class="aman-panel-title anchored">
 All Posts
 </h2>
 <div class="aman-card aman-table">
-<div id="listing-all-posts" class="quarto-listing quarto-listing-container-table">
-<div class="listing-actions-group">
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
-</div>
+<div id="listing-all-posts" class="quarto-listing quarto-listing-container-custom">
 
-<table class="quarto-listing-table table">
+<table class="table aman-posts-table">
 <thead>
 <tr>
 <th>
@@ -365,60 +332,60 @@ Categories
 </th>
 </tr>
 </thead>
-<tbody class="list">
-<tr data-index="0" data-categories="learning,simulation,tactile sensing,MuJoCo" data-listing-date-sort="1785276000000" data-listing-file-modified-sort="1789990050115" data-listing-reading-time-sort="1.175" data-listing-title-sort="Simulating a Tactile Sensor in MuJoCo" data-listing-filename-sort="index.qmd">
+<tbody>
+<tr>
 <td class="listing-date">
 July 29, 2026
 </td>
-<td class="listing-title">
-<a href="./posts/learning/mujoco-tactile-sensor-simulation/index.html" class="title">Simulating a Tactile Sensor in MuJoCo</a>
+<td>
+<a href="./posts/learning/mujoco-tactile-sensor-simulation/index.html">Simulating a Tactile Sensor in MuJoCo</a>
 </td>
 <td class="listing-categories">
-learning,simulation,tactile sensing,MuJoCo
+learning, simulation, tactile sensing, MuJoCo
 </td>
 </tr>
-<tr data-index="1" data-categories="learning,tactile sensing,robotics" data-listing-date-sort="1784671200000" data-listing-file-modified-sort="1789990050115" data-listing-reading-time-sort="1.075" data-listing-title-sort="Normal and Shear Forces in Tactile Sensing" data-listing-filename-sort="index.qmd">
+<tr>
 <td class="listing-date">
 July 22, 2026
 </td>
-<td class="listing-title">
-<a href="./posts/learning/tactile-sensing-normal-shear/index.html" class="title">Normal and Shear Forces in Tactile Sensing</a>
+<td>
+<a href="./posts/learning/tactile-sensing-normal-shear/index.html">Normal and Shear Forces in Tactile Sensing</a>
 </td>
 <td class="listing-categories">
-learning,tactile sensing,robotics
+learning, tactile sensing, robotics
 </td>
 </tr>
-<tr data-index="2" data-categories="learning,self-supervised learning,representation learning" data-listing-date-sort="1784066400000" data-listing-file-modified-sort="1789990050114" data-listing-reading-time-sort="1.39" data-listing-title-sort="MAE vs JEPA: Two Ways to Learn Representations Without Labels" data-listing-filename-sort="index.qmd">
+<tr>
 <td class="listing-date">
 July 15, 2026
 </td>
-<td class="listing-title">
-<a href="./posts/learning/mae-vs-jepa/index.html" class="title">MAE vs JEPA: Two Ways to Learn Representations Without Labels</a>
+<td>
+<a href="./posts/learning/mae-vs-jepa/index.html">MAE vs JEPA: Two Ways to Learn Representations Without Labels</a>
 </td>
 <td class="listing-categories">
-learning,self-supervised learning,representation learning
+learning, self-supervised learning, representation learning
 </td>
 </tr>
-<tr data-index="3" data-categories="quantum,tutorial,VQE" data-listing-date-sort="1638399600000" data-listing-file-modified-sort="1789990141025" data-listing-reading-time-sort="3.325" data-listing-title-sort="Variational Quantum Eigensolver From Scratch" data-listing-filename-sort="index.qmd">
+<tr>
 <td class="listing-date">
 December 2, 2021
 </td>
-<td class="listing-title">
-<a href="./posts/quantum/vqe-from-scratch/index.html" class="title">Variational Quantum Eigensolver From Scratch</a>
+<td>
+<a href="https://medium.com/analytics-vidhya/variational-quantum-eigensolver-from-scratch-finding-ground-state-energy-of-hamiltonian-a5c13d5268f1" target="_blank" rel="noopener">Variational Quantum Eigensolver From Scratch</a>
 </td>
 <td class="listing-categories">
-quantum,tutorial,VQE
+quantum, tutorial, VQE
 </td>
 </tr>
-<tr data-index="4" data-categories="tutorials,robotics,Webots" data-listing-date-sort="1638313200000" data-listing-file-modified-sort="1789990050115" data-listing-reading-time-sort="2.3" data-listing-title-sort="Getting Started With Webots" data-listing-filename-sort="index.qmd">
+<tr>
 <td class="listing-date">
 December 1, 2021
 </td>
-<td class="listing-title">
-<a href="./posts/tutorials/getting-started-with-webots/index.html" class="title">Getting Started With Webots</a>
+<td>
+<a href="https://pratik-ingle.github.io/webots_tutorial/" target="_blank" rel="noopener">Getting Started With Webots</a>
 </td>
 <td class="listing-categories">
-tutorials,robotics,Webots
+tutorials, robotics, Webots
 </td>
 </tr>
 </tbody>
@@ -429,6 +396,9 @@ No matching items
 </div>
 </div>
 </div>
+<p class="aman-footlinks">
+<a href="blog.xml">RSS feed</a> · <a href="https://github.com/pratik-ingle">GitHub</a> · <a href="./projects.html">Projects</a>
+</p>
 </div>
 </div>
 

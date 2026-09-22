@@ -4,6 +4,7 @@ date: 2021-12-01
 categories: [tutorials, robotics, Webots]
 description: "A beginner tutorial for creating a Webots project, adding an e-puck robot, and writing simple controllers."
 image: ../../../images/webot.gif
+external-url: https://pratik-ingle.github.io/webots_tutorial/
 comments:
   utterances:
     repo: pratik-ingle/pratik-ingle.github.io

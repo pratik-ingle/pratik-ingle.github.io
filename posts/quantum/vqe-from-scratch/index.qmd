@@ -4,6 +4,7 @@ date: 2021-12-02
 categories: [quantum, tutorial, VQE]
 description: "A compact explanation of VQE and the parts needed to implement it."
 image: ../../../images/vqe.png
+external-url: https://medium.com/analytics-vidhya/variational-quantum-eigensolver-from-scratch-finding-ground-state-energy-of-hamiltonian-a5c13d5268f1
 comments:
   utterances:
     repo: pratik-ingle/pratik-ingle.github.io
