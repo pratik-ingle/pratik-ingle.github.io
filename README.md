@@ -9,10 +9,15 @@ GitHub Pages for this `pratik-ingle.github.io` user site is currently configured
 ## Local workflow
 
 ```bash
-quarto preview
-quarto render
-rsync -a docs/ ./
+quarto preview   # live preview while editing
+./deploy.sh      # quarto render + mirror docs/ into the repo root
+git add -A && git commit -m "..." && git push
 ```
+
+Do not delete the rendered `*.html`, `site_libs/`, `posts/**/*.html`, etc. from the
+repository root. If they are missing, GitHub Pages falls back to rendering this
+README with Jekyll and the site shows the README instead of the home page.
+A `.nojekyll` file is kept at the root so Jekyll never processes the site.
 
 ## Add a blog post
 
