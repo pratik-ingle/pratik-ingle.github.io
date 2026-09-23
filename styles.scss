@@ -227,8 +227,14 @@ iframe.cv-frame {
   .nl-hero {
     grid-template-columns: 1fr;
   }
+  .nl-photo {
+    display: flex;
+    justify-content: center;
+  }
   .nl-photo img {
     max-width: 260px;
+    margin-left: auto;
+    margin-right: auto;
   }
   .nl-quicklinks ul {
     columns: 1;
