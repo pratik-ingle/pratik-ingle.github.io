@@ -31,11 +31,19 @@ Before my PhD, I worked on collective robotics and decision-making in dynamic en
 
 ## Publications
 
-1. **Pratik Ingle**, Jorn Lambertsen, Kasper Stoy, and Andres Faina. 2026. *Scalable Surface-Based Manipulation Through Modularity and Inter-Module Object Transfer*. [arXiv:2601.21884](https://arxiv.org/abs/2601.21884).
+1. **Pratik Ingle** et al. *Suspended-Fabric Robotic Manipulation Surfaces: Modelling, Design Space, and Multimodular Extension*. Under review, IEEE International Conference on Robotics and Automation (ICRA 2027), South Korea.
 
-2. **Pratik Ingle**, Kasper Stoy, and Andres Faina. 2025. *Heterogeneous object manipulation on nonlinear soft surface through linear controller*. IEEE 21st International Conference on Automation Science and Engineering (CASE), 1780-1787. [DOI](https://doi.org/10.1109/CASE58245.2025.11163787).
+2. **Pratik Ingle** et al. *Survey of Robotic Manipulation Surfaces: Challenges and Opportunities*. Under review, International Journal of Robotics Research.
 
-3. **Pratik Ingle**, Kasper Stoy, and Andres Faina. 2025. *Soft Manipulation Surface With Reduced Actuator Density For Heterogeneous Object Manipulation*. IEEE 8th International Conference on Soft Robotics (RoboSoft), selected for oral presentation. [DOI](https://doi.org/10.1109/RoboSoft63089.2025.11020841).
+3. **Pratik Ingle** et al. 2026. *Scalable, Distributed Control of a Manipulation Surface with Emergent Properties*. 18th International Conference on the Simulation of Adaptive Behavior (SAB 2026), Germany.
+
+4. **Pratik Ingle**, Jorn Lambertsen, Kasper Stoy, and Andres Faina. 2026. *Scalable Surface-Based Manipulation Through Modularity and Inter-Module Object Transfer*. [arXiv:2601.21884](https://arxiv.org/abs/2601.21884).
+
+5. **Pratik Ingle**, Kasper Stoy, and Andres Faina. 2025. *Heterogeneous object manipulation on nonlinear soft surface through linear controller*. IEEE 21st International Conference on Automation Science and Engineering (CASE), 1780-1787. [DOI](https://doi.org/10.1109/CASE58245.2025.11163787).
+
+6. **Pratik Ingle**, Kasper Stoy, and Andres Faina. 2025. *Soft Manipulation Surface With Reduced Actuator Density For Heterogeneous Object Manipulation*. IEEE 8th International Conference on Soft Robotics (RoboSoft), selected for oral presentation. [DOI](https://doi.org/10.1109/RoboSoft63089.2025.11020841).
+
+7. **Pratik Ingle** et al. 2024. *Moving Depot (MOD): An Efficient Depot Motion Strategy for Multi-Robot Foraging*. 14th International Conference on Swarm Intelligence (ANTS 2024), Germany.
 
 ## Talks {#talks}
 
