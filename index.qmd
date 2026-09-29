@@ -56,9 +56,9 @@ Full list on [Google Scholar](https://scholar.google.com/citations?hl=en&user=J_
 - **Under review**: Suspended-Fabric Robotic Manipulation Surfaces: Modelling, Design Space, and Multimodular Extension - IEEE ICRA 2027.
 - **Under review**: Survey of Robotic Manipulation Surfaces: Challenges and Opportunities - International Journal of Robotics Research.
 - **2026**: Scalable, Distributed Control of a Manipulation Surface with Emergent Properties - SAB 2026 (Simulation of Adaptive Behavior), Germany.
-- **2026**: [Scalable Surface-Based Manipulation Through Modularity and Inter-Module Object Transfer](https://arxiv.org/abs/2601.21884) - with J. Lambertsen, K. Støy, A. Faíña. arXiv:2601.21884. [Explainer post](posts/research/scalable-surface-based-manipulation/index.qmd).
-- **2025**: [Heterogeneous Object Manipulation on Nonlinear Soft Surface Through Linear Controller](https://doi.org/10.1109/CASE58245.2025.11163787) - IEEE CASE 2025. [Explainer post](posts/research/linear-control-nonlinear-soft-surface/index.qmd).
-- **2025**: [Soft Manipulation Surface With Reduced Actuator Density For Heterogeneous Object Manipulation](https://doi.org/10.1109/RoboSoft63089.2025.11020841) - IEEE RoboSoft 2025, oral presentation. [Explainer post](posts/research/reduced-actuator-soft-manipulation-surface/index.qmd).
+- **2026**: [Scalable Surface-Based Manipulation Through Modularity and Inter-Module Object Transfer](https://arxiv.org/abs/2601.21884) - with J. Lambertsen, K. Støy, A. Faíña. arXiv:2601.21884.
+- **2025**: [Heterogeneous Object Manipulation on Nonlinear Soft Surface Through Linear Controller](https://doi.org/10.1109/CASE58245.2025.11163787) - IEEE CASE 2025.
+- **2025**: [Soft Manipulation Surface With Reduced Actuator Density For Heterogeneous Object Manipulation](https://doi.org/10.1109/RoboSoft63089.2025.11020841) - IEEE RoboSoft 2025, oral presentation.
 - **2024**: Moving Depot (MOD): An Efficient Depot Motion Strategy for Multi-Robot Foraging - ANTS 2024, Germany.
 
 #### Talks {#talks}
@@ -73,9 +73,9 @@ Full list on [Google Scholar](https://scholar.google.com/citations?hl=en&user=J_
 
 I work on robotic manipulation surfaces: soft, fabric-based platforms driven by sparse actuators that move heterogeneous and fragile objects without grasping. Current threads:
 
-- [Soft manipulation surfaces](research.qmd) - reduced actuator density, geometric control, heterogeneous objects.
-- [Modular manipulation](posts/research/scalable-surface-based-manipulation/index.qmd) - shared-boundary actuation and inter-module object transfer.
-- [Tactile sensing](posts/learning/tactile-sensing-normal-shear/index.qmd) - MAE/JEPA representation learning on normal and shear tactile channels, MuJoCo sensor simulation (UCL CRISP Lab).
+- **Soft manipulation surfaces** - reduced actuator density, geometric control, heterogeneous objects.
+- **Modular manipulation** - shared-boundary actuation and inter-module object transfer.
+- **Tactile sensing** - MAE/JEPA representation learning on normal and shear tactile channels, MuJoCo sensor simulation (UCL CRISP Lab).
 - Earlier: swarm robotics, multi-robot foraging, and collective decision-making.
 
 #### Experience
@@ -93,16 +93,6 @@ See the [full portfolio](projects.qmd).
 - [Decision making in collectives](projects/dynamic-individual-memory.qmd) - dynamic individual memory and consensus in changing environments.
 - [Influencer agents with quantum circuits](projects/quantum-influencer-agents.qmd) - leader selection for flock control.
 - [UVC disinfection UAV](projects/uvc-disinfection-uav.qmd) - autonomous aerial robot built during COVID-19.
-
-#### Writing
-
-Recent posts from the [blog](blog.qmd).
-
-- [MAE vs JEPA](posts/learning/mae-vs-jepa/index.qmd) - two ways to learn representations without labels.
-- [Normal and shear forces in tactile sensing](posts/learning/tactile-sensing-normal-shear/index.qmd) - why 3-channel tactile sensors matter.
-- [Simulating a tactile sensor in MuJoCo](posts/learning/mujoco-tactile-sensor-simulation/index.qmd) - notes on sim-based data collection.
-- [Getting started with Webots](posts/tutorials/getting-started-with-webots/index.qmd) - a beginner tutorial.
-- [VQE from scratch](posts/quantum/vqe-from-scratch/index.qmd) - finding the ground-state energy of a Hamiltonian.
 
 #### Teaching and Service
 
