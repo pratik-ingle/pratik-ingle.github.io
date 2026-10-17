@@ -5,3 +5,7 @@ _freeze/
 .Rproj.user/
 
 /.quarto/
+
+# Staging inbox for notes dragged out of the Obsidian vault.
+# The converted post under posts/notes/ is the source of truth.
+/Blogs/

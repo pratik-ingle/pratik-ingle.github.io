@@ -23,9 +23,9 @@ body { background: #eef1f5; }
 Pratik is a **robotics researcher** working on grasp-free manipulation: moving objects by shaping and controlling soft, modular surfaces instead of gripping them. He is a PhD candidate at the IT University of Copenhagen (REAL Lab) and is currently a visiting researcher at University College London working on tactile sensing and self-supervised learning.
 
 ::: {.nl-quicklinks}
-- **Papers** → [Google Scholar](https://scholar.google.com/citations?hl=en&user=J_lEQ7kAAAAJ) or [CV](cv.qmd)
+- **Papers** → [Google Scholar](https://scholar.google.com/citations?hl=en&user=J_lEQ7kAAAAJ)
 - **Talks** → [See list](#talks)
-- **Research** → [Overview](research.qmd)
+- **Research** → [Overview](research.qmd) or [MANTA-RAY project page](https://pratik-ingle.github.io/mantaray.github.io/)
 - **Projects** → [Portfolio](projects.qmd)
 - **Blog** → [Notes and tutorials](blog.qmd)
 - **Code** → [GitHub](https://github.com/pratik-ingle)
@@ -38,7 +38,6 @@ Pratik is a **robotics researcher** working on grasp-free manipulation: moving o
 [<i class="bi bi-linkedin"></i>](https://www.linkedin.com/in/pratik-ingle-03034b152 "LinkedIn")
 [<i class="bi bi-envelope-fill"></i>](mailto:prin@itu.dk "Email")
 [<i class="bi bi-mastodon"></i>](https://ecoevo.social/@Pratik "Mastodon")
-[<i class="bi bi-file-earmark-pdf"></i>](files/Pratik_CV.pdf "CV (PDF)")
 :::
 
 ::::
@@ -58,7 +57,7 @@ Full list on [Google Scholar](https://scholar.google.com/citations?hl=en&user=J_
 - **2026**: Scalable, Distributed Control of a Manipulation Surface with Emergent Properties - SAB 2026 (Simulation of Adaptive Behavior), Germany.
 - **2026**: [Scalable Surface-Based Manipulation Through Modularity and Inter-Module Object Transfer](https://arxiv.org/abs/2601.21884) - with J. Lambertsen, K. Støy, A. Faíña. arXiv:2601.21884.
 - **2025**: [Heterogeneous Object Manipulation on Nonlinear Soft Surface Through Linear Controller](https://doi.org/10.1109/CASE58245.2025.11163787) - IEEE CASE 2025.
-- **2025**: [Soft Manipulation Surface With Reduced Actuator Density For Heterogeneous Object Manipulation](https://doi.org/10.1109/RoboSoft63089.2025.11020841) - IEEE RoboSoft 2025, oral presentation.
+- **2025**: [Soft Manipulation Surface With Reduced Actuator Density For Heterogeneous Object Manipulation](https://doi.org/10.1109/RoboSoft63089.2025.11020841) - IEEE RoboSoft 2025, oral presentation. [MANTA-RAY project page](https://pratik-ingle.github.io/mantaray.github.io/).
 - **2024**: Moving Depot (MOD): An Efficient Depot Motion Strategy for Multi-Robot Foraging - ANTS 2024, Germany.
 
 #### Talks {#talks}
@@ -103,7 +102,6 @@ See the [full portfolio](projects.qmd).
 #### Other
 
 - [Contact](mailto:prin@itu.dk) - prin@itu.dk.
-- [CV](cv.qmd) - PDF and overview.
 - [Google Scholar](https://scholar.google.com/citations?hl=en&user=J_lEQ7kAAAAJ) · [GitHub](https://github.com/pratik-ingle) · [LinkedIn](https://www.linkedin.com/in/pratik-ingle-03034b152)
 
 :::::

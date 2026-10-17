@@ -16,11 +16,21 @@ listing:
     contents: posts/quantum/*/index.qmd
     sort: "date desc"
     template: _templates/post-list.ejs
+  - id: notes-list
+    contents: posts/notes/*/index.qmd
+    sort: "date desc"
+    template: _templates/post-list.ejs
+  - id: essays-list
+    contents: posts/essays/*/index.qmd
+    sort: "date desc"
+    template: _templates/post-list.ejs
   - id: all-posts
     contents:
       - posts/learning/*/index.qmd
       - posts/tutorials/*/index.qmd
       - posts/quantum/*/index.qmd
+      - posts/notes/*/index.qmd
+      - posts/essays/*/index.qmd
     sort: "date desc"
     template: _templates/post-table.ejs
     feed: true
@@ -63,6 +73,20 @@ body { background: #1c1c1e; color: #e5e7eb; }
 <h3>Quantum Notes</h3>
 <p class="aman-card-sub">Quantum computing and hybrid quantum-classical ML</p>
 ::: {#quantum-list}
+:::
+:::
+
+::: {.aman-card}
+<h3>Notes</h3>
+<p class="aman-card-sub">Reading notes and open questions, straight from my vault</p>
+::: {#notes-list}
+:::
+:::
+
+::: {.aman-card}
+<h3>Essays</h3>
+<p class="aman-card-sub">Longer arguments, with the evidence shown</p>
+::: {#essays-list}
 :::
 :::
 

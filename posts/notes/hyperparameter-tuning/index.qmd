@@ -1,0 +1,32 @@
+---
+title: "Hyperparameter tuning"
+date: 2026-09-17
+categories: [notes]
+description: "TODO: one-sentence summary for the blog listing and RSS."
+draft: true
+comments:
+  utterances:
+    repo: pratik-ingle/pratik-ingle.github.io
+---
+
+<https://aman.ai/primers/ai/hyperparameter-tuning/>
+
+Questions:
+
+1. Why are their two optimisation functions, one for training loss/error and validation loss/error?
+   $$\theta^*(\lambda) = argmin_\theta L_{train}(\theta;\lambda)$$
+   $$\lambda^* = argmin_{\lambda \in } L_{val}(\theta^*(\lambda))$$
+
+   Ans:
+
+   ::: {.callout-warning appearance="simple"}
+   Missing attachment: `bilevel_ridge_train_vs_val.html`
+   :::
+
+2. What is an optimzers? and what are different optimizers (SGD, Adam, RMSProp, etc)?
+
+   ::: {.callout-warning appearance="simple"}
+   Missing attachment: `optimizer_trajectories_ill_conditioned_quadratic.html`
+   :::
+
+<!-- obsidian-import: source="Hyperparameter tuning.md" sha256=3f3510938f294d2f1a7041a7fee8b7a104f8b9544aebf1e2eafc168bd35a5d39 generated=2026-09-29 -->

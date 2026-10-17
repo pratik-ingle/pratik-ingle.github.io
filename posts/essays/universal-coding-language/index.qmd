@@ -1,0 +1,266 @@
+---
+title: "The Last Programming Language Won't Be for Humans"
+subtitle: "Coding has been declared dead three times. This time it's the language that goes, not the job."
+date: 2026-09-29
+categories: [essays, AI, programming languages]
+description: "Coding has been declared dead three times. This time it's the language that goes, not the job."
+toc: true
+toc-depth: 2
+bibliography: references.bib
+link-citations: true
+comments:
+  utterances:
+    repo: pratik-ingle/pratik-ingle.github.io
+---
+
+::: {.callout-tip title="In short" appearance="simple"}
+Coding agents already write close to half of professional developers' code, yet trust in that code is falling. This post maps six futures for programming, the evidence behind each, and the four gates between today and a language only machines read. My bet: people keep writing precise specifications, and everything beneath them stops being written for human eyes.
+:::
+
+## 1. Coding has died before
+
+In 1957, John Backus's team released Fortran as an "automatic coding system" [@backus1957]. The compiler would write the machine code, and much of the programmer's job was supposed to go with it. In 2023, Andrej Karpathy declared English "the hottest new programming language" [@karpathy2023]. Two years later he named "vibe coding": building software by talking to a model and never reading the code it writes [@karpathy2025].
+
+In between, Edsger Dijkstra made the case for the defence. Programming in natural language, he argued in 1978, is foolish, because precision needs formal notation [@dijkstra1978].
+
+Both sides were half right. The layer being mourned never died; it sank. Nobody writes machine code by hand anymore, yet every program still becomes machine code. I think the same thing is happening again, one level up. Typing code is dying; code is not. What humans write is moving up, toward the specification. What machines exchange is sinking below readability: first into something no human needs to read, and eventually into something no human can.
+
+Making that case takes three things: an honest look at where we are, a map of where today's research leads, and an account of the gates between the two.
+
+## 2. What the data says
+
+Two claims circulate more than any others: that coding is dead, and that almost nobody writes code by hand anymore. Neither survives the surveys.
+
+JetBrains asked more than 15,000 professional developers how last month's code was produced. On average, they said agents had written about 47% of it on their own, while 27% was still written entirely by hand [@jetbrains2026agents]. Over half now hand-write less than a fifth of their code, and one in five writes none at all. But the fully agentic group, where agents produce more than 80% of the code, is still a 22% minority. Ninety percent of professional developers use a coding agent at work at least weekly [@jetbrains2026adoption]. At the top end, Google says 75% of its new code is AI-generated and approved by engineers, up from 25% in 2024 [@semafor2026google].
+
+Adoption, then, is solved. Trust is not. Stack Overflow's survey of 49,000 developers found that 84% use or plan to use AI tools, but only 29% trust their output, down from 40% the year before. Another 46% actively distrust it, and 45% say debugging AI-generated code takes longer than writing it themselves [@so2025]. Sonar found that 96% of developers do not fully trust AI code to be correct, yet only 48% always check it before committing [@sonar2026].
+
+The productivity evidence is just as mixed. In METR's 2025 randomized controlled trial, experienced open-source developers working in their own repositories were 19% *slower* with AI, while believing it had sped them up by about 20% [@metr2025]. An earlier Copilot trial found a 56% speed-up, but on a single, simple, greenfield task [@peng2023]. Context matters. METR's 2026 follow-up could not produce a reliable estimate at all: too many developers declined to submit tasks they did not want to do without AI, which skewed the sample [@metr2026]. That says more about adoption than productivity, but it says it loudly.
+
+So hand-written code is a minority, not a rounding error. And the variable that decides what happens next is not adoption but trust, because trust decides whether a human still has to open the file.
+
+## 3. Six futures on one map
+
+Any proposal for the future of programming can be placed on two axes: who reads the code (humans, or only machines) and how it is represented (text tokens, or latent vectors). Hover over a point to see its trajectory, its evidence, and what would break it.
+
+::: {#fig-map}
+
+```{=html}
+<div style="height:520px; width:100%;">                        <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-4.1.1.min.js" integrity="sha256-O24V1F27f8pb0glCkelh3cVHLNiHAJ5gCaVtq2aNch8=" crossorigin="anonymous"></script>                <div id="87345748-7ce8-41eb-a86f-b5dc060edf6f" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("87345748-7ce8-41eb-a86f-b5dc060edf6f")) {                    Plotly.newPlot(                        "87345748-7ce8-41eb-a86f-b5dc060edf6f",                        [{"customdata":[["S0","Plateau","AI stays autocomplete; humans own the code.","84% adoption vs 29% trust (Stack Overflow 2025); METR RCT: 19% slower.","Trust and measured productivity rise together."],["S1","English on top","The prompt is the program; source becomes a build artifact.","47% of code agent-written (JetBrains 2026); Google at 75%.","Dijkstra's precision objection: 45% say debugging AI code takes longer."],["S2","Typed bridge","Humans read specs, types and proofs; machines write bodies.","TypeScript #1 on GitHub (2025); Clover-style verified generation.","Verification stays niche; security pass rate stuck at 56%."]],"hovertemplate":"\u003cb\u003e%{customdata[0]} %{customdata[1]}\u003c\u002fb\u003e\u003cbr\u003e\u003cb\u003eTrajectory:\u003c\u002fb\u003e %{customdata[2]}\u003cbr\u003e\u003cb\u003eEvidence:\u003c\u002fb\u003e %{customdata[3]}\u003cbr\u003e\u003cb\u003eBreaks if:\u003c\u002fb\u003e %{customdata[4]}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#5F5E5A","size":16,"symbol":"circle"},"mode":"markers+text","name":"In production","text":["S0 Plateau","S1 English on top","S2 Typed bridge"],"textposition":"top center","x":[0.08,0.3,0.45],"y":[0.1,0.18,0.36],"type":"scatter"},{"customdata":[["S3","Compressed grammar","Same AST, fewer tokens; humans see Python, models see SimPy.","SimPy cuts 10-13%; formatting is 13-15% of Java\u002fC#\u002fC++ tokens.","Tokenizer-free models absorb the gain at the model layer."],["S4","Universal IR","An AI-native intermediate representation one rung above LLVM.","Platonic Representation Hypothesis; LLVM, MLIR and Wasm as precedent.","No cross-vendor standard exists."],["S5","Neuralese","Agents exchange activations; text is generated only on request.","DroidSpeak 2.78x prefill speedup; Cache-to-Cache (ICLR 2026); Coconut.","Monitorability and regulation demand a readable trace."]],"hovertemplate":"\u003cb\u003e%{customdata[0]} %{customdata[1]}\u003c\u002fb\u003e\u003cbr\u003e\u003cb\u003eTrajectory:\u003c\u002fb\u003e %{customdata[2]}\u003cbr\u003e\u003cb\u003eEvidence:\u003c\u002fb\u003e %{customdata[3]}\u003cbr\u003e\u003cb\u003eBreaks if:\u003c\u002fb\u003e %{customdata[4]}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#534AB7","size":16,"symbol":"diamond"},"mode":"markers+text","name":"Research","text":["S3 Compressed grammar","S4 Universal IR","S5 Neuralese"],"textposition":"top center","x":[0.7,0.82,0.92],"y":[0.2,0.62,0.9],"type":"scatter"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"white","showlakes":true,"showland":true,"subunitcolor":"#C8D4E3"},"hoverlabel":{"align":"left"},"hovermode":"closest","paper_bgcolor":"white","plot_bgcolor":"white","polar":{"angularaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""},"bgcolor":"white","radialaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"yaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"zaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"baxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"bgcolor":"white","caxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2}}},"shapes":[{"line":{"color":"rgba(0,0,0,0.18)","dash":"dot","width":1},"type":"line","x0":0.04,"x1":0.96,"y0":0.04,"y1":0.96}],"legend":{"title":{"text":"Status"},"orientation":"h","y":1.08,"x":0},"hoverlabel":{"align":"left","bgcolor":"white"},"margin":{"l":40,"r":20,"t":40,"b":60},"xaxis":{"range":[0,1.02],"tickvals":[0.06,0.94],"ticktext":["Humans read it","Only machines read it"],"title":{"text":"Who reads the code"},"showgrid":false,"zeroline":false},"yaxis":{"range":[0,1.02],"tickvals":[0.06,0.94],"ticktext":["Text tokens","Latent vectors"],"title":{"text":"How the code is represented"},"showgrid":false,"zeroline":false},"height":520},                        {"displayModeBar": false, "responsive": true}                    )                };            </script>        </div>
+```
+
+Six scenarios for the future of programming. Everything in production sits bottom-left; every research trajectory pushes up and right.
+:::
+
+The question that matters is what would move the industry along that diagonal, and whether every step on it is one we should want. Here are the six scenarios in brief.
+
+### S0 · Plateau: "AI as autocomplete"
+
+- **Trajectory.** Adoption without trust. Agents draft, humans review, and code stays multilingual and human-owned.
+- **Evidence.** The trust numbers and METR's measured slowdown above [@so2025; @metr2025].
+- **Breaks if.** Trust and measured productivity rise together.
+- **Status.** Today. This is the null hypothesis, and the data currently supports it better than any alternative.
+
+### S1 · English on top: "The prompt is the program"
+
+- **Trajectory.** Karpathy's arc: English in, code out, code never opened. Source becomes a build artifact.
+- **Evidence.** Agents alone write about 47% of professional developers' code; Google reports 75% [@jetbrains2026agents; @semafor2026google].
+- **Breaks if.** Dijkstra's precision objection bites. Already 45% of developers say debugging AI code takes longer than writing it [@so2025].
+- **Status.** In production, though "never opened" is aspirational: about half of developers still check every commit [@sonar2026].
+
+### S2 · Typed bridge: "The spec is the source"
+
+- **Trajectory.** Languages that give agents machine-checkable feedback win. Humans read types, contracts and specifications; machines write the function bodies.
+- **Evidence.** TypeScript overtook Python as GitHub's most-used language in 2025, a shift GitHub partly credits to AI [@octoverse2025]. JavaScript/TypeScript and Go developers delegate 54–55% of their code to agents, against 33% for C and C++ [@jetbrains2026agents]. Closed-loop pipelines such as Clover check generated Dafny code against its own annotations and docstrings [@clover2023].
+- **Breaks if.** Verification tooling stays niche while AI code passes security tests only 56% of the time [@veracode2026].
+- **Status.** In production for types; pilot stage for proofs.
+
+### S3 · Compressed grammar: "Same meaning, fewer tokens"
+
+- **Trajectory.** Keep the language but strip out the parts only humans need. Humans see Python; the model sees a token-lean twin.
+- **Evidence.** Formatting alone is 13–15% of Java, C# and C++ tokens, and SimPy trims a further 10–13% with identical syntax trees [@hiddencost2025; @sun2024simpy]. Section 4 has the details.
+- **Breaks if.** Tokenizers disappear, or models stay clumsy in unfamiliar notation (Gate 3).
+- **Status.** Research prototype.
+
+### S4 · Universal IR: "One machine language"
+
+- **Trajectory.** An AI-native intermediate representation one rung above LLVM: the thing agents write and exchange, with English above it and machine code below.
+- **Evidence.** LLVM, MLIR and WebAssembly are already universal, unreadable targets, and the Platonic Representation Hypothesis suggests model internals are converging [@huh2024].
+- **Breaks if.** No cross-vendor standard emerges. Every lab has its own tokenizer and its own representation space.
+- **Status.** Analogy only. No artifact exists yet.
+
+### S5 · Neuralese: "No language"
+
+- **Trajectory.** Agents exchange activations, not text. Language is generated only when a human asks for it.
+- **Evidence.** DroidSpeak, Cache-to-Cache, Coconut, Gibberlink, and a decade of emergent-communication research [@droidspeak2024; @c2c2026; @coconut2024; @gibberlink2025; @lazaridou2020].
+- **Breaks if.** Monitorability requirements and regulation insist on a readable trace [@korbak2025].
+- **Status.** Lab.
+
+## 4. What code costs a machine
+
+Programming languages were designed for three audiences: the machine that runs the code, the person who writes it, and the person who reads it six months later. Language models are a fourth audience, and they pay for code in tokens.
+
+Code is more predictable than prose. In 2012, Hindle and colleagues showed that source code has markedly lower cross-entropy than English under the same n-gram models: it is "natural" in the sense of being repetitive and conventional [@hindle2012]. Casalnuovo, Sagae and Devanbu later confirmed the gap across corpora and model families [@casalnuovo2019]. Shannon had estimated printed English at roughly one bit per character [@shannon1951]. Delétang and colleagues tied that tradition to today's models: a language model is a general-purpose compressor, and its loss is a compression rate [@deletang2024]. Seen this way, any token the model could have predicted is overhead. It is there for some other reader.
+
+A coding agent pays that overhead in two ways. The **surface cost** is the tokens needed to write the program down. The **process cost** is the tokens the agent burns reasoning, compiling, failing and revising on its way to a working program. The two are measured differently, and they rank languages differently.
+
+::: {#fig-tokens}
+
+```{=html}
+<div style="height:440px; width:100%;">                            <div id="b53f5524-ebb0-4763-97c1-a6ebcc3668b1" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("b53f5524-ebb0-4763-97c1-a6ebcc3668b1")) {                    Plotly.newPlot(                        "b53f5524-ebb0-4763-97c1-a6ebcc3668b1",                        [{"customdata":["significant","significant","significant","significant","not significant"],"hovertemplate":"Java, %{x}: %{y:.2f}\u00d7 Python (%{customdata})\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#D85A30","opacity":[1.0,1.0,1.0,1.0,0.35]},"name":"Java","x":["Sonnet 4.6","GPT-5.5","GLM-5.2","Qwen 3.6","Gemma 4"],"y":[1.18,1.3,1.34,1.21,0.85],"type":"bar","xaxis":"x","yaxis":"y"},{"customdata":["significant","significant","significant","significant","not significant"],"hovertemplate":"Rust, %{x}: %{y:.2f}\u00d7 Python (%{customdata})\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#534AB7","opacity":[1.0,1.0,1.0,1.0,0.35]},"name":"Rust","x":["Sonnet 4.6","GPT-5.5","GLM-5.2","Qwen 3.6","Gemma 4"],"y":[1.16,1.36,1.57,1.2,1.07],"type":"bar","xaxis":"x","yaxis":"y"},{"customdata":["significant","significant","significant","significant","significant"],"hovertemplate":"OCaml, %{x}: %{y:.2f}\u00d7 Python (%{customdata})\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#1D9E75","opacity":[1.0,1.0,1.0,1.0,1.0]},"name":"OCaml","x":["Sonnet 4.6","GPT-5.5","GLM-5.2","Qwen 3.6","Gemma 4"],"y":[1.28,1.3,1.54,1.69,1.44],"type":"bar","xaxis":"x","yaxis":"y"},{"hovertemplate":"%{x}: %{y}% of tokens\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#888780"},"showlegend":false,"text":["14.7%","13.2%","13.2%","4.0%"],"textposition":"outside","x":["Java","C#","C++","Python"],"y":[14.7,13.2,13.2,4.0],"type":"bar","xaxis":"x2","yaxis":"y2"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"white","showlakes":true,"showland":true,"subunitcolor":"#C8D4E3"},"hoverlabel":{"align":"left"},"hovermode":"closest","paper_bgcolor":"white","plot_bgcolor":"white","polar":{"angularaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""},"bgcolor":"white","radialaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"yaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"zaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"baxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"bgcolor":"white","caxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,0.528]},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"\u00d7 Python output tokens"},"range":[0,1.9]},"xaxis2":{"anchor":"y2","domain":[0.648,1.0]},"yaxis2":{"anchor":"x2","domain":[0.0,1.0],"title":{"text":"% of tokens"},"range":[0,20]},"annotations":[{"font":{"size":16},"showarrow":false,"text":"Process cost: agent output tokens vs Python","x":0.264,"xanchor":"center","xref":"paper","y":1.0,"yanchor":"bottom","yref":"paper"},{"font":{"size":16},"showarrow":false,"text":"Surface cost: share of tokens that are formatting","x":0.8240000000000001,"xanchor":"center","xref":"paper","y":1.0,"yanchor":"bottom","yref":"paper"},{"showarrow":false,"text":"Python = 1.0","x":1,"xanchor":"right","xref":"x domain","y":1.0,"yanchor":"top","yref":"y"}],"shapes":[{"line":{"color":"rgba(0,0,0,0.45)","dash":"dot"},"type":"line","x0":0,"x1":1,"xref":"x domain","y0":1.0,"y1":1.0,"yref":"y"}],"legend":{"orientation":"h","y":-0.18,"x":0},"margin":{"l":40,"r":20,"t":60,"b":40},"barmode":"group","height":440},                        {"displayModeBar": false, "responsive": true}                    )                };            </script>        </div>
+```
+
+Two bills for the same program. Left: output tokens a coding agent spends relative to Python on the same problems, after controlling for problem difficulty (Wu, Anderson and Guha 2026); faded bars are not statistically significant. Right: share of tokens that are whitespace, indentation and line breaks only (Pan et al. 2026).
+:::
+
+**Process cost.** Wu, Anderson and Guha ran five current models as coding agents on the same 100 competitive-programming problems in Python, Java, Rust and OCaml: 2,000 runs in all [@tokenmaxxing2026]. A mixed-effects model let them compare languages on identical problems. Every model was cheapest in Python. OCaml cost 1.28–1.69× as many output tokens across all five. Rust (1.07–1.57×) and Java (0.85–1.34×) depended on the model, and Gemma was the one model where neither penalty was significant.
+
+The mechanism is the interesting part. The extra tokens do not come from longer programs; they come from struggle. In Gemma's stalled OCaml runs, 92% of the failed intermediate solutions were compile errors: the agent was fighting the syntax, not the algorithm. GPT-5.5 fell back to Python to prototype on 27% of OCaml problems before translating. The authors point to training data: The Stack v2 holds roughly 200 GB each of Python and Java, but only 12 GB of Rust and even less OCaml. They add their own caveat: these are self-contained problems, and repository-scale work may behave differently.
+
+**Surface cost.** Martin Alderson ran the GPT-4 tokenizer over Rosetta Code solutions to the same tasks in 19 popular languages. He found a 2.6× spread, from Clojure (the most compact, at 109 tokens per task) to C (the most verbose). Dynamic languages generally won by skipping type declarations, with Haskell and F# close behind thanks to type inference. In a later run, J, an array language written in plain ASCII, averaged about 70 tokens. APL's famous terseness, by contrast, did not survive tokenization: its unusual glyphs each split into several tokens [@alderson2026]. Surface cost depends on how well the tokenizer knows the notation, not just on how short the code looks.
+
+The right-hand panel isolates the purest surface cost: formatting. On The Stack v2, whitespace, indentation and line breaks make up 14.7% of the tokens in Java and 13.2% in C# and C++, but only 4.0% in Python, where indentation carries meaning [@hiddencost2025]. Roughly one token in seven in a Java file exists only so that a human can read it. In the authors' code-completion experiments, advanced models lost essentially nothing when the formatting was stripped out.
+
+The next step is to redesign the grammar itself for the model. Sun and colleagues' SimPy rewrites Python's grammar to drop the tokens and layout only humans need, while keeping the abstract syntax tree identical, so programs convert losslessly in both directions. It cuts token usage by 13.5% for CodeLlama and 10.4% for GPT-4, with task performance maintained or improved [@sun2024simpy]. Token Sugar extends the idea with reversible shorthands for recurring code patterns [@tokensugar2025]. Humans see Python; the model sees something terser.
+
+To see what the process-cost multipliers mean for a real bill, pick a model and a workload.
+
+```{ojs}
+//| echo: false
+processCost = ({
+  "Claude Sonnet 4.6": {Python: 1, Java: 1.18, Rust: 1.16, OCaml: 1.28},
+  "GPT-5.5":           {Python: 1, Java: 1.30, Rust: 1.36, OCaml: 1.30},
+  "GLM-5.2":           {Python: 1, Java: 1.34, Rust: 1.57, OCaml: 1.54},
+  "Qwen 3.6":          {Python: 1, Java: 1.21, Rust: 1.20, OCaml: 1.69},
+  "Gemma 4":           {Python: 1, Java: 0.85, Rust: 1.07, OCaml: 1.44}
+})
+viewof model = Inputs.select(Object.keys(processCost), {label: "Model", value: "GPT-5.5"})
+viewof monthlyTokens = Inputs.range([1, 500], {
+  value: 50, step: 1,
+  label: "Output tokens per month if written in Python (millions)"
+})
+viewof price = Inputs.range([0.5, 30], {
+  value: 10, step: 0.5,
+  label: "Price per million output tokens (USD)"
+})
+costs = Object.entries(processCost[model]).map(([lang, m]) =>
+  ({lang, m, cost: m * monthlyTokens * price}))
+Plot.plot({
+  marginLeft: 70,
+  height: 260,
+  x: {label: null, domain: ["Python", "Java", "Rust", "OCaml"]},
+  y: {label: "USD per month", grid: true},
+  marks: [
+    Plot.barY(costs, {x: "lang", y: "cost", fill: "#534AB7"}),
+    Plot.text(costs, {x: "lang", y: "cost",
+      text: d => `$${Math.round(d.cost).toLocaleString()} (×${d.m.toFixed(2)})`, dy: -8}),
+    Plot.ruleY([0])
+  ]
+})
+```
+
+Readability, in other words, is a tax. It has always been worth paying, because humans read code. The rest of this post asks what happens to the tax when they stop.
+
+## 5. Four gates between agents and neuralese
+
+Here is the argument that started this post. Agents keep improving, so more people rely on them. Human supervision shifts from reading code to testing what it does. With no one reading it, code no longer needs to be readable, so the language is free to optimize for tokens. It converges on a single machine-facing representation. Eventually agents skip language altogether and exchange latent state directly.
+
+Every arrow in that chain is a gate, and each gate has a metric you can watch.
+
+```{mermaid}
+%%| label: fig-gates
+%%| fig-cap: "The chain from coding agents to neuralese. Each arrow is a gate that current data either supports or contradicts."
+flowchart LR
+  S1["S1 English on top"] -->|"G1 agents own<br/>the debug loop"| S2["S2 Typed bridge<br/>spec is the source"]
+  S2 -->|"G2 review moves<br/>to specs and tests"| G3{"G3 where is token<br/>pressure absorbed?"}
+  G3 -->|"in the language"| S3["S3 Compressed grammar"]
+  G3 -->|"in the model"| S4["S4 Universal IR"]
+  S3 --> S4
+  S4 -->|"G4 auditable<br/>projection kept?"| S5["S5 Neuralese"]
+```
+
+### Gate 1: agents must own the debug loop
+
+"Test the outputs instead of reading the code" frees humans only if the agent also fixes what fails. The moment a person opens the file to debug, the pressure for readable code is back. So the thesis is really a claim about agent reliability, not about languages. Current data cuts against it: 45% of developers say debugging AI code takes longer than writing it [@so2025], and 96% do not fully trust it [@sonar2026]. METR sharpens the point. Roughly half of the test-passing SWE-bench Verified pull requests written by agents between mid-2024 and late 2025 would not have been merged by the repositories' own maintainers [@metr2026swebench]. Passing the tests is not the same as being done.
+
+::: {.callout-note title="What to watch"}
+The share of developers who say debugging AI code takes longer than writing it, and the share of agent pull requests merged without human edits. Gate 1 opens when the first falls and the second rises.
+:::
+
+### Gate 2: tests are weaker than reading
+
+Tests check what you thought to test. Security, privacy and side effects are exactly what you didn't. Veracode tracked more than 100 models across four snapshots and found the security pass rate stuck at 56%. Syntax success was near 100%, yet nearly half of tasks introduced a vulnerability, with Python passing 63% of the time and Java only 30% [@veracode2026]. Veracode tests raw models with no security prompting or human review, so the figure measures how often flaws are generated, not how often they ship. But review is precisely the step this chain proposes to remove.
+
+The remedy is specification and proof: the S2 world of Dafny, Lean and Clover. That means the human-facing language does not disappear; it moves up a level. Humans stop typing code, but they do not stop writing precise text.
+
+::: {.callout-note title="What to watch"}
+Adoption of verified-code tooling in CI pipelines, and the continued drift of language share toward statically typed languages.
+:::
+
+### Gate 3: the model may absorb the token pressure, not the language
+
+Grammar redesign saves 10–13% of tokens; stripping formatting saves 4–15%. Meanwhile, the price of a given level of capability has been falling by roughly an order of magnitude a year [@a16z2024], and tokenizer-free architectures have arrived. Meta's Byte Latent Transformer reads raw bytes, grouped into patches by how predictable the next byte is, with no tokenizer at all, and matches token-based models at the 8-billion-parameter scale [@blt2024]. If that approach wins, the inefficiency S3 targets vanishes inside the model, with no change to the language.
+
+Section 4's process-cost data adds a second objection. Agents are cheapest in the languages they have seen most, and burn tokens fighting the syntax of the ones they have seen least. A brand-new, token-optimal language would begin life as the least familiar language in the world (OCaml's problem, magnified) until models were trained on it at scale.
+
+So "less supervision leads to token pressure" holds, but "token pressure leads to a new language" is the weakest link in the chain. The likelier outcome is that the language stays, the tokenizer dies, and S3 is skipped.
+
+::: {.callout-note title="What to watch"}
+Whether a frontier lab ships a tokenizer-free production model, and whether any vendor ships an AI-oriented grammar. Either would settle the question.
+:::
+
+### Gate 4: neuralese needs permission, not just capability
+
+The chain needs less human oversight; governance is moving the other way. Korbak and colleagues, writing across the major labs, argue that the ability to monitor a model's chain of thought is a safety property worth protecting in how models are built [@korbak2025]. Liability and regulation both push toward a readable trace. The technology is not ready either. Cache-to-Cache works across models only through a learned projector between specific pairs [@c2c2026], and cross-vendor latent communication would need a standard nobody has agreed on. The nearest precedent is the Model Context Protocol, which went from announcement to de facto standard for tool calls in about a year [@mcp]. S5 will most likely arrive as a capability permitted only where S4 keeps an auditable projection alongside it.
+
+::: {.callout-note title="What to watch"}
+Any cross-vendor cache or latent-state protocol, and whether monitorability requirements make it into regulation.
+:::
+
+Put the gates back into the chain and the argument changes shape. Agents become reliable enough to own the debug loop (Gate 1). Human review moves to specs and tests (Gate 2, S2). Code stops being written for human eyes. Efficiency pressure appears, but tokenizer-free models absorb it instead of new grammars (Gate 3, skipping S3). Multi-agent systems adopt latent communication wherever auditability survives (Gate 4, S4 and S5). The destination looks similar; the route does not.
+
+## 6. What "universal" actually means
+
+The universal language already exists; it just isn't one anybody writes. LLVM IR [@llvm], MLIR [@mlir] and WebAssembly [@wasm] are universal, machine-targeted and effectively unreadable. Dozens of source languages compile into them, and nobody complains that they cannot read the result. My prediction is an AI-native IR one rung above LLVM: the thing agents write and exchange, with English above it and machine code below.
+
+Three lines of research suggest this is more than an analogy.
+
+**The representations are converging.** The Platonic Representation Hypothesis holds that, as models scale, their internal representations converge across architectures and modalities toward a shared statistical model of reality [@huh2024]. If internal representations converge, a shared external one becomes an engineering problem.
+
+**The artifacts exist.** DroidSpeak passes embedding and key-value caches between agents built on the same base model instead of re-tokenizing text, cutting prefill latency by up to 2.78× with negligible loss of accuracy [@droidspeak2024]. Cache-to-Cache extends this across different models using a learned projector and a neural cache fuser [@c2c2026]. Coconut does the same thing within a single model, reasoning in continuous latent space instead of decoding tokens [@coconut2024].
+
+**The precedent is old.** In 2017, Lewis and colleagues' negotiation agents drifted from English into a shorthand of their own once the reward stopped caring about English [@lewis2017]. Lazaridou and Baroni survey a decade of research in which agents invent communication protocols under pressure [@lazaridou2020]. And in 2025, the Gibberlink hackathon demo showed two voice agents switching from English to a data-over-sound protocol once they recognized each other. It was scripted by prompt rather than emergent, but it went viral because it made the idea concrete [@gibberlink2025]. The S5 future has already happened in the lab, more than once.
+
+So the universal coding language is real. It is an IR, it sits below humans, and it will probably take two forms: a symbolic one for auditing and a latent one for speed.
+
+## 7. Not a winner, but a stack
+
+Put the scenarios together and they stop looking like competitors. They are layers.
+
+```{mermaid}
+%%| label: fig-stack
+%%| fig-cap: "The likely endpoint is a stack, not a winner. The compiler stack never deleted a rung either."
+flowchart TB
+  H["Humans · intent in English (S1)"] --> P["Spec · types, contracts, proofs (S2)<br/>the human-readable contract"]
+  P --> I["Universal IR · machine-facing, token-optimal (S4)"]
+  I --> N["Neuralese · latent exchange between agents (S5)"]
+  N -.->|"auditable projection"| P
+```
+
+Assembly still runs under C, which still runs under Python. The likeliest endpoint is S1 as the human interface, S2 as the verifiable contract, and S4 and S5 as the machine representation, with S3 a transitional hack that tokenizer-free models make unnecessary.
+
+Three signals will tell you which scenario is winning:
+
+1. **The trust number.** If the share of developers who trust AI output climbs back past 40% in Stack Overflow's survey while "debugging takes longer" falls, Gate 1 is opening.
+2. **Verified-code adoption.** If proof-carrying or contract-checked generation moves from research into CI pipelines, Gate 2 is holding the human-facing layer at the spec.
+3. **A cross-vendor latent protocol.** The first standard that lets one lab's agent hand its cache to another's, with an auditable projection, is the moment S4 and S5 leave the lab.
+
+Until then, the honest reading of the data is S0 sliding into S1. That is a long way from coding being dead. It is the distance between "nobody types assembly" and "assembly is dead."
+
+Hands will leave the keyboard. What they leave behind is the spec: the one artifact that has to be precise, checkable, and readable by the people who bear the consequences. The spec is the new source code.
+
+## References
+
+::: {#refs}
+:::

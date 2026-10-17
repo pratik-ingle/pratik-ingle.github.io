@@ -1,6 +1,12 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - "**/*.qmd"
+    # Blogs/ is the staging inbox for notes dragged out of the Obsidian
+    # vault. Never render or publish it; import-notes.py converts it into
+    # posts/notes/ instead.
+    - "!Blogs/"
 
 website:
   title: "Pratik Ingle"
@@ -17,8 +23,6 @@ website:
         href: index.qmd
       - text: Blog
         href: blog.qmd
-      - text: CV
-        href: cv.qmd
   page-footer:
     left: "Copyright 2026, Pratik Ingle. Text and images licensed CC-BY-NC 4.0 unless noted."
   search: true

@@ -109,13 +109,6 @@ body {
   border-radius: 12px;
 }
 
-iframe.cv-frame {
-  width: 100%;
-  min-height: 850px;
-  border: 1px solid var(--pi-border);
-  border-radius: 12px;
-}
-
 /* ---------- Home: one-page card layout (natolambert-style) ---------- */
 .nl-page {
   max-width: 900px;
@@ -300,7 +293,7 @@ iframe.cv-frame {
 
 .aman-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.5rem;
   align-items: start;
 }

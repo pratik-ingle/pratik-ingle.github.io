@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-09-29">
+<meta name="description" content="Coding has been declared dead three times. This time it’s the language that goes, not the job.">
+
+<title>Pratik Ingle - The Last Programming Language Won’t Be for Humans</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../images/avatar5.jpg" rel="icon" type="image/jpeg">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YZLKD6JCSW"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-YZLKD6JCSW', { 'anonymize_ip': true});
+</script>
+<script type="module" src="../../../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../../../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+<script src="../../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Pratik Ingle</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blog.html">Blog</a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#coding-has-died-before" id="toc-coding-has-died-before" class="nav-link active" data-scroll-target="#coding-has-died-before">1. Coding has died before</a></li>
+  <li><a href="#what-the-data-says" id="toc-what-the-data-says" class="nav-link" data-scroll-target="#what-the-data-says">2. What the data says</a></li>
+  <li><a href="#six-futures-on-one-map" id="toc-six-futures-on-one-map" class="nav-link" data-scroll-target="#six-futures-on-one-map">3. Six futures on one map</a></li>
+  <li><a href="#what-code-costs-a-machine" id="toc-what-code-costs-a-machine" class="nav-link" data-scroll-target="#what-code-costs-a-machine">4. What code costs a machine</a></li>
+  <li><a href="#four-gates-between-agents-and-neuralese" id="toc-four-gates-between-agents-and-neuralese" class="nav-link" data-scroll-target="#four-gates-between-agents-and-neuralese">5. Four gates between agents and neuralese</a></li>
+  <li><a href="#what-universal-actually-means" id="toc-what-universal-actually-means" class="nav-link" data-scroll-target="#what-universal-actually-means">6. What “universal” actually means</a></li>
+  <li><a href="#not-a-winner-but-a-stack" id="toc-not-a-winner-but-a-stack" class="nav-link" data-scroll-target="#not-a-winner-but-a-stack">7. Not a winner, but a stack</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">The Last Programming Language Won’t Be for Humans</h1>
+<p class="subtitle lead">Coding has been declared dead three times. This time it’s the language that goes, not the job.</p>
+  <div class="quarto-categories">
+    <div class="quarto-category">essays</div>
+    <div class="quarto-category">AI</div>
+    <div class="quarto-category">programming languages</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Coding has been declared dead three times. This time it’s the language that goes, not the job.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 29, 2026</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<div class="callout-tip callout callout-style-simple">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container" title="In short">
+<p>Coding agents already write close to half of professional developers’ code, yet trust in that code is falling. This post maps six futures for programming, the evidence behind each, and the four gates between today and a language only machines read. My bet: people keep writing precise specifications, and everything beneath them stops being written for human eyes.</p>
+</div>
+</div>
+</div>
+<section id="coding-has-died-before" class="level2">
+<h2 class="anchored" data-anchor-id="coding-has-died-before">1. Coding has died before</h2>
+<p>In 1957, John Backus’s team released Fortran as an “automatic coding system” <span class="citation" data-cites="backus1957">(<a href="#ref-backus1957" role="doc-biblioref">Backus et al. 1957</a>)</span>. The compiler would write the machine code, and much of the programmer’s job was supposed to go with it. In 2023, Andrej Karpathy declared English “the hottest new programming language” <span class="citation" data-cites="karpathy2023">(<a href="#ref-karpathy2023" role="doc-biblioref">Karpathy 2023</a>)</span>. Two years later he named “vibe coding”: building software by talking to a model and never reading the code it writes <span class="citation" data-cites="karpathy2025">(<a href="#ref-karpathy2025" role="doc-biblioref">Karpathy 2025</a>)</span>.</p>
+<p>In between, Edsger Dijkstra made the case for the defence. Programming in natural language, he argued in 1978, is foolish, because precision needs formal notation <span class="citation" data-cites="dijkstra1978">(<a href="#ref-dijkstra1978" role="doc-biblioref">Dijkstra 1978</a>)</span>.</p>
+<p>Both sides were half right. The layer being mourned never died; it sank. Nobody writes machine code by hand anymore, yet every program still becomes machine code. I think the same thing is happening again, one level up. Typing code is dying; code is not. What humans write is moving up, toward the specification. What machines exchange is sinking below readability: first into something no human needs to read, and eventually into something no human can.</p>
+<p>Making that case takes three things: an honest look at where we are, a map of where today’s research leads, and an account of the gates between the two.</p>
+</section>
+<section id="what-the-data-says" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-data-says">2. What the data says</h2>
+<p>Two claims circulate more than any others: that coding is dead, and that almost nobody writes code by hand anymore. Neither survives the surveys.</p>
+<p>JetBrains asked more than 15,000 professional developers how last month’s code was produced. On average, they said agents had written about 47% of it on their own, while 27% was still written entirely by hand <span class="citation" data-cites="jetbrains2026agents">(<a href="#ref-jetbrains2026agents" role="doc-biblioref">JetBrains Research 2026</a>)</span>. Over half now hand-write less than a fifth of their code, and one in five writes none at all. But the fully agentic group, where agents produce more than 80% of the code, is still a 22% minority. Ninety percent of professional developers use a coding agent at work at least weekly <span class="citation" data-cites="jetbrains2026adoption">(<a href="#ref-jetbrains2026adoption" role="doc-biblioref">Bogdanov 2026</a>)</span>. At the top end, Google says 75% of its new code is AI-generated and approved by engineers, up from 25% in 2024 <span class="citation" data-cites="semafor2026google">(<a href="#ref-semafor2026google" role="doc-biblioref">Semafor 2026</a>)</span>.</p>
+<p>Adoption, then, is solved. Trust is not. Stack Overflow’s survey of 49,000 developers found that 84% use or plan to use AI tools, but only 29% trust their output, down from 40% the year before. Another 46% actively distrust it, and 45% say debugging AI-generated code takes longer than writing it themselves <span class="citation" data-cites="so2025">(<a href="#ref-so2025" role="doc-biblioref">Stack Overflow 2025</a>)</span>. Sonar found that 96% of developers do not fully trust AI code to be correct, yet only 48% always check it before committing <span class="citation" data-cites="sonar2026">(<a href="#ref-sonar2026" role="doc-biblioref">Sonar 2026</a>)</span>.</p>
+<p>The productivity evidence is just as mixed. In METR’s 2025 randomized controlled trial, experienced open-source developers working in their own repositories were 19% <em>slower</em> with AI, while believing it had sped them up by about 20% <span class="citation" data-cites="metr2025">(<a href="#ref-metr2025" role="doc-biblioref">Becker et al. 2025</a>)</span>. An earlier Copilot trial found a 56% speed-up, but on a single, simple, greenfield task <span class="citation" data-cites="peng2023">(<a href="#ref-peng2023" role="doc-biblioref">Peng et al. 2023</a>)</span>. Context matters. METR’s 2026 follow-up could not produce a reliable estimate at all: too many developers declined to submit tasks they did not want to do without AI, which skewed the sample <span class="citation" data-cites="metr2026">(<a href="#ref-metr2026" role="doc-biblioref">METR 2026</a>)</span>. That says more about adoption than productivity, but it says it loudly.</p>
+<p>So hand-written code is a minority, not a rounding error. And the variable that decides what happens next is not adoption but trust, because trust decides whether a human still has to open the file.</p>
+</section>
+<section id="six-futures-on-one-map" class="level2">
+<h2 class="anchored" data-anchor-id="six-futures-on-one-map">3. Six futures on one map</h2>
+<p>Any proposal for the future of programming can be placed on two axes: who reads the code (humans, or only machines) and how it is represented (text tokens, or latent vectors). Hover over a point to see its trajectory, its evidence, and what would break it.</p>
+<div id="fig-map" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+
+<div style="height:520px; width:100%;">                        <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-4.1.1.min.js" integrity="sha256-O24V1F27f8pb0glCkelh3cVHLNiHAJ5gCaVtq2aNch8=" crossorigin="anonymous"></script>                <div id="87345748-7ce8-41eb-a86f-b5dc060edf6f" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("87345748-7ce8-41eb-a86f-b5dc060edf6f")) {                    Plotly.newPlot(                        "87345748-7ce8-41eb-a86f-b5dc060edf6f",                        [{"customdata":[["S0","Plateau","AI stays autocomplete; humans own the code.","84% adoption vs 29% trust (Stack Overflow 2025); METR RCT: 19% slower.","Trust and measured productivity rise together."],["S1","English on top","The prompt is the program; source becomes a build artifact.","47% of code agent-written (JetBrains 2026); Google at 75%.","Dijkstra's precision objection: 45% say debugging AI code takes longer."],["S2","Typed bridge","Humans read specs, types and proofs; machines write bodies.","TypeScript #1 on GitHub (2025); Clover-style verified generation.","Verification stays niche; security pass rate stuck at 56%."]],"hovertemplate":"\u003cb\u003e%{customdata[0]} %{customdata[1]}\u003c\u002fb\u003e\u003cbr\u003e\u003cb\u003eTrajectory:\u003c\u002fb\u003e %{customdata[2]}\u003cbr\u003e\u003cb\u003eEvidence:\u003c\u002fb\u003e %{customdata[3]}\u003cbr\u003e\u003cb\u003eBreaks if:\u003c\u002fb\u003e %{customdata[4]}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#5F5E5A","size":16,"symbol":"circle"},"mode":"markers+text","name":"In production","text":["S0 Plateau","S1 English on top","S2 Typed bridge"],"textposition":"top center","x":[0.08,0.3,0.45],"y":[0.1,0.18,0.36],"type":"scatter"},{"customdata":[["S3","Compressed grammar","Same AST, fewer tokens; humans see Python, models see SimPy.","SimPy cuts 10-13%; formatting is 13-15% of Java\u002fC#\u002fC++ tokens.","Tokenizer-free models absorb the gain at the model layer."],["S4","Universal IR","An AI-native intermediate representation one rung above LLVM.","Platonic Representation Hypothesis; LLVM, MLIR and Wasm as precedent.","No cross-vendor standard exists."],["S5","Neuralese","Agents exchange activations; text is generated only on request.","DroidSpeak 2.78x prefill speedup; Cache-to-Cache (ICLR 2026); Coconut.","Monitorability and regulation demand a readable trace."]],"hovertemplate":"\u003cb\u003e%{customdata[0]} %{customdata[1]}\u003c\u002fb\u003e\u003cbr\u003e\u003cb\u003eTrajectory:\u003c\u002fb\u003e %{customdata[2]}\u003cbr\u003e\u003cb\u003eEvidence:\u003c\u002fb\u003e %{customdata[3]}\u003cbr\u003e\u003cb\u003eBreaks if:\u003c\u002fb\u003e %{customdata[4]}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#534AB7","size":16,"symbol":"diamond"},"mode":"markers+text","name":"Research","text":["S3 Compressed grammar","S4 Universal IR","S5 Neuralese"],"textposition":"top center","x":[0.7,0.82,0.92],"y":[0.2,0.62,0.9],"type":"scatter"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"white","showlakes":true,"showland":true,"subunitcolor":"#C8D4E3"},"hoverlabel":{"align":"left"},"hovermode":"closest","paper_bgcolor":"white","plot_bgcolor":"white","polar":{"angularaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""},"bgcolor":"white","radialaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"yaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"zaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"baxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"bgcolor":"white","caxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2}}},"shapes":[{"line":{"color":"rgba(0,0,0,0.18)","dash":"dot","width":1},"type":"line","x0":0.04,"x1":0.96,"y0":0.04,"y1":0.96}],"legend":{"title":{"text":"Status"},"orientation":"h","y":1.08,"x":0},"hoverlabel":{"align":"left","bgcolor":"white"},"margin":{"l":40,"r":20,"t":40,"b":60},"xaxis":{"range":[0,1.02],"tickvals":[0.06,0.94],"ticktext":["Humans read it","Only machines read it"],"title":{"text":"Who reads the code"},"showgrid":false,"zeroline":false},"yaxis":{"range":[0,1.02],"tickvals":[0.06,0.94],"ticktext":["Text tokens","Latent vectors"],"title":{"text":"How the code is represented"},"showgrid":false,"zeroline":false},"height":520},                        {"displayModeBar": false, "responsive": true}                    )                };            </script>        </div>
+<p></p><figcaption class="figure-caption">Figure 1: Six scenarios for the future of programming. Everything in production sits bottom-left; every research trajectory pushes up and right.</figcaption><p></p>
+</figure>
+</div>
+<p>The question that matters is what would move the industry along that diagonal, and whether every step on it is one we should want. Here are the six scenarios in brief.</p>
+<section id="s0-plateau-ai-as-autocomplete" class="level3">
+<h3 class="anchored" data-anchor-id="s0-plateau-ai-as-autocomplete">S0 · Plateau: “AI as autocomplete”</h3>
+<ul>
+<li><strong>Trajectory.</strong> Adoption without trust. Agents draft, humans review, and code stays multilingual and human-owned.</li>
+<li><strong>Evidence.</strong> The trust numbers and METR’s measured slowdown above <span class="citation" data-cites="so2025 metr2025">(<a href="#ref-so2025" role="doc-biblioref">Stack Overflow 2025</a>; <a href="#ref-metr2025" role="doc-biblioref">Becker et al. 2025</a>)</span>.</li>
+<li><strong>Breaks if.</strong> Trust and measured productivity rise together.</li>
+<li><strong>Status.</strong> Today. This is the null hypothesis, and the data currently supports it better than any alternative.</li>
+</ul>
+</section>
+<section id="s1-english-on-top-the-prompt-is-the-program" class="level3">
+<h3 class="anchored" data-anchor-id="s1-english-on-top-the-prompt-is-the-program">S1 · English on top: “The prompt is the program”</h3>
+<ul>
+<li><strong>Trajectory.</strong> Karpathy’s arc: English in, code out, code never opened. Source becomes a build artifact.</li>
+<li><strong>Evidence.</strong> Agents alone write about 47% of professional developers’ code; Google reports 75% <span class="citation" data-cites="jetbrains2026agents semafor2026google">(<a href="#ref-jetbrains2026agents" role="doc-biblioref">JetBrains Research 2026</a>; <a href="#ref-semafor2026google" role="doc-biblioref">Semafor 2026</a>)</span>.</li>
+<li><strong>Breaks if.</strong> Dijkstra’s precision objection bites. Already 45% of developers say debugging AI code takes longer than writing it <span class="citation" data-cites="so2025">(<a href="#ref-so2025" role="doc-biblioref">Stack Overflow 2025</a>)</span>.</li>
+<li><strong>Status.</strong> In production, though “never opened” is aspirational: about half of developers still check every commit <span class="citation" data-cites="sonar2026">(<a href="#ref-sonar2026" role="doc-biblioref">Sonar 2026</a>)</span>.</li>
+</ul>
+</section>
+<section id="s2-typed-bridge-the-spec-is-the-source" class="level3">
+<h3 class="anchored" data-anchor-id="s2-typed-bridge-the-spec-is-the-source">S2 · Typed bridge: “The spec is the source”</h3>
+<ul>
+<li><strong>Trajectory.</strong> Languages that give agents machine-checkable feedback win. Humans read types, contracts and specifications; machines write the function bodies.</li>
+<li><strong>Evidence.</strong> TypeScript overtook Python as GitHub’s most-used language in 2025, a shift GitHub partly credits to AI <span class="citation" data-cites="octoverse2025">(<a href="#ref-octoverse2025" role="doc-biblioref">GitHub 2025</a>)</span>. JavaScript/TypeScript and Go developers delegate 54–55% of their code to agents, against 33% for C and C++ <span class="citation" data-cites="jetbrains2026agents">(<a href="#ref-jetbrains2026agents" role="doc-biblioref">JetBrains Research 2026</a>)</span>. Closed-loop pipelines such as Clover check generated Dafny code against its own annotations and docstrings <span class="citation" data-cites="clover2023">(<a href="#ref-clover2023" role="doc-biblioref">C. Sun et al. 2023</a>)</span>.</li>
+<li><strong>Breaks if.</strong> Verification tooling stays niche while AI code passes security tests only 56% of the time <span class="citation" data-cites="veracode2026">(<a href="#ref-veracode2026" role="doc-biblioref">Veracode 2026</a>)</span>.</li>
+<li><strong>Status.</strong> In production for types; pilot stage for proofs.</li>
+</ul>
+</section>
+<section id="s3-compressed-grammar-same-meaning-fewer-tokens" class="level3">
+<h3 class="anchored" data-anchor-id="s3-compressed-grammar-same-meaning-fewer-tokens">S3 · Compressed grammar: “Same meaning, fewer tokens”</h3>
+<ul>
+<li><strong>Trajectory.</strong> Keep the language but strip out the parts only humans need. Humans see Python; the model sees a token-lean twin.</li>
+<li><strong>Evidence.</strong> Formatting alone is 13–15% of Java, C# and C++ tokens, and SimPy trims a further 10–13% with identical syntax trees <span class="citation" data-cites="hiddencost2025 sun2024simpy">(<a href="#ref-hiddencost2025" role="doc-biblioref">Pan et al. 2026</a>; <a href="#ref-sun2024simpy" role="doc-biblioref">Z. Sun et al. 2024</a>)</span>. Section 4 has the details.</li>
+<li><strong>Breaks if.</strong> Tokenizers disappear, or models stay clumsy in unfamiliar notation (Gate 3).</li>
+<li><strong>Status.</strong> Research prototype.</li>
+</ul>
+</section>
+<section id="s4-universal-ir-one-machine-language" class="level3">
+<h3 class="anchored" data-anchor-id="s4-universal-ir-one-machine-language">S4 · Universal IR: “One machine language”</h3>
+<ul>
+<li><strong>Trajectory.</strong> An AI-native intermediate representation one rung above LLVM: the thing agents write and exchange, with English above it and machine code below.</li>
+<li><strong>Evidence.</strong> LLVM, MLIR and WebAssembly are already universal, unreadable targets, and the Platonic Representation Hypothesis suggests model internals are converging <span class="citation" data-cites="huh2024">(<a href="#ref-huh2024" role="doc-biblioref">Huh et al. 2024</a>)</span>.</li>
+<li><strong>Breaks if.</strong> No cross-vendor standard emerges. Every lab has its own tokenizer and its own representation space.</li>
+<li><strong>Status.</strong> Analogy only. No artifact exists yet.</li>
+</ul>
+</section>
+<section id="s5-neuralese-no-language" class="level3">
+<h3 class="anchored" data-anchor-id="s5-neuralese-no-language">S5 · Neuralese: “No language”</h3>
+<ul>
+<li><strong>Trajectory.</strong> Agents exchange activations, not text. Language is generated only when a human asks for it.</li>
+<li><strong>Evidence.</strong> DroidSpeak, Cache-to-Cache, Coconut, Gibberlink, and a decade of emergent-communication research <span class="citation" data-cites="droidspeak2024 c2c2026 coconut2024 gibberlink2025 lazaridou2020">(<a href="#ref-droidspeak2024" role="doc-biblioref">Liu et al. 2024</a>; <a href="#ref-c2c2026" role="doc-biblioref">Fu et al. 2026</a>; <a href="#ref-coconut2024" role="doc-biblioref">Hao et al. 2024</a>; <a href="#ref-gibberlink2025" role="doc-biblioref">Starkov and Pidkuiko 2025</a>; <a href="#ref-lazaridou2020" role="doc-biblioref">Lazaridou and Baroni 2020</a>)</span>.</li>
+<li><strong>Breaks if.</strong> Monitorability requirements and regulation insist on a readable trace <span class="citation" data-cites="korbak2025">(<a href="#ref-korbak2025" role="doc-biblioref">Korbak et al. 2025</a>)</span>.</li>
+<li><strong>Status.</strong> Lab.</li>
+</ul>
+</section>
+</section>
+<section id="what-code-costs-a-machine" class="level2">
+<h2 class="anchored" data-anchor-id="what-code-costs-a-machine">4. What code costs a machine</h2>
+<p>Programming languages were designed for three audiences: the machine that runs the code, the person who writes it, and the person who reads it six months later. Language models are a fourth audience, and they pay for code in tokens.</p>
+<p>Code is more predictable than prose. In 2012, Hindle and colleagues showed that source code has markedly lower cross-entropy than English under the same n-gram models: it is “natural” in the sense of being repetitive and conventional <span class="citation" data-cites="hindle2012">(<a href="#ref-hindle2012" role="doc-biblioref">Hindle et al. 2012</a>)</span>. Casalnuovo, Sagae and Devanbu later confirmed the gap across corpora and model families <span class="citation" data-cites="casalnuovo2019">(<a href="#ref-casalnuovo2019" role="doc-biblioref">Casalnuovo, Sagae, and Devanbu 2019</a>)</span>. Shannon had estimated printed English at roughly one bit per character <span class="citation" data-cites="shannon1951">(<a href="#ref-shannon1951" role="doc-biblioref">Shannon 1951</a>)</span>. Delétang and colleagues tied that tradition to today’s models: a language model is a general-purpose compressor, and its loss is a compression rate <span class="citation" data-cites="deletang2024">(<a href="#ref-deletang2024" role="doc-biblioref">Delétang et al. 2024</a>)</span>. Seen this way, any token the model could have predicted is overhead. It is there for some other reader.</p>
+<p>A coding agent pays that overhead in two ways. The <strong>surface cost</strong> is the tokens needed to write the program down. The <strong>process cost</strong> is the tokens the agent burns reasoning, compiling, failing and revising on its way to a working program. The two are measured differently, and they rank languages differently.</p>
+<div id="fig-tokens" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+
+<div style="height:440px; width:100%;">                            <div id="b53f5524-ebb0-4763-97c1-a6ebcc3668b1" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("b53f5524-ebb0-4763-97c1-a6ebcc3668b1")) {                    Plotly.newPlot(                        "b53f5524-ebb0-4763-97c1-a6ebcc3668b1",                        [{"customdata":["significant","significant","significant","significant","not significant"],"hovertemplate":"Java, %{x}: %{y:.2f}\u00d7 Python (%{customdata})\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#D85A30","opacity":[1.0,1.0,1.0,1.0,0.35]},"name":"Java","x":["Sonnet 4.6","GPT-5.5","GLM-5.2","Qwen 3.6","Gemma 4"],"y":[1.18,1.3,1.34,1.21,0.85],"type":"bar","xaxis":"x","yaxis":"y"},{"customdata":["significant","significant","significant","significant","not significant"],"hovertemplate":"Rust, %{x}: %{y:.2f}\u00d7 Python (%{customdata})\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#534AB7","opacity":[1.0,1.0,1.0,1.0,0.35]},"name":"Rust","x":["Sonnet 4.6","GPT-5.5","GLM-5.2","Qwen 3.6","Gemma 4"],"y":[1.16,1.36,1.57,1.2,1.07],"type":"bar","xaxis":"x","yaxis":"y"},{"customdata":["significant","significant","significant","significant","significant"],"hovertemplate":"OCaml, %{x}: %{y:.2f}\u00d7 Python (%{customdata})\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#1D9E75","opacity":[1.0,1.0,1.0,1.0,1.0]},"name":"OCaml","x":["Sonnet 4.6","GPT-5.5","GLM-5.2","Qwen 3.6","Gemma 4"],"y":[1.28,1.3,1.54,1.69,1.44],"type":"bar","xaxis":"x","yaxis":"y"},{"hovertemplate":"%{x}: %{y}% of tokens\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#888780"},"showlegend":false,"text":["14.7%","13.2%","13.2%","4.0%"],"textposition":"outside","x":["Java","C#","C++","Python"],"y":[14.7,13.2,13.2,4.0],"type":"bar","xaxis":"x2","yaxis":"y2"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"white","showlakes":true,"showland":true,"subunitcolor":"#C8D4E3"},"hoverlabel":{"align":"left"},"hovermode":"closest","paper_bgcolor":"white","plot_bgcolor":"white","polar":{"angularaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""},"bgcolor":"white","radialaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"yaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"zaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"baxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"bgcolor":"white","caxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,0.528]},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"\u00d7 Python output tokens"},"range":[0,1.9]},"xaxis2":{"anchor":"y2","domain":[0.648,1.0]},"yaxis2":{"anchor":"x2","domain":[0.0,1.0],"title":{"text":"% of tokens"},"range":[0,20]},"annotations":[{"font":{"size":16},"showarrow":false,"text":"Process cost: agent output tokens vs Python","x":0.264,"xanchor":"center","xref":"paper","y":1.0,"yanchor":"bottom","yref":"paper"},{"font":{"size":16},"showarrow":false,"text":"Surface cost: share of tokens that are formatting","x":0.8240000000000001,"xanchor":"center","xref":"paper","y":1.0,"yanchor":"bottom","yref":"paper"},{"showarrow":false,"text":"Python = 1.0","x":1,"xanchor":"right","xref":"x domain","y":1.0,"yanchor":"top","yref":"y"}],"shapes":[{"line":{"color":"rgba(0,0,0,0.45)","dash":"dot"},"type":"line","x0":0,"x1":1,"xref":"x domain","y0":1.0,"y1":1.0,"yref":"y"}],"legend":{"orientation":"h","y":-0.18,"x":0},"margin":{"l":40,"r":20,"t":60,"b":40},"barmode":"group","height":440},                        {"displayModeBar": false, "responsive": true}                    )                };            </script>        </div>
+<p></p><figcaption class="figure-caption">Figure 2: Two bills for the same program. Left: output tokens a coding agent spends relative to Python on the same problems, after controlling for problem difficulty (Wu, Anderson and Guha 2026); faded bars are not statistically significant. Right: share of tokens that are whitespace, indentation and line breaks only (Pan et al.&nbsp;2026).</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Process cost.</strong> Wu, Anderson and Guha ran five current models as coding agents on the same 100 competitive-programming problems in Python, Java, Rust and OCaml: 2,000 runs in all <span class="citation" data-cites="tokenmaxxing2026">(<a href="#ref-tokenmaxxing2026" role="doc-biblioref">Wu, Anderson, and Guha 2026</a>)</span>. A mixed-effects model let them compare languages on identical problems. Every model was cheapest in Python. OCaml cost 1.28–1.69× as many output tokens across all five. Rust (1.07–1.57×) and Java (0.85–1.34×) depended on the model, and Gemma was the one model where neither penalty was significant.</p>
+<p>The mechanism is the interesting part. The extra tokens do not come from longer programs; they come from struggle. In Gemma’s stalled OCaml runs, 92% of the failed intermediate solutions were compile errors: the agent was fighting the syntax, not the algorithm. GPT-5.5 fell back to Python to prototype on 27% of OCaml problems before translating. The authors point to training data: The Stack v2 holds roughly 200 GB each of Python and Java, but only 12 GB of Rust and even less OCaml. They add their own caveat: these are self-contained problems, and repository-scale work may behave differently.</p>
+<p><strong>Surface cost.</strong> Martin Alderson ran the GPT-4 tokenizer over Rosetta Code solutions to the same tasks in 19 popular languages. He found a 2.6× spread, from Clojure (the most compact, at 109 tokens per task) to C (the most verbose). Dynamic languages generally won by skipping type declarations, with Haskell and F# close behind thanks to type inference. In a later run, J, an array language written in plain ASCII, averaged about 70 tokens. APL’s famous terseness, by contrast, did not survive tokenization: its unusual glyphs each split into several tokens <span class="citation" data-cites="alderson2026">(<a href="#ref-alderson2026" role="doc-biblioref">Alderson 2026</a>)</span>. Surface cost depends on how well the tokenizer knows the notation, not just on how short the code looks.</p>
+<p>The right-hand panel isolates the purest surface cost: formatting. On The Stack v2, whitespace, indentation and line breaks make up 14.7% of the tokens in Java and 13.2% in C# and C++, but only 4.0% in Python, where indentation carries meaning <span class="citation" data-cites="hiddencost2025">(<a href="#ref-hiddencost2025" role="doc-biblioref">Pan et al. 2026</a>)</span>. Roughly one token in seven in a Java file exists only so that a human can read it. In the authors’ code-completion experiments, advanced models lost essentially nothing when the formatting was stripped out.</p>
+<p>The next step is to redesign the grammar itself for the model. Sun and colleagues’ SimPy rewrites Python’s grammar to drop the tokens and layout only humans need, while keeping the abstract syntax tree identical, so programs convert losslessly in both directions. It cuts token usage by 13.5% for CodeLlama and 10.4% for GPT-4, with task performance maintained or improved <span class="citation" data-cites="sun2024simpy">(<a href="#ref-sun2024simpy" role="doc-biblioref">Z. Sun et al. 2024</a>)</span>. Token Sugar extends the idea with reversible shorthands for recurring code patterns <span class="citation" data-cites="tokensugar2025">(<a href="#ref-tokensugar2025" role="doc-biblioref">Z. Sun et al. 2025</a>)</span>. Humans see Python; the model sees something terser.</p>
+<p>To see what the process-cost multipliers mean for a real bill, pick a model and a workload.</p>
+<div class="cell">
+<div class="sourceCode cell-code hidden" id="cb1" data-startfrom="131" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 130;"><span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a>processCost <span class="op">=</span> ({</span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Claude Sonnet 4.6"</span><span class="op">:</span> {<span class="dt">Python</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">Java</span><span class="op">:</span> <span class="fl">1.18</span><span class="op">,</span> <span class="dt">Rust</span><span class="op">:</span> <span class="fl">1.16</span><span class="op">,</span> <span class="dt">OCaml</span><span class="op">:</span> <span class="fl">1.28</span>}<span class="op">,</span></span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>  <span class="st">"GPT-5.5"</span><span class="op">:</span>           {<span class="dt">Python</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">Java</span><span class="op">:</span> <span class="fl">1.30</span><span class="op">,</span> <span class="dt">Rust</span><span class="op">:</span> <span class="fl">1.36</span><span class="op">,</span> <span class="dt">OCaml</span><span class="op">:</span> <span class="fl">1.30</span>}<span class="op">,</span></span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a>  <span class="st">"GLM-5.2"</span><span class="op">:</span>           {<span class="dt">Python</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">Java</span><span class="op">:</span> <span class="fl">1.34</span><span class="op">,</span> <span class="dt">Rust</span><span class="op">:</span> <span class="fl">1.57</span><span class="op">,</span> <span class="dt">OCaml</span><span class="op">:</span> <span class="fl">1.54</span>}<span class="op">,</span></span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Qwen 3.6"</span><span class="op">:</span>          {<span class="dt">Python</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">Java</span><span class="op">:</span> <span class="fl">1.21</span><span class="op">,</span> <span class="dt">Rust</span><span class="op">:</span> <span class="fl">1.20</span><span class="op">,</span> <span class="dt">OCaml</span><span class="op">:</span> <span class="fl">1.69</span>}<span class="op">,</span></span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Gemma 4"</span><span class="op">:</span>           {<span class="dt">Python</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">Java</span><span class="op">:</span> <span class="fl">0.85</span><span class="op">,</span> <span class="dt">Rust</span><span class="op">:</span> <span class="fl">1.07</span><span class="op">,</span> <span class="dt">OCaml</span><span class="op">:</span> <span class="fl">1.44</span>}</span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>viewof model <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(processCost)<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Model"</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="st">"GPT-5.5"</span>})</span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>viewof monthlyTokens <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">500</span>]<span class="op">,</span> {</span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="st">"Output tokens per month if written in Python (millions)"</span></span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>viewof price <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.5</span><span class="op">,</span> <span class="dv">30</span>]<span class="op">,</span> {</span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span></span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="st">"Price per million output tokens (USD)"</span></span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>costs <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">entries</span>(processCost[model])<span class="op">.</span><span class="fu">map</span>(([lang<span class="op">,</span> m]) <span class="kw">=&gt;</span></span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a>  ({lang<span class="op">,</span> m<span class="op">,</span> <span class="dt">cost</span><span class="op">:</span> m <span class="op">*</span> monthlyTokens <span class="op">*</span> price}))</span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">70</span><span class="op">,</span></span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">260</span><span class="op">,</span></span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="kw">null</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="st">"Python"</span><span class="op">,</span> <span class="st">"Java"</span><span class="op">,</span> <span class="st">"Rust"</span><span class="op">,</span> <span class="st">"OCaml"</span>]}<span class="op">,</span></span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"USD per month"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">barY</span>(costs<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"lang"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"cost"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#534AB7"</span>})<span class="op">,</span></span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>(costs<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"lang"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"cost"</span><span class="op">,</span></span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>      <span class="dt">text</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="vs">`$</span><span class="sc">${</span><span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(d<span class="op">.</span><span class="at">cost</span>)<span class="op">.</span><span class="fu">toLocaleString</span>()<span class="sc">}</span><span class="vs"> (×</span><span class="sc">${</span>d<span class="op">.</span><span class="at">m</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="vs">)`</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> <span class="op">-</span><span class="dv">8</span>})<span class="op">,</span></span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])</span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+<p>Readability, in other words, is a tax. It has always been worth paying, because humans read code. The rest of this post asks what happens to the tax when they stop.</p>
+</section>
+<section id="four-gates-between-agents-and-neuralese" class="level2">
+<h2 class="anchored" data-anchor-id="four-gates-between-agents-and-neuralese">5. Four gates between agents and neuralese</h2>
+<p>Here is the argument that started this post. Agents keep improving, so more people rely on them. Human supervision shifts from reading code to testing what it does. With no one reading it, code no longer needs to be readable, so the language is free to optimize for tokens. It converges on a single machine-facing representation. Eventually agents skip language altogether and exchange latent state directly.</p>
+<p>Every arrow in that chain is a gate, and each gate has a metric you can watch.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-gates" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p>
+
+</p><pre class="mermaid" data-tooltip-selector="#mermaid-tooltip-1">flowchart LR
+  S1["S1 English on top"] --&gt;|"G1 agents own<br>the debug loop"| S2["S2 Typed bridge<br>spec is the source"]
+  S2 --&gt;|"G2 review moves<br>to specs and tests"| G3{"G3 where is token<br>pressure absorbed?"}
+  G3 --&gt;|"in the language"| S3["S3 Compressed grammar"]
+  G3 --&gt;|"in the model"| S4["S4 Universal IR"]
+  S3 --&gt; S4
+  S4 --&gt;|"G4 auditable<br>projection kept?"| S5["S5 Neuralese"]
+</pre>
+<div id="mermaid-tooltip-1" class="mermaidTooltip">
+
+</div>
+<p></p>
+<p></p><figcaption class="figure-caption">Figure 3: The chain from coding agents to neuralese. Each arrow is a gate that current data either supports or contradicts.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="gate-1-agents-must-own-the-debug-loop" class="level3">
+<h3 class="anchored" data-anchor-id="gate-1-agents-must-own-the-debug-loop">Gate 1: agents must own the debug loop</h3>
+<p>“Test the outputs instead of reading the code” frees humans only if the agent also fixes what fails. The moment a person opens the file to debug, the pressure for readable code is back. So the thesis is really a claim about agent reliability, not about languages. Current data cuts against it: 45% of developers say debugging AI code takes longer than writing it <span class="citation" data-cites="so2025">(<a href="#ref-so2025" role="doc-biblioref">Stack Overflow 2025</a>)</span>, and 96% do not fully trust it <span class="citation" data-cites="sonar2026">(<a href="#ref-sonar2026" role="doc-biblioref">Sonar 2026</a>)</span>. METR sharpens the point. Roughly half of the test-passing SWE-bench Verified pull requests written by agents between mid-2024 and late 2025 would not have been merged by the repositories’ own maintainers <span class="citation" data-cites="metr2026swebench">(<a href="#ref-metr2026swebench" role="doc-biblioref">Whitfill et al. 2026</a>)</span>. Passing the tests is not the same as being done.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body" title="What to watch">
+<p>The share of developers who say debugging AI code takes longer than writing it, and the share of agent pull requests merged without human edits. Gate 1 opens when the first falls and the second rises.</p>
+</div>
+</div>
+</section>
+<section id="gate-2-tests-are-weaker-than-reading" class="level3">
+<h3 class="anchored" data-anchor-id="gate-2-tests-are-weaker-than-reading">Gate 2: tests are weaker than reading</h3>
+<p>Tests check what you thought to test. Security, privacy and side effects are exactly what you didn’t. Veracode tracked more than 100 models across four snapshots and found the security pass rate stuck at 56%. Syntax success was near 100%, yet nearly half of tasks introduced a vulnerability, with Python passing 63% of the time and Java only 30% <span class="citation" data-cites="veracode2026">(<a href="#ref-veracode2026" role="doc-biblioref">Veracode 2026</a>)</span>. Veracode tests raw models with no security prompting or human review, so the figure measures how often flaws are generated, not how often they ship. But review is precisely the step this chain proposes to remove.</p>
+<p>The remedy is specification and proof: the S2 world of Dafny, Lean and Clover. That means the human-facing language does not disappear; it moves up a level. Humans stop typing code, but they do not stop writing precise text.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body" title="What to watch">
+<p>Adoption of verified-code tooling in CI pipelines, and the continued drift of language share toward statically typed languages.</p>
+</div>
+</div>
+</section>
+<section id="gate-3-the-model-may-absorb-the-token-pressure-not-the-language" class="level3">
+<h3 class="anchored" data-anchor-id="gate-3-the-model-may-absorb-the-token-pressure-not-the-language">Gate 3: the model may absorb the token pressure, not the language</h3>
+<p>Grammar redesign saves 10–13% of tokens; stripping formatting saves 4–15%. Meanwhile, the price of a given level of capability has been falling by roughly an order of magnitude a year <span class="citation" data-cites="a16z2024">(<a href="#ref-a16z2024" role="doc-biblioref">Appenzeller 2024</a>)</span>, and tokenizer-free architectures have arrived. Meta’s Byte Latent Transformer reads raw bytes, grouped into patches by how predictable the next byte is, with no tokenizer at all, and matches token-based models at the 8-billion-parameter scale <span class="citation" data-cites="blt2024">(<a href="#ref-blt2024" role="doc-biblioref">Pagnoni et al. 2024</a>)</span>. If that approach wins, the inefficiency S3 targets vanishes inside the model, with no change to the language.</p>
+<p>Section 4’s process-cost data adds a second objection. Agents are cheapest in the languages they have seen most, and burn tokens fighting the syntax of the ones they have seen least. A brand-new, token-optimal language would begin life as the least familiar language in the world (OCaml’s problem, magnified) until models were trained on it at scale.</p>
+<p>So “less supervision leads to token pressure” holds, but “token pressure leads to a new language” is the weakest link in the chain. The likelier outcome is that the language stays, the tokenizer dies, and S3 is skipped.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body" title="What to watch">
+<p>Whether a frontier lab ships a tokenizer-free production model, and whether any vendor ships an AI-oriented grammar. Either would settle the question.</p>
+</div>
+</div>
+</section>
+<section id="gate-4-neuralese-needs-permission-not-just-capability" class="level3">
+<h3 class="anchored" data-anchor-id="gate-4-neuralese-needs-permission-not-just-capability">Gate 4: neuralese needs permission, not just capability</h3>
+<p>The chain needs less human oversight; governance is moving the other way. Korbak and colleagues, writing across the major labs, argue that the ability to monitor a model’s chain of thought is a safety property worth protecting in how models are built <span class="citation" data-cites="korbak2025">(<a href="#ref-korbak2025" role="doc-biblioref">Korbak et al. 2025</a>)</span>. Liability and regulation both push toward a readable trace. The technology is not ready either. Cache-to-Cache works across models only through a learned projector between specific pairs <span class="citation" data-cites="c2c2026">(<a href="#ref-c2c2026" role="doc-biblioref">Fu et al. 2026</a>)</span>, and cross-vendor latent communication would need a standard nobody has agreed on. The nearest precedent is the Model Context Protocol, which went from announcement to de facto standard for tool calls in about a year <span class="citation" data-cites="mcp">(<a href="#ref-mcp" role="doc-biblioref">Anthropic 2024</a>)</span>. S5 will most likely arrive as a capability permitted only where S4 keeps an auditable projection alongside it.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body" title="What to watch">
+<p>Any cross-vendor cache or latent-state protocol, and whether monitorability requirements make it into regulation.</p>
+</div>
+</div>
+<p>Put the gates back into the chain and the argument changes shape. Agents become reliable enough to own the debug loop (Gate 1). Human review moves to specs and tests (Gate 2, S2). Code stops being written for human eyes. Efficiency pressure appears, but tokenizer-free models absorb it instead of new grammars (Gate 3, skipping S3). Multi-agent systems adopt latent communication wherever auditability survives (Gate 4, S4 and S5). The destination looks similar; the route does not.</p>
+</section>
+</section>
+<section id="what-universal-actually-means" class="level2">
+<h2 class="anchored" data-anchor-id="what-universal-actually-means">6. What “universal” actually means</h2>
+<p>The universal language already exists; it just isn’t one anybody writes. LLVM IR <span class="citation" data-cites="llvm">(<a href="#ref-llvm" role="doc-biblioref">LLVM Project, n.d.b</a>)</span>, MLIR <span class="citation" data-cites="mlir">(<a href="#ref-mlir" role="doc-biblioref">LLVM Project, n.d.a</a>)</span> and WebAssembly <span class="citation" data-cites="wasm">(<a href="#ref-wasm" role="doc-biblioref">WebAssembly Community Group, n.d.</a>)</span> are universal, machine-targeted and effectively unreadable. Dozens of source languages compile into them, and nobody complains that they cannot read the result. My prediction is an AI-native IR one rung above LLVM: the thing agents write and exchange, with English above it and machine code below.</p>
+<p>Three lines of research suggest this is more than an analogy.</p>
+<p><strong>The representations are converging.</strong> The Platonic Representation Hypothesis holds that, as models scale, their internal representations converge across architectures and modalities toward a shared statistical model of reality <span class="citation" data-cites="huh2024">(<a href="#ref-huh2024" role="doc-biblioref">Huh et al. 2024</a>)</span>. If internal representations converge, a shared external one becomes an engineering problem.</p>
+<p><strong>The artifacts exist.</strong> DroidSpeak passes embedding and key-value caches between agents built on the same base model instead of re-tokenizing text, cutting prefill latency by up to 2.78× with negligible loss of accuracy <span class="citation" data-cites="droidspeak2024">(<a href="#ref-droidspeak2024" role="doc-biblioref">Liu et al. 2024</a>)</span>. Cache-to-Cache extends this across different models using a learned projector and a neural cache fuser <span class="citation" data-cites="c2c2026">(<a href="#ref-c2c2026" role="doc-biblioref">Fu et al. 2026</a>)</span>. Coconut does the same thing within a single model, reasoning in continuous latent space instead of decoding tokens <span class="citation" data-cites="coconut2024">(<a href="#ref-coconut2024" role="doc-biblioref">Hao et al. 2024</a>)</span>.</p>
+<p><strong>The precedent is old.</strong> In 2017, Lewis and colleagues’ negotiation agents drifted from English into a shorthand of their own once the reward stopped caring about English <span class="citation" data-cites="lewis2017">(<a href="#ref-lewis2017" role="doc-biblioref">Lewis et al. 2017</a>)</span>. Lazaridou and Baroni survey a decade of research in which agents invent communication protocols under pressure <span class="citation" data-cites="lazaridou2020">(<a href="#ref-lazaridou2020" role="doc-biblioref">Lazaridou and Baroni 2020</a>)</span>. And in 2025, the Gibberlink hackathon demo showed two voice agents switching from English to a data-over-sound protocol once they recognized each other. It was scripted by prompt rather than emergent, but it went viral because it made the idea concrete <span class="citation" data-cites="gibberlink2025">(<a href="#ref-gibberlink2025" role="doc-biblioref">Starkov and Pidkuiko 2025</a>)</span>. The S5 future has already happened in the lab, more than once.</p>
+<p>So the universal coding language is real. It is an IR, it sits below humans, and it will probably take two forms: a symbolic one for auditing and a latent one for speed.</p>
+</section>
+<section id="not-a-winner-but-a-stack" class="level2">
+<h2 class="anchored" data-anchor-id="not-a-winner-but-a-stack">7. Not a winner, but a stack</h2>
+<p>Put the scenarios together and they stop looking like competitors. They are layers.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-stack" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p>
+
+</p><pre class="mermaid" data-tooltip-selector="#mermaid-tooltip-2">flowchart TB
+  H["Humans · intent in English (S1)"] --&gt; P["Spec · types, contracts, proofs (S2)<br>the human-readable contract"]
+  P --&gt; I["Universal IR · machine-facing, token-optimal (S4)"]
+  I --&gt; N["Neuralese · latent exchange between agents (S5)"]
+  N -.-&gt;|"auditable projection"| P
+</pre>
+<div id="mermaid-tooltip-2" class="mermaidTooltip">
+
+</div>
+<p></p>
+<p></p><figcaption class="figure-caption">Figure 4: The likely endpoint is a stack, not a winner. The compiler stack never deleted a rung either.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Assembly still runs under C, which still runs under Python. The likeliest endpoint is S1 as the human interface, S2 as the verifiable contract, and S4 and S5 as the machine representation, with S3 a transitional hack that tokenizer-free models make unnecessary.</p>
+<p>Three signals will tell you which scenario is winning:</p>
+<ol type="1">
+<li><strong>The trust number.</strong> If the share of developers who trust AI output climbs back past 40% in Stack Overflow’s survey while “debugging takes longer” falls, Gate 1 is opening.</li>
+<li><strong>Verified-code adoption.</strong> If proof-carrying or contract-checked generation moves from research into CI pipelines, Gate 2 is holding the human-facing layer at the spec.</li>
+<li><strong>A cross-vendor latent protocol.</strong> The first standard that lets one lab’s agent hand its cache to another’s, with an auditable projection, is the moment S4 and S5 leave the lab.</li>
+</ol>
+<p>Until then, the honest reading of the data is S0 sliding into S1. That is a long way from coding being dead. It is the distance between “nobody types assembly” and “assembly is dead.”</p>
+<p>Hands will leave the keyboard. What they leave behind is the spec: the one artifact that has to be precise, checkable, and readable by the people who bear the consequences. The spec is the new source code.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-alderson2026" class="csl-entry" role="doc-biblioentry">
+Alderson, Martin. 2026. <span>“Which Programming Languages Are Most Token-Efficient?”</span> January 2026. <a href="https://martinalderson.com/posts/which-programming-languages-are-most-token-efficient/">https://martinalderson.com/posts/which-programming-languages-are-most-token-efficient/</a>.
+</div>
+<div id="ref-mcp" class="csl-entry" role="doc-biblioentry">
+Anthropic. 2024. <span>“Model Context Protocol.”</span> November 2024. <a href="https://modelcontextprotocol.io/">https://modelcontextprotocol.io/</a>.
+</div>
+<div id="ref-a16z2024" class="csl-entry" role="doc-biblioentry">
+Appenzeller, Guido. 2024. <span>“Welcome to <span>LLMflation</span> – <span>LLM</span> Inference Cost Is Going down Fast.”</span> Andreessen Horowitz. November 2024. <a href="https://a16z.com/llmflation-llm-inference-cost/">https://a16z.com/llmflation-llm-inference-cost/</a>.
+</div>
+<div id="ref-backus1957" class="csl-entry" role="doc-biblioentry">
+Backus, J. W., R. J. Beeber, S. Best, R. Goldberg, L. M. Haibt, H. L. Herrick, R. A. Nelson, et al. 1957. <span>“The <span>FORTRAN</span> Automatic Coding System.”</span> In <em>Papers Presented at the Western Joint Computer Conference</em>, 188–98. <a href="https://doi.org/10.1145/1455567.1455599">https://doi.org/10.1145/1455567.1455599</a>.
+</div>
+<div id="ref-metr2025" class="csl-entry" role="doc-biblioentry">
+Becker, Joel, Nate Rush, Elizabeth Barnes, and David Rein. 2025. <span>“Measuring the Impact of Early-2025 <span>AI</span> on Experienced Open-Source Developer Productivity.”</span> <a href="https://arxiv.org/abs/2507.09089">https://arxiv.org/abs/2507.09089</a>.
+</div>
+<div id="ref-jetbrains2026adoption" class="csl-entry" role="doc-biblioentry">
+Bogdanov, Mikhail. 2026. <span>“<span>AI</span> Coding Agents: Adoption Trends.”</span> JetBrains Research. August 2026. <a href="https://blog.jetbrains.com/research/2026/08/ai-coding-agent-adoption-2026/">https://blog.jetbrains.com/research/2026/08/ai-coding-agent-adoption-2026/</a>.
+</div>
+<div id="ref-casalnuovo2019" class="csl-entry" role="doc-biblioentry">
+Casalnuovo, Casey, Kenji Sagae, and Prem Devanbu. 2019. <span>“Studying the Difference Between Natural and Programming Language Corpora.”</span> <em>Empirical Software Engineering</em> 24: 1823–68. <a href="https://arxiv.org/abs/1806.02437">https://arxiv.org/abs/1806.02437</a>.
+</div>
+<div id="ref-deletang2024" class="csl-entry" role="doc-biblioentry">
+Delétang, Grégoire, Anian Ruoss, Paul-Ambroise Duquenne, Elliot Catt, Tim Genewein, Christopher Mattern, Jordi Grau-Moya, et al. 2024. <span>“Language Modeling Is Compression.”</span> In <em>International Conference on Learning Representations (ICLR)</em>. <a href="https://arxiv.org/abs/2309.10668">https://arxiv.org/abs/2309.10668</a>.
+</div>
+<div id="ref-dijkstra1978" class="csl-entry" role="doc-biblioentry">
+Dijkstra, Edsger W. 1978. <span>“On the Foolishness of <span>‘Natural Language Programming’</span>.”</span> <a href="https://www.cs.utexas.edu/~EWD/transcriptions/EWD06xx/EWD667.html">https://www.cs.utexas.edu/~EWD/transcriptions/EWD06xx/EWD667.html</a>.
+</div>
+<div id="ref-c2c2026" class="csl-entry" role="doc-biblioentry">
+Fu, Tianyu, Zihan Min, Hanling Zhang, Jichao Yan, Guohao Dai, Wanli Ouyang, and Yu Wang. 2026. <span>“Cache-to-Cache: Direct Semantic Communication Between Large Language Models.”</span> In <em>International Conference on Learning Representations (ICLR)</em>. <a href="https://arxiv.org/abs/2510.03215">https://arxiv.org/abs/2510.03215</a>.
+</div>
+<div id="ref-octoverse2025" class="csl-entry" role="doc-biblioentry">
+GitHub. 2025. <span>“Octoverse 2025: A New Developer Joins <span>GitHub</span> Every Second as <span>AI</span> Leads <span>TypeScript</span> to #1.”</span> October 2025. <a href="https://github.blog/news-insights/octoverse/octoverse-a-new-developer-joins-github-every-second-as-ai-leads-typescript-to-1/">https://github.blog/news-insights/octoverse/octoverse-a-new-developer-joins-github-every-second-as-ai-leads-typescript-to-1/</a>.
+</div>
+<div id="ref-coconut2024" class="csl-entry" role="doc-biblioentry">
+Hao, Shibo, Sainbayar Sukhbaatar, DiJia Su, Xian Li, Zhiting Hu, Jason Weston, and Yuandong Tian. 2024. <span>“Training Large Language Models to Reason in a Continuous Latent Space.”</span> <a href="https://arxiv.org/abs/2412.06769">https://arxiv.org/abs/2412.06769</a>.
+</div>
+<div id="ref-hindle2012" class="csl-entry" role="doc-biblioentry">
+Hindle, Abram, Earl T. Barr, Zhendong Su, Mark Gabel, and Premkumar Devanbu. 2012. <span>“On the Naturalness of Software.”</span> In <em>Proceedings of the 34th International Conference on Software Engineering (ICSE)</em>, 837–47. <a href="https://dl.acm.org/doi/10.5555/2337223.2337322">https://dl.acm.org/doi/10.5555/2337223.2337322</a>.
+</div>
+<div id="ref-huh2024" class="csl-entry" role="doc-biblioentry">
+Huh, Minyoung, Brian Cheung, Tongzhou Wang, and Phillip Isola. 2024. <span>“The Platonic Representation Hypothesis.”</span> In <em>International Conference on Machine Learning (ICML)</em>. <a href="https://arxiv.org/abs/2405.07987">https://arxiv.org/abs/2405.07987</a>.
+</div>
+<div id="ref-jetbrains2026agents" class="csl-entry" role="doc-biblioentry">
+JetBrains Research. 2026. <span>“How Much Code Do Developers Really Let Agents Write?”</span> JetBrains. August 2026. <a href="https://blog.jetbrains.com/research/2026/08/how-much-code-do-developers-really-let-agents-write/">https://blog.jetbrains.com/research/2026/08/how-much-code-do-developers-really-let-agents-write/</a>.
+</div>
+<div id="ref-karpathy2023" class="csl-entry" role="doc-biblioentry">
+Karpathy, Andrej. 2023. <span>“The Hottest New Programming Language Is <span>English</span>.”</span> January 2023. <a href="https://x.com/karpathy/status/1617979122625712128">https://x.com/karpathy/status/1617979122625712128</a>.
+</div>
+<div id="ref-karpathy2025" class="csl-entry" role="doc-biblioentry">
+———. 2025. <span>“There’s a New Kind of Coding <span>I</span> Call <span>‘Vibe Coding’</span>.”</span> February 2025. <a href="https://x.com/karpathy/status/1886192184808149383">https://x.com/karpathy/status/1886192184808149383</a>.
+</div>
+<div id="ref-korbak2025" class="csl-entry" role="doc-biblioentry">
+Korbak, Tomek, Mikita Balesni, Elizabeth Barnes, et al. 2025. <span>“Chain of Thought Monitorability: A New and Fragile Opportunity for <span>AI</span> Safety.”</span> <a href="https://arxiv.org/abs/2507.11473">https://arxiv.org/abs/2507.11473</a>.
+</div>
+<div id="ref-lazaridou2020" class="csl-entry" role="doc-biblioentry">
+Lazaridou, Angeliki, and Marco Baroni. 2020. <span>“Emergent Multi-Agent Communication in the Deep Learning Era.”</span> <a href="https://arxiv.org/abs/2006.02419">https://arxiv.org/abs/2006.02419</a>.
+</div>
+<div id="ref-lewis2017" class="csl-entry" role="doc-biblioentry">
+Lewis, Mike, Denis Yarats, Yann N. Dauphin, Devi Parikh, and Dhruv Batra. 2017. <span>“Deal or No Deal? End-to-End Learning for Negotiation Dialogues.”</span> In <em>Proceedings of EMNLP</em>. <a href="https://arxiv.org/abs/1706.05125">https://arxiv.org/abs/1706.05125</a>.
+</div>
+<div id="ref-droidspeak2024" class="csl-entry" role="doc-biblioentry">
+Liu, Yuhan, Yuyang Huang, Jiayi Yao, Zhuohan Gu, Kuntai Du, Hanchen Li, Yihua Cheng, et al. 2024. <span>“<span>DroidSpeak</span>: <span>KV</span> Cache Sharing for Cross-<span>LLM</span> Communication and Multi-<span>LLM</span> Serving.”</span> <a href="https://arxiv.org/abs/2411.02820">https://arxiv.org/abs/2411.02820</a>.
+</div>
+<div id="ref-mlir" class="csl-entry" role="doc-biblioentry">
+LLVM Project. n.d.a. <span>“<span>MLIR</span>: Multi-Level Intermediate Representation.”</span> <a href="https://mlir.llvm.org/">https://mlir.llvm.org/</a>.
+</div>
+<div id="ref-llvm" class="csl-entry" role="doc-biblioentry">
+———. n.d.b. <span>“The <span>LLVM</span> Compiler Infrastructure.”</span> <a href="https://llvm.org/">https://llvm.org/</a>.
+</div>
+<div id="ref-metr2026" class="csl-entry" role="doc-biblioentry">
+METR. 2026. <span>“We Are Changing Our Developer Productivity Experiment Design.”</span> February 2026. <a href="https://metr.org/blog/2026-02-24-uplift-update/">https://metr.org/blog/2026-02-24-uplift-update/</a>.
+</div>
+<div id="ref-blt2024" class="csl-entry" role="doc-biblioentry">
+Pagnoni, Artidoro, Ram Pasunuru, Pedro Rodriguez, John Nguyen, Benjamin Muller, Margaret Li, Chunting Zhou, et al. 2024. <span>“Byte Latent Transformer: Patches Scale Better Than Tokens.”</span> <a href="https://arxiv.org/abs/2412.09871">https://arxiv.org/abs/2412.09871</a>.
+</div>
+<div id="ref-hiddencost2025" class="csl-entry" role="doc-biblioentry">
+Pan, Dangfeng, Zhensu Sun, Cenyuan Zhang, David Lo, and Xiaoning Du. 2026. <span>“The Hidden Cost of Readability: How Code Formatting Silently Consumes Your <span>LLM</span> Budget.”</span> In <em>Proceedings of the 48th IEEE/ACM International Conference on Software Engineering (ICSE)</em>. <a href="https://arxiv.org/abs/2508.13666">https://arxiv.org/abs/2508.13666</a>.
+</div>
+<div id="ref-peng2023" class="csl-entry" role="doc-biblioentry">
+Peng, Sida, Eirini Kalliamvakou, Peter Cihon, and Mert Demirer. 2023. <span>“The Impact of <span>AI</span> on Developer Productivity: Evidence from <span>GitHub</span> <span>Copilot</span>.”</span> <a href="https://arxiv.org/abs/2302.06590">https://arxiv.org/abs/2302.06590</a>.
+</div>
+<div id="ref-semafor2026google" class="csl-entry" role="doc-biblioentry">
+Semafor. 2026. <span>“Google <span>CEO</span> Says 75% of Company’s New Code Is <span>AI</span>-Generated.”</span> April 2026. <a href="https://www.semafor.com/article/04/24/2026/google-ceo-says-75-of-companys-new-code-is-ai-generated">https://www.semafor.com/article/04/24/2026/google-ceo-says-75-of-companys-new-code-is-ai-generated</a>.
+</div>
+<div id="ref-shannon1951" class="csl-entry" role="doc-biblioentry">
+Shannon, Claude E. 1951. <span>“Prediction and Entropy of Printed <span>English</span>.”</span> <em>Bell System Technical Journal</em> 30 (1): 50–64. <a href="https://doi.org/10.1002/j.1538-7305.1951.tb01366.x">https://doi.org/10.1002/j.1538-7305.1951.tb01366.x</a>.
+</div>
+<div id="ref-sonar2026" class="csl-entry" role="doc-biblioentry">
+Sonar. 2026. <span>“Sonar Data Reveals Critical <span>‘Verification Gap’</span> in <span>AI</span> Coding: 96% Don’t Fully Trust Output, yet Only 48% Verify It.”</span> January 2026. <a href="https://www.sonarsource.com/company/press-releases/sonar-data-reveals-critical-verification-gap-in-ai-coding/">https://www.sonarsource.com/company/press-releases/sonar-data-reveals-critical-verification-gap-in-ai-coding/</a>.
+</div>
+<div id="ref-so2025" class="csl-entry" role="doc-biblioentry">
+Stack Overflow. 2025. <span>“2025 Developer Survey: <span>AI</span>.”</span> 2025. <a href="https://survey.stackoverflow.co/2025/ai">https://survey.stackoverflow.co/2025/ai</a>.
+</div>
+<div id="ref-gibberlink2025" class="csl-entry" role="doc-biblioentry">
+Starkov, Boris, and Anton Pidkuiko. 2025. <span>“<span>GibberLink</span>: Two Conversational <span>AI</span> Agents Switching from <span>English</span> to a Sound-Level Protocol.”</span> February 2025. <a href="https://github.com/PennyroyalTea/gibberlink">https://github.com/PennyroyalTea/gibberlink</a>.
+</div>
+<div id="ref-clover2023" class="csl-entry" role="doc-biblioentry">
+Sun, Chuyue, Ying Sheng, Oded Padon, and Clark Barrett. 2023. <span>“Clover: Closed-Loop Verifiable Code Generation.”</span> <a href="https://arxiv.org/abs/2310.17807">https://arxiv.org/abs/2310.17807</a>.
+</div>
+<div id="ref-sun2024simpy" class="csl-entry" role="doc-biblioentry">
+Sun, Zhensu, Xiaoning Du, Zhou Yang, Li Li, and David Lo. 2024. <span>“<span>AI</span> Coders Are Among Us: Rethinking Programming Language Grammar Towards Efficient Code Generation.”</span> In <em>Proceedings of the 33rd ACM SIGSOFT International Symposium on Software Testing and Analysis (ISSTA)</em>. <a href="https://doi.org/10.1145/3650212.3680347">https://doi.org/10.1145/3650212.3680347</a>.
+</div>
+<div id="ref-tokensugar2025" class="csl-entry" role="doc-biblioentry">
+Sun, Zhensu, Chengran Yang, Xiaoning Du, Zhou Yang, Li Li, and David Lo. 2025. <span>“Token Sugar: Making Source Code Sweeter for <span>LLMs</span> Through Token-Efficient Shorthand.”</span> In <em>Proceedings of the 40th IEEE/ACM International Conference on Automated Software Engineering (ASE)</em>, 2440–51. <a href="https://arxiv.org/abs/2512.08266">https://arxiv.org/abs/2512.08266</a>.
+</div>
+<div id="ref-veracode2026" class="csl-entry" role="doc-biblioentry">
+Veracode. 2026. <span>“<span>LLMs</span> Are Getting Smarter, but Not Safer: <span>Veracode</span> 2026 <span>GenAI</span> Code Security Report Finds <span>AI</span>-Generated Code Security Has Stalled at 56% Pass Rate.”</span> July 2026. <a href="https://www.businesswire.com/news/home/20260728207685/en/">https://www.businesswire.com/news/home/20260728207685/en/</a>.
+</div>
+<div id="ref-wasm" class="csl-entry" role="doc-biblioentry">
+WebAssembly Community Group. n.d. <span>“<span>WebAssembly</span>.”</span> <a href="https://webassembly.org/">https://webassembly.org/</a>.
+</div>
+<div id="ref-metr2026swebench" class="csl-entry" role="doc-biblioentry">
+Whitfill, Parker, Cheryl Wu, Joel Becker, and Nate Rush. 2026. <span>“Many <span>SWE</span>-Bench-Passing <span>PRs</span> Would Not Be Merged into Main.”</span> METR. March 2026. <a href="https://metr.org/notes/2026-03-10-many-swe-bench-passing-prs-would-not-be-merged-into-main/">https://metr.org/notes/2026-03-10-many-swe-bench-passing-prs-would-not-be-merged-into-main/</a>.
+</div>
+<div id="ref-tokenmaxxing2026" class="csl-entry" role="doc-biblioentry">
+Wu, Zixuan, Carolyn Jane Anderson, and Arjun Guha. 2026. <span>“The Best Programming Language for Tokenmaxxing: An Investigation of Coding Agent Behavior Across Programming Languages.”</span> <a href="https://arxiv.org/abs/2607.22807">https://arxiv.org/abs/2607.22807</a>.
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+{"contents":[{"methodName":"interpret","cellName":"ojs-cell-1","inline":false,"source":"processCost = ({\n  \"Claude Sonnet 4.6\": {Python: 1, Java: 1.18, Rust: 1.16, OCaml: 1.28},\n  \"GPT-5.5\":           {Python: 1, Java: 1.30, Rust: 1.36, OCaml: 1.30},\n  \"GLM-5.2\":           {Python: 1, Java: 1.34, Rust: 1.57, OCaml: 1.54},\n  \"Qwen 3.6\":          {Python: 1, Java: 1.21, Rust: 1.20, OCaml: 1.69},\n  \"Gemma 4\":           {Python: 1, Java: 0.85, Rust: 1.07, OCaml: 1.44}\n})\nviewof model = Inputs.select(Object.keys(processCost), {label: \"Model\", value: \"GPT-5.5\"})\nviewof monthlyTokens = Inputs.range([1, 500], {\n  value: 50, step: 1,\n  label: \"Output tokens per month if written in Python (millions)\"\n})\nviewof price = Inputs.range([0.5, 30], {\n  value: 10, step: 0.5,\n  label: \"Price per million output tokens (USD)\"\n})\ncosts = Object.entries(processCost[model]).map(([lang, m]) =>\n  ({lang, m, cost: m * monthlyTokens * price}))\nPlot.plot({\n  marginLeft: 70,\n  height: 260,\n  x: {label: null, domain: [\"Python\", \"Java\", \"Rust\", \"OCaml\"]},\n  y: {label: \"USD per month\", grid: true},\n  marks: [\n    Plot.barY(costs, {x: \"lang\", y: \"cost\", fill: \"#534AB7\"}),\n    Plot.text(costs, {x: \"lang\", y: \"cost\",\n      text: d => `$${Math.round(d.cost).toLocaleString()} (×${d.m.toFixed(2)})`, dy: -8}),\n    Plot.ruleY([0])\n  ]\n})\n"},{"methodName":"interpretQuiet","source":"shinyInput('model')"},{"methodName":"interpretQuiet","source":"shinyInput('monthlyTokens')"},{"methodName":"interpretQuiet","source":"shinyInput('price')"}]}
+</script>
+<script type="module">
+window._ojs.paths.runtimeToDoc = "../../posts/essays/universal-coding-language";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "../../..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp(/https:\/\/pratik-ingle\.github\.io/);
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+    var links = window.document.querySelectorAll('a:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="pratik-ingle/pratik-ingle.github.io" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2026, Pratik Ingle. Text and images licensed CC-BY-NC 4.0 unless noted.</div>   
+  </div>
+</footer>
+
+
+
+</body></html>
