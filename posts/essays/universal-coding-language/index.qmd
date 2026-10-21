@@ -3,7 +3,12 @@ title: "The Last Programming Language Won't Be for Humans"
 subtitle: "Coding has been declared dead three times. This time it's the language that goes, not the job."
 date: 2026-09-29
 categories: [essays, AI, programming languages]
-description: "Coding has been declared dead three times. This time it's the language that goes, not the job."
+# The subtitle is already the on-page summary. A `description:` field would
+# print the same sentence a second time under the categories, so set only
+# the meta tag that search results and link previews read.
+include-in-header:
+  text: |
+    <meta name="description" content="Coding has been declared dead three times. This time it's the language that goes, not the job.">
 toc: true
 toc-depth: 2
 bibliography: references.bib
