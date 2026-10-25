@@ -39,7 +39,8 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  scroll-padding-top: 16px;
+  /* --header-h is set by the sticky header (Header.astro) so in-page jumps land below it. */
+  scroll-padding-top: calc(var(--header-h, 70px) + 16px);
 }
 
 body {
@@ -98,7 +99,7 @@ button {
   position: absolute;
   left: 12px;
   top: -100px;
-  z-index: 10;
+  z-index: 30; /* above the sticky header */
   padding: 10px 16px;
   background: var(--ink);
   color: var(--paper);

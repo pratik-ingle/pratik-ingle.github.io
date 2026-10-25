@@ -30,8 +30,23 @@ const path = Astro.url.pathname.slice(base.length) || '/';
   </nav>
 </header>
 
+<script>
+  // In-page jumps (#main, #top, …) should land below the sticky header, whose height changes as it wraps.
+  const header = document.querySelector<HTMLElement>('.site-header');
+  if (header) {
+    new ResizeObserver(() =>
+      document.documentElement.style.setProperty('--header-h', `${header.offsetHeight}px`),
+    ).observe(header);
+  }
+</script>
+
 <style>
+  /* Stays pinned to the top of the window while the page scrolls. */
   .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--paper);
     border-bottom: 2px solid var(--ink);
   }
 
@@ -110,9 +125,24 @@ const path = Astro.url.pathname.slice(base.length) || '/';
     }
   }
 
+  /* Phones: two compact rows, so the pinned bar doesn't take over the screen. */
   @media (max-width: 560px) {
     .site-nav {
-      padding-block: 6px 10px;
+      row-gap: 0;
+      padding-block: 4px 6px;
+    }
+
+    .brand {
+      padding: 4px 0;
+    }
+
+    .brand__mark {
+      width: 16px;
+      height: 16px;
+    }
+
+    .brand__name {
+      font-size: 18px;
     }
 
     .site-nav__links {
@@ -121,13 +151,13 @@ const path = Astro.url.pathname.slice(base.length) || '/';
     }
 
     .site-nav__links a {
-      padding: 10px 4px;
+      padding: 8px 4px;
       font-size: 14px;
     }
 
     .site-nav__links .site-nav__contact {
       margin-left: 0;
-      padding: 10px 12px;
+      padding: 8px 12px;
     }
   }
 </style>
