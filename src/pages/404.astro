@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import { href } from '../lib/paths';
+---
+
+<Base title="Not found">
+  <div class="container page">
+    <div class="meta-row">
+      <span>404 — Not found</span>
+    </div>
+    <h1 class="display">Lost <em>in latent space.</em></h1>
+    <p class="lede">This page doesn’t exist, or it moved. Try one of these instead.</p>
+    <div class="actions">
+      <a class="btn btn--solid" href={href('/')}>Home →</a>
+      <a class="btn" href={href('/work/')}>Work →</a>
+      <a class="btn" href={href('/writing/')}>Writing →</a>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 40px;
+  }
+</style>

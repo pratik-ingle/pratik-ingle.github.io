@@ -1,0 +1,54 @@
+---
+interface Props {
+  name: 'scholar' | 'code' | 'briefcase' | 'mail';
+}
+
+const { name } = Astro.props;
+---
+
+<svg
+  aria-hidden="true"
+  width="16"
+  height="16"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.75"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  {
+    name === 'scholar' && (
+      <>
+        <path d="M2 9l10-5 10 5-10 5z" />
+        <path d="M6 11v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5" />
+        <path d="M22 9v6" />
+      </>
+    )
+  }
+  {
+    name === 'code' && (
+      <>
+        <path d="M8 7l-5 5 5 5" />
+        <path d="M16 7l5 5-5 5" />
+      </>
+    )
+  }
+  {
+    name === 'briefcase' && (
+      <>
+        <rect x="3" y="7" width="18" height="13" rx="1" />
+        <path d="M9 7V4h6v3" />
+        <path d="M3 12h18" />
+      </>
+    )
+  }
+  {
+    name === 'mail' && (
+      <>
+        <rect x="3" y="5" width="18" height="14" rx="1" />
+        <path d="M3 6l9 7 9-7" />
+      </>
+    )
+  }
+</svg>

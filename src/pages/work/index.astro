@@ -1,0 +1,238 @@
+---
+import Figure from '../../components/Figure.astro';
+import Base from '../../layouts/Base.astro';
+import { PROJECT_TRACKS, PROJECT_TYPES, TYPE_TAG } from '../../data/taxonomy';
+import { getProjects } from '../../lib/content';
+import { builtMonth, pad } from '../../lib/format';
+import { href } from '../../lib/paths';
+
+const projects = await getProjects();
+const filters = [
+  { group: 'type', label: 'Type', values: ['All', ...PROJECT_TYPES] },
+  { group: 'track', label: 'Track', values: ['All', ...PROJECT_TRACKS] },
+];
+---
+
+<Base
+  title="Work"
+  description="Research from Pratik Ingle’s PhD and visiting positions, a product people use, and the systems he builds on the side."
+>
+  <div class="container page" data-filter-root>
+    <div class="meta-row">
+      <span>01 — Work</span>
+      <span>{projects.length} projects · research, builds and products</span>
+      <span>Rev. {builtMonth}</span>
+    </div>
+    <h1 class="display">Projects <em>in motion.</em></h1>
+    <p class="lede">
+      Research from my PhD and visiting positions, a product people use, and the systems I build on the side. Filter by
+      type or by track.
+    </p>
+
+    <div class="filters">
+      {
+        filters.map(({ group, label, values }, i) => (
+          <div role="group" aria-label={`Filter by ${group}`} class="filters__row">
+            <span class="filters__label">{label}</span>
+            {values.map((value) => (
+              <button
+                type="button"
+                class="toggle"
+                data-filter-group={group}
+                data-value={value}
+                aria-pressed={String(value === 'All')}
+              >
+                {value}
+              </button>
+            ))}
+            {i === filters.length - 1 && (
+              <span
+                class="filters__count"
+                data-filter-count
+                data-singular="project"
+                data-plural="projects"
+                aria-live="polite"
+              >
+                {projects.length} projects
+              </span>
+            )}
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="grid">
+      {
+        projects.map((p) => {
+          const page = href(`/work/${p.id}/`);
+          const [first] = p.data.links;
+          const cta =
+            first && !p.data.ctaLabel
+              ? { label: `${first.label} ↗`, href: href(first.href) }
+              : { label: `${p.data.ctaLabel ?? 'Details'} →`, href: page };
+          return (
+            <article class="card" data-filter-item data-type={p.data.type} data-track={p.data.tracks.join('|')}>
+              <div class="card__top">
+                <span class:list={['tag', TYPE_TAG[p.data.type]]}>{p.data.type}</span>
+                <span class="card__num">
+                  {pad(p.data.order)} · {p.data.tracks.join(' · ')}
+                </span>
+              </div>
+              <a href={page} class="card__media" tabindex="-1" aria-hidden="true">
+                <Figure caption={p.data.media} src={p.data.image} />
+              </a>
+              <h2 class="card__title">
+                <a href={page}>{p.data.title}</a>
+              </h2>
+              <p class="card__blurb">{p.data.blurb}</p>
+              <div class="card__foot">
+                {p.data.meta && <span>{p.data.meta}</span>}
+                <a href={cta.href}>{cta.label}</a>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+    <p class="empty" data-filter-empty hidden>No projects match both filters yet. Try another combination.</p>
+  </div>
+</Base>
+
+<script>
+  import '../../scripts/filter';
+</script>
+
+<style>
+  .filters {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 48px;
+    padding: 16px 0;
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .filters__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .filters__label {
+    flex: 0 0 72px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .filters__count {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+    gap: 56px 32px;
+    margin-top: 48px;
+  }
+
+  .card {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 14px;
+    border-top: 2px solid var(--ink);
+  }
+
+  .card__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .card__top .tag {
+    padding: 3px 10px;
+  }
+
+  .card__num {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  .card__media {
+    display: block;
+  }
+
+  .card__title {
+    margin: 4px 0 0;
+    font-weight: 800;
+    font-size: 26px;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+
+  .card__title a {
+    text-decoration: none;
+  }
+
+  .card:has(.card__media:hover) .card__title a {
+    color: var(--accent);
+  }
+
+  .card__blurb {
+    flex: 1;
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--text-2);
+  }
+
+  .card__foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+
+  .card__foot span {
+    color: var(--muted);
+  }
+
+  .card__foot a {
+    margin-left: auto;
+    color: var(--accent);
+  }
+
+  .empty {
+    margin: 48px 0 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 19px;
+    color: var(--text-2);
+  }
+
+  @media (max-width: 560px) {
+    .filters__label {
+      flex-basis: 100%;
+    }
+
+    .filters__count {
+      margin-left: 0;
+      flex-basis: 100%;
+    }
+  }
+</style>

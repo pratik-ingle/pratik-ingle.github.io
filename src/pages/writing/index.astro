@@ -1,0 +1,182 @@
+---
+import Figure from '../../components/Figure.astro';
+import Base from '../../layouts/Base.astro';
+import { POST_TOPICS } from '../../data/taxonomy';
+import { getPosts } from '../../lib/content';
+import { formatMonth, readingTime } from '../../lib/format';
+import { href } from '../../lib/paths';
+
+const posts = await getPosts();
+---
+
+<Base title="Writing" description="Pratik Ingle on robotics research, machine learning, and building with AI tools.">
+  <div class="container page" data-filter-root>
+    <div class="meta-row">
+      <span>03 — Writing</span>
+      <span>Essays · tutorials · research notes</span>
+      <a href={href('/rss.xml')}>RSS ↗</a>
+    </div>
+    <h1 class="display">Writing, <em>thinking out loud.</em></h1>
+    <p class="lede">On robotics research, machine learning, and building with AI tools.</p>
+
+    <div role="group" aria-label="Filter by topic" class="topics">
+      {
+        ['All', ...POST_TOPICS].map((topic) => (
+          <button
+            type="button"
+            class="topics__tab"
+            data-filter-group="topic"
+            data-value={topic}
+            aria-pressed={String(topic === 'All')}
+          >
+            {topic}
+          </button>
+        ))
+      }
+    </div>
+
+    <ol class="posts">
+      {
+        posts.map((post) => (
+          <li data-filter-item data-topic={post.data.topic}>
+            <a href={post.data.url ?? href(`/writing/${post.id}/`)} class="post">
+              <div class="post__media">
+                <Figure caption={post.data.media} src={post.data.image} ratio="16 / 10" size="sm" corners={2} />
+              </div>
+              <span class="post__body">
+                <span class="post__meta">
+                  <span>{formatMonth(post.data.date)}</span>
+                  <span class="tag tag--outline">{post.data.topic}</span>
+                  <span>{readingTime(post.body, post.data.minutes)}</span>
+                </span>
+                <span class="post__title">{post.data.title}</span>
+                <span class="post__excerpt">{post.data.excerpt}</span>
+                <span class="post__read">Read →</span>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="empty" data-filter-empty hidden>Nothing in this topic yet.</p>
+  </div>
+</Base>
+
+<script>
+  import '../../scripts/filter';
+</script>
+
+<style>
+  .topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 28px;
+    margin-top: 48px;
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .topics__tab {
+    padding: 16px 0 13px;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    background: none;
+    color: var(--text-2);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .topics__tab:hover {
+    color: var(--accent);
+  }
+
+  .topics__tab[aria-pressed='true'] {
+    border-bottom-color: var(--accent);
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .posts {
+    margin: 48px 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: 2px solid var(--ink);
+  }
+
+  .posts li {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .post {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 32px;
+    padding: 28px 0;
+    text-decoration: none;
+  }
+
+  .post__media {
+    flex: 0 0 240px;
+    max-width: 100%;
+  }
+
+  .post__body {
+    flex: 1 1 420px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .post__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 14px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .post__meta .tag {
+    padding: 2px 9px;
+  }
+
+  .post__title {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .post__excerpt {
+    font-family: var(--serif);
+    font-size: 17px;
+    color: var(--muted);
+  }
+
+  .post__read {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--accent);
+  }
+
+  .empty {
+    margin: 32px 0 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 19px;
+    color: var(--text-2);
+  }
+
+  @media (max-width: 720px) {
+    .post__media {
+      flex-basis: 100%;
+    }
+
+    .post__title {
+      font-size: 24px;
+    }
+  }
+</style>

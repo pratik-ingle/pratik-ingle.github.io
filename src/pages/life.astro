@@ -1,0 +1,311 @@
+---
+import Figure from '../components/Figure.astro';
+import Base from '../layouts/Base.astro';
+import { books, interests, photos, type BookStatus } from '../data/life';
+import { builtMonth } from '../lib/format';
+import { href } from '../lib/paths';
+
+const statusTag: Record<BookStatus, string> = {
+  'Reading now': 'tag--accent',
+  Favourite: 'tag--ink',
+  Finished: 'tag--quiet',
+};
+
+// Photos beyond the first four fade into the grid one tile at a time.
+const rotation = photos
+  .slice(4)
+  .filter((p) => p.image)
+  .map((p) => ({ src: href(p.image!), alt: p.caption }));
+---
+
+<Base title="Life" description="Archery, ceramics, winter bathing, scuba diving and the books on Pratik Ingle’s shelf.">
+  <section class="container page intro">
+    <div class="meta-row">
+      <span>04 — Life</span>
+      <span>Interests · Reading</span>
+      <span>Updated {builtMonth}</span>
+    </div>
+    <h1 class="display">Personal</h1>
+    <div class="intro__text">
+      <p>
+        The curiosity that drives my research doesn’t switch off when I leave the lab. I compete in archery, get my
+        hands into clay, take cold dips through the Danish winter, and lately I’ve been getting hooked on scuba diving.
+      </p>
+      <p>
+        Most of these I started as a complete beginner, and that’s half the fun. Below you’ll find them, along with the
+        books on my shelf.
+      </p>
+      <p class="intro__invite">
+        If you enjoy any of this, or have been meaning to try it, come along. I’m always glad of company at the range,
+        the wheel or the water.
+      </p>
+    </div>
+  </section>
+
+  <section id="interests" class="container block" aria-labelledby="interests-title">
+    <div class="section-head">
+      <div class="section-head__title">
+        <span class="section-head__num">§01</span>
+        <h2 id="interests-title">Interests</h2>
+      </div>
+      <span class="section-head__sub">What I do away from the desk, and what I’m starting to explore.</span>
+    </div>
+
+    <div class="interests">
+      {
+        interests.map((c) => (
+          <article class:list={['interest', { 'interest--exploring': c.exploring }]}>
+            <Figure caption={c.media} src={c.image} size="lg" label={c.fig} />
+            <div class="interest__head">
+              <div class="interest__name">
+                <h3>{c.title}</h3>
+                {c.exploring && <span class="tag tag--accent">Now exploring</span>}
+              </div>
+              {c.spec && <span class="interest__spec">{c.spec}</span>}
+            </div>
+            <p class="interest__text">{c.text}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="photos" data-rotator data-photos={JSON.stringify(rotation)}>
+      {
+        photos.slice(0, 4).map((p) => (
+          <div class="photo">{p.image ? <img src={href(p.image)} alt={p.caption} loading="lazy" /> : p.caption}</div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section id="reading" class="container block" aria-labelledby="reading-title">
+    <div class="section-head">
+      <div class="section-head__title">
+        <span class="section-head__num">§02</span>
+        <h2 id="reading-title">Reading shelf</h2>
+      </div>
+      <span class="section-head__sub">Books I’d hand to a friend, each with a one-line take.</span>
+    </div>
+
+    <div class="books">
+      {
+        books.map((b) => (
+          <article class="book">
+            <div class="book__cover">
+              {b.cover ? <img src={href(b.cover)} alt={`Cover of ${b.title}`} loading="lazy" /> : '[Cover]'}
+            </div>
+            <span class:list={['tag', statusTag[b.status]]}>{b.status}</span>
+            <h3 class="book__title">{b.title}</h3>
+            <span class="book__author">{b.author}</span>
+            <p class="book__take">{b.take}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</Base>
+
+<script>
+  import '../scripts/rotate-photos';
+</script>
+
+<style>
+  .intro {
+    padding-bottom: 0;
+  }
+
+  .intro__text {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 44rem;
+    margin-top: 28px;
+    font-family: var(--serif);
+    font-size: 21px;
+    line-height: 1.55;
+    color: var(--text);
+  }
+
+  .intro__text p {
+    margin: 0;
+  }
+
+  .intro__invite {
+    font-style: italic;
+  }
+
+  .block {
+    padding-top: var(--section-gap);
+  }
+
+  .block:last-child {
+    padding-bottom: var(--section-gap);
+  }
+
+  .interests {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px 32px;
+  }
+
+  .interest {
+    flex: 1 1 460px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .interest__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px 12px;
+    padding-top: 12px;
+    border-top: 2px solid var(--ink);
+  }
+
+  .interest--exploring .interest__head {
+    border-top-color: var(--accent);
+  }
+
+  .interest__name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
+  }
+
+  .interest__name h3 {
+    margin: 0;
+    font-weight: 800;
+    font-size: 32px;
+    letter-spacing: -0.035em;
+  }
+
+  .interest__name .tag {
+    padding: 3px 10px;
+  }
+
+  .interest__spec {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .interest__text {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .photos {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .photo,
+  .book__cover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--fill);
+    border: 1px solid var(--rule);
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .photo {
+    position: relative;
+    aspect-ratio: 1 / 1;
+  }
+
+  /* :global because the rotator script adds these images after the page loads. */
+  .photo :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 1.2s ease;
+  }
+
+  .photo :global(img.is-entering) {
+    opacity: 0;
+  }
+
+  .book__cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .books {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px 28px;
+  }
+
+  .book {
+    flex: 1 1 160px;
+    max-width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .book__cover {
+    aspect-ratio: 2 / 3;
+    padding: 12px;
+  }
+
+  .book .tag {
+    align-self: flex-start;
+    font-size: 11.5px;
+  }
+
+  .book__title {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  .book__author {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .book__take {
+    margin: 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--text-2);
+  }
+
+  @media (max-width: 720px) {
+    .photos {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .interest__name h3 {
+      font-size: 28px;
+    }
+
+    .book {
+      flex-basis: 140px;
+    }
+  }
+</style>

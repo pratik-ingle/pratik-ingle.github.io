@@ -1,0 +1,133 @@
+---
+import { nav, site } from '../data/site';
+import { href } from '../lib/paths';
+
+// Path relative to the deploy base, so "/work/rl-code-generation/" still highlights Work.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const path = Astro.url.pathname.slice(base.length) || '/';
+---
+
+<header class="site-header">
+  <nav aria-label="Main" class="container site-nav">
+    <a href={href('/')} class="brand">
+      <span class="brand__mark" aria-hidden="true"></span>
+      <span class="brand__name">{site.name}</span>
+    </a>
+    <span class="site-nav__tagline">{site.tagline}</span>
+    <div class="site-nav__links">
+      {
+        nav.map((item) => {
+          const current = path === item.path ? 'page' : path.startsWith(item.path) ? 'true' : undefined;
+          return (
+            <a href={href(item.path)} aria-current={current}>
+              {item.label}
+            </a>
+          );
+        })
+      }
+      <a href={`mailto:${site.email}`} class="site-nav__contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 24px;
+    padding-block: 10px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    text-decoration: none;
+  }
+
+  .brand__mark {
+    width: 20px;
+    height: 20px;
+    background: var(--accent);
+  }
+
+  .brand__name {
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.03em;
+  }
+
+  .site-nav__tagline {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .site-nav__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .site-nav__links a {
+    padding: 12px;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+  }
+
+  .site-nav__links a[aria-current] {
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+  }
+
+  .site-nav__links .site-nav__contact {
+    margin-left: 8px;
+    padding: 12px 18px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .site-nav__links .site-nav__contact:hover {
+    background: var(--accent);
+    color: var(--paper);
+  }
+
+  /* Hide the tagline before it would push the links onto a second row. */
+  @media (max-width: 1140px) {
+    .site-nav__tagline {
+      display: none;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .site-nav {
+      padding-block: 6px 10px;
+    }
+
+    .site-nav__links {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .site-nav__links a {
+      padding: 10px 4px;
+      font-size: 14px;
+    }
+
+    .site-nav__links .site-nav__contact {
+      margin-left: 0;
+      padding: 10px 12px;
+    }
+  }
+</style>

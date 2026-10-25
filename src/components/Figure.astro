@@ -1,0 +1,145 @@
+---
+import { href } from '../lib/paths';
+
+interface Props {
+  // Placeholder text shown in the black box, e.g. "[GIF: tactile skin readings]". Doubles as alt text once `src` is set.
+  caption: string;
+  // Image, GIF or video (.mp4 / .webm) in public/, e.g. "/media/tactile.mp4".
+  src?: string;
+  ratio?: string;
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+  corners?: 2 | 4;
+  label?: string;
+  // object-position for real media, e.g. "50% 30%" to keep a face in frame.
+  position?: string;
+  class?: string;
+}
+
+const { caption, src, ratio = '4 / 3', size = 'md', corners = 4, label, position, class: className } = Astro.props;
+const alt = caption.replace(/^\[|\]$/g, '').replace(/^[^:]+:\s*/, '');
+const isVideo = src !== undefined && /\.(mp4|webm)$/i.test(src);
+const mediaStyle = position ? `object-position: ${position}` : undefined;
+---
+
+<div class:list={['fig', `fig--${size}`, { 'fig--media': src }, className]} style={`aspect-ratio: ${ratio}`}>
+  {
+    src ? (
+      isVideo ? (
+        <video src={href(src)} style={mediaStyle} aria-label={alt} autoplay muted loop playsinline />
+      ) : (
+        <img src={href(src)} style={mediaStyle} alt={alt} loading="lazy" decoding="async" />
+      )
+    ) : (
+      <span class="fig__caption">{caption}</span>
+    )
+  }
+  <span class="fig__mark fig__mark--tl" aria-hidden="true"></span>
+  {corners === 4 && <span class="fig__mark fig__mark--tr" aria-hidden="true"></span>}
+  {corners === 4 && <span class="fig__mark fig__mark--bl" aria-hidden="true"></span>}
+  <span class="fig__mark fig__mark--br" aria-hidden="true"></span>
+  {label && <span class="fig__label">{label}</span>}
+</div>
+
+<style>
+  .fig {
+    --mark: 14px;
+    --inset: 12px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 36px;
+    background: var(--ink);
+    color: #bdbdbd;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  .fig--xs {
+    --mark: 8px;
+    --inset: 6px;
+    padding: 8px;
+    color: #9a9a9a;
+    font-size: 10px;
+    line-height: 1.3;
+  }
+
+  .fig--sm {
+    --mark: 12px;
+    --inset: 10px;
+    padding: 20px;
+    font-size: 12px;
+  }
+
+  .fig--lg {
+    --mark: 16px;
+    --inset: 14px;
+  }
+
+  .fig img,
+  .fig video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .fig__mark {
+    position: absolute;
+    width: var(--mark);
+    height: var(--mark);
+    border: 0 solid #7a7a7a;
+  }
+
+  .fig--media .fig__mark {
+    border-color: #ffffff;
+  }
+
+  .fig__mark--tl {
+    top: var(--inset);
+    left: var(--inset);
+    border-top-width: 1.5px;
+    border-left-width: 1.5px;
+  }
+
+  .fig__mark--tr {
+    top: var(--inset);
+    right: var(--inset);
+    border-top-width: 1.5px;
+    border-right-width: 1.5px;
+  }
+
+  .fig__mark--bl {
+    bottom: var(--inset);
+    left: var(--inset);
+    border-bottom-width: 1.5px;
+    border-left-width: 1.5px;
+  }
+
+  .fig__mark--br {
+    bottom: var(--inset);
+    right: var(--inset);
+    border-bottom-width: 1.5px;
+    border-right-width: 1.5px;
+  }
+
+  .fig__label {
+    position: absolute;
+    top: calc(var(--inset) - 2px);
+    left: calc(var(--inset) + var(--mark) + 10px);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: #9a9a9a;
+  }
+
+  /* Over a photo the label needs its own backing to stay legible. */
+  .fig--media .fig__label {
+    padding: 2px 7px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+</style>

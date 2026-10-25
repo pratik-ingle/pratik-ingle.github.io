@@ -1,0 +1,326 @@
+---
+import Figure from '../components/Figure.astro';
+import Icon from '../components/Icon.astro';
+import EmbodiedDemo from '../components/EmbodiedDemo.astro';
+import Base from '../layouts/Base.astro';
+import { latest } from '../data/home';
+import { site, socials } from '../data/site';
+import { href } from '../lib/paths';
+---
+
+<Base home>
+  <section class="container hero">
+    <figure class="hero__figure">
+      <Figure
+        src="/images/portrait.jpg"
+        caption="[Photo: Pratik Ingle standing outdoors in warm evening light]"
+        ratio="4 / 5"
+        size="lg"
+        label="FIG. 00 — P. INGLE"
+        position="50% 30%"
+      />
+      <figcaption>
+        <span>Pratik Ingle · PhD candidate</span>
+        <span>Copenhagen, DK</span>
+      </figcaption>
+    </figure>
+
+    <div class="hero__text">
+      <h1 class="sr-only">{site.role}</h1>
+      <div class="hero__about">
+        <p>
+          I’m Pratik Ingle, a PhD candidate in Computer Science at the IT University of Copenhagen, working in the <a
+            href="https://real.itu.dk/">REAL Lab</a> with <a
+            href="https://researcher.itu.dk/p/en/persons/kasper-st%C3%B8y/">Kasper Støy</a> and <a
+            href="https://real.itu.dk/people/afaina/">Andrés Faíña</a> on learning and control for grasp-free
+          manipulation. My research sits at the intersection of tactile sensing and robot learning. In 2026, I was a
+          visiting researcher at UCL’s <a href="https://lorejam.wixsite.com/crisp">CRISP Lab</a> with <a
+            href="https://profiles.ucl.ac.uk/102308-lorenzo-jamone">Lorenzo Jamone</a>, working on tactile perception
+          for robot hands. Before my PhD, I completed a BS-MS in Electrical Engineering and Computer Science at IISER
+          Bhopal and worked on multi-robot systems at NJIT’s <a href="https://www.theswarmlab.com/">Swarm Lab</a>.
+        </p>
+        <p>
+          I’m interested in world models, in particular JEPA-style models that learn by predicting in latent space,
+          and more recently in vision-language-action (VLA) models, LLM inference, safety, and evaluation.
+        </p>
+      </div>
+      <div class="hero__actions">
+        <a class="btn btn--solid" href={href('/work/')}>See the work →</a>
+        <a class="btn" href={href('/publications/')}>Publications →</a>
+        <a class="btn" href={href('/writing/')}>Blog →</a>
+      </div>
+      <ul class="hero__socials">
+        {
+          socials.map((s) => (
+            <li>
+              <a href={s.href}>
+                <Icon name={s.icon} />
+                {s.label} ↗
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="container play" aria-labelledby="play-title">
+    <div class="section-head block-head">
+      <div class="block-titles">
+        <h2 id="play-title">Visual abstract</h2>
+        <span class="section-head__sub">My research in four live demos. Pick one and try it.</span>
+      </div>
+    </div>
+    <EmbodiedDemo />
+  </section>
+
+  <section class="container latest" aria-labelledby="latest-title">
+    <div class="section-head block-head">
+      <div class="block-titles">
+        <h2 id="latest-title">Latest</h2>
+        <span class="section-head__sub">What I’m working on right now.</span>
+      </div>
+      <a href={href('/work/')} class="latest__all">All projects →</a>
+    </div>
+
+    <ul class="latest__list">
+      {
+        latest.map((item) => (
+          <li>
+            <a href={href(item.href)} class="latest__item">
+              <Figure caption={item.media} src={item.image} ratio="16 / 10" size="xs" corners={2} />
+              <span class="latest__body">
+                <span class="latest__meta">
+                  <span class:list={['tag', item.highlight ? 'tag--accent' : 'tag--ink']}>{item.kind}</span>
+                  <span>{item.status}</span>
+                </span>
+                <span class="latest__title">{item.title}</span>
+                <span class="latest__text">{item.text}</span>
+              </span>
+              <span class="latest__arrow" aria-hidden="true">
+                →
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 48px 56px;
+    padding-top: 72px;
+  }
+
+  .hero__figure {
+    flex: 0 1 380px;
+    min-width: 260px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hero__figure figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .hero__text {
+    flex: 1.6 1 520px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .hero__about {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    border-top: 2px solid var(--ink);
+    padding-top: 20px;
+    font-family: var(--serif);
+    font-size: 21px;
+    line-height: 1.55;
+    color: var(--text);
+  }
+
+  .hero__about p {
+    margin: 0;
+  }
+
+  /* Lab and supervisor links: a quiet underline so the paragraph still reads as prose. */
+  .hero__about a {
+    color: inherit;
+    text-decoration-color: var(--rule-strong);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+  }
+
+  .hero__about a:hover {
+    color: var(--accent);
+    text-decoration-color: currentColor;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .hero__socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+
+  .hero__socials a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+  }
+
+  .play,
+  .latest {
+    padding-top: var(--section-gap);
+  }
+
+  .block-head {
+    margin-bottom: 24px;
+  }
+
+  .block-titles {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .block-titles h2 {
+    margin: 0;
+    font-weight: 800;
+    font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .latest__all {
+    padding: 8px 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .latest__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--ink);
+  }
+
+  .latest__list li {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .latest__item {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 20px 0;
+    text-decoration: none;
+  }
+
+  .latest__item :global(.fig) {
+    flex: 0 0 112px;
+  }
+
+  .latest__body {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .latest__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .latest__title {
+    font-weight: 800;
+    font-size: 22px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .latest__text {
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.45;
+    color: var(--text-2);
+  }
+
+  .latest__arrow {
+    flex: 0 0 auto;
+    font-size: 20px;
+    color: var(--accent);
+    transition: transform 0.15s;
+  }
+
+  .latest__item:hover .latest__arrow {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 720px) {
+    .hero {
+      padding-top: 40px;
+    }
+
+    .hero__about {
+      font-size: 19px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .latest__item {
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .latest__item :global(.fig) {
+      flex-basis: 80px;
+    }
+
+    .latest__title {
+      font-size: 19px;
+    }
+
+    .latest__text {
+      font-size: 16px;
+    }
+
+    .latest__arrow {
+      display: none;
+    }
+  }
+</style>

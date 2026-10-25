@@ -1,0 +1,600 @@
+---
+// Four small demos a visitor can switch between: an instruction-following arm, a robot that plans
+// with a world model, grasp-free manipulation on an actuated surface, and a prompt-injection eval
+// for an email agent. Logic lives in src/scripts/embodied-demo.ts, surface-scene.ts and
+// agent-safety.ts; the eval itself in src/lib/agent-eval.ts.
+// Laid out as a list of demos beside the live one, matching the hero's photo and text columns.
+// Keep each description to one line on desktop so the list stays as tall as the live demo.
+import { DEFENCES, EPISODES } from '../lib/agent-eval';
+import { PRESETS } from '../lib/surface-presets';
+
+const demos = [
+  { mode: 'arm', name: 'Language → action', desc: 'Tell a robot arm what to do, in words.' },
+  { mode: 'nav', name: 'World model', desc: 'A robot that plans by imagining futures.' },
+  { mode: 'surface', name: 'Grasp-free manipulation', short: 'Grasp-free', desc: 'Move objects by reshaping a soft surface.' },
+  { mode: 'safety', name: 'Agent safety', desc: '12 prompt injections vs. four defences.' },
+];
+const examples = ['put red on green and both on blue', 'unstack everything', 'reset'];
+---
+
+<div class="demo" data-embodied-demo>
+  <div class="demo__tabs" role="tablist" aria-label="Choose a demo">
+    {
+      demos.map((d, i) => (
+        <button type="button" role="tab" aria-selected={String(i === 0)} data-mode={d.mode}>
+          <span class="demo__num">{String(i + 1).padStart(2, '0')}</span>
+          <span class="demo__name">
+            <span class="demo__long">{d.name}</span>
+            <span class="demo__short">{d.short ?? d.name}</span>
+          </span>
+          <span class="demo__desc">{d.desc}</span>
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="demo__stage">
+    <span class="demo__status" data-status>toy policy · parser + motion planner</span>
+
+    <canvas class="demo__canvas" data-canvas tabindex="0" role="img" aria-label=""></canvas>
+
+    <div class="demo__panel" data-panel="arm">
+      <form class="demo__form" data-arm-form>
+        <label class="sr-only" for="demo-instruction">Instruction for the robot arm</label>
+        <input
+          id="demo-instruction"
+          data-arm-input
+          type="text"
+          autocomplete="off"
+          spellcheck="false"
+          placeholder="Tell the arm what to do, e.g. stack red on blue"
+        />
+        <button type="submit" data-arm-run>Run</button>
+      </form>
+      <p class="demo__plan" data-plan aria-live="polite"></p>
+      <p class="demo__examples">
+        {'Try: '}
+        {
+          examples.map((e, i) => (
+            <>
+              {i > 0 && ' · '}
+              <button type="button" data-example>{e}</button>
+            </>
+          ))
+        }
+        {' · or click a block'}
+      </p>
+    </div>
+
+    <p class="demo__caption" data-panel="nav" hidden>
+      Click to set a goal. The robot imagines 24 futures (dotted), coloured by score{' '}
+      <span class="nowrap"><span class="heat-key" aria-hidden="true"></span> best → worst</span> (grey: wall ahead),
+      and follows the solid one towards the ring.
+    </p>
+
+    <div class="demo__panel" data-panel="surface" hidden>
+      <p class="demo__examples">
+        {'Try: '}
+        {
+          PRESETS.map((p, i) => (
+            <>
+              {i > 0 && ' · '}
+              <button type="button" data-surface-preset={p}>{p}</button>
+            </>
+          ))
+        }
+        {' · or click a ball, then where it should go'}
+      </p>
+      <p class="demo__caption">No gripper: each ball follows a planned path (dashed) that keeps it clear of the others, and the actuators tilt the fabric to roll it along.</p>
+    </div>
+
+    <div class="safety" data-panel="safety" data-safety hidden>
+      <div class="safety__defences" role="group" aria-label="Defences">
+        <span class="safety__label">Defences</span>
+        {
+          DEFENCES.map((d) => (
+            <button type="button" aria-pressed="false" data-defence={d.id} title={d.help}>
+              {d.label}
+            </button>
+          ))
+        }
+      </div>
+      <div class="safety__grid" aria-label="Eval episodes: 12 injected emails and 4 normal tasks">
+        {
+          EPISODES.map((e, i) => (
+            <button type="button" class:list={['tile', { 'tile--task': e.kind === 'task' }]} data-episode={i} data-state="pending">
+              <span class="tile__tag">{e.tag}</span>
+              <span class="tile__sub">{e.sub}</span>
+            </button>
+          ))
+        }
+      </div>
+      <div class="safety__metrics">
+        <span data-metrics aria-live="polite"></span>
+        <span class="safety__key">
+          <i class="key key--fail" aria-hidden="true"></i>hijacked or failed
+          <i class="key key--pass" aria-hidden="true"></i>blocked or done
+        </span>
+      </div>
+      <dl class="safety__log" data-log aria-live="polite"></dl>
+      <p class="demo__caption">Turn defences on and the eval re-runs. Click a tile to see what the agent did.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Desktop: demo list in the photo's column, the live demo in the text column. */
+  .demo {
+    display: grid;
+    grid-template-columns: 380px minmax(0, 1fr);
+    gap: 24px 56px;
+    align-items: start;
+  }
+
+  .demo__tabs {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--ink);
+  }
+
+  .demo__tabs button {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 4px 8px;
+    padding: 11px 12px 11px 14px;
+    border: 0;
+    border-bottom: 1px solid var(--rule);
+    border-left: 3px solid transparent;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+
+  .demo__num {
+    grid-row: span 2;
+    padding-top: 5px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .demo__name {
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--text-2);
+  }
+
+  .demo__desc {
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--muted);
+  }
+
+  .demo__short {
+    display: none;
+  }
+
+  .demo__tabs button:hover .demo__name {
+    color: var(--accent);
+  }
+
+  .demo__tabs button[aria-selected='true'] {
+    border-left-color: var(--accent);
+  }
+
+  .demo__tabs button[aria-selected='true'] .demo__name {
+    color: var(--ink);
+  }
+
+  .demo__tabs button[aria-selected='true'] .demo__num {
+    color: var(--accent);
+  }
+
+  .demo__tabs button[aria-selected='true'] .demo__desc {
+    color: var(--text-2);
+  }
+
+  .demo__stage {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .demo__status {
+    padding-top: 8px;
+    border-top: 1px solid var(--ink);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* Tablet: stacked, the four demos side by side as tabs above the live one. */
+  @media (max-width: 1035px) {
+    .demo {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    .demo__tabs {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0 18px;
+      border-top: 0;
+    }
+
+    .demo__tabs button {
+      grid-template-columns: minmax(0, 1fr);
+      align-content: start;
+      padding: 12px 0 0;
+      border-bottom: 0;
+      border-left: 0;
+      border-top: 3px solid var(--rule);
+    }
+
+    .demo__num {
+      grid-row: auto;
+      padding-top: 0;
+    }
+
+    .demo__tabs button[aria-selected='true'] {
+      border-top-color: var(--accent);
+    }
+  }
+
+  /* Phone: just the (short) names, as two rows of two tabs. */
+  @media (max-width: 560px) {
+    .demo__tabs {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 18px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .demo__tabs button {
+      padding: 7px 0 5px;
+      border-top: 0;
+      border-bottom: 3px solid transparent;
+    }
+
+    .demo__long {
+      display: none;
+    }
+
+    .demo__short {
+      display: inline;
+    }
+
+    .demo__tabs button[aria-selected='true'] {
+      border-bottom-color: var(--accent);
+    }
+
+    .demo__num,
+    .demo__desc {
+      display: none;
+    }
+
+    .demo__name {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0;
+    }
+
+    .demo__tabs button[aria-selected='true'] .demo__name {
+      font-weight: 700;
+    }
+
+    .demo__status {
+      padding-top: 0;
+      border-top: 0;
+    }
+  }
+
+  .demo__canvas {
+    display: block;
+    width: 100%;
+    height: 190px;
+    touch-action: pan-y;
+  }
+
+  .demo__canvas:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+  }
+
+  .demo__panel {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .demo__form {
+    display: flex;
+    gap: 8px;
+  }
+
+  .demo__form input {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 10px;
+    border: 1.5px solid var(--ink);
+    border-radius: 0;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink);
+    background: var(--paper);
+  }
+
+  .demo__form input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 0;
+  }
+
+  .demo__form button {
+    padding: 8px 16px;
+    border: 1.5px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .demo__form button:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: var(--accent);
+  }
+
+  .demo__form button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .demo__plan,
+  .demo__examples,
+  .demo__caption {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .demo__plan {
+    min-height: 18px;
+  }
+
+  .demo__plan :global(.is-current) {
+    color: var(--accent);
+  }
+
+  .demo__plan :global(.is-done) {
+    color: var(--ink);
+  }
+
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  /* Same stops as HEAT in src/scripts/embodied-demo.ts */
+  .heat-key {
+    display: inline-block;
+    width: 56px;
+    height: 7px;
+    vertical-align: 1px;
+    background: linear-gradient(90deg, #2d5bff, #18a6c4, #60b240, #eaa01e, #e1251b);
+  }
+
+  .demo__examples button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ink);
+    font: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--rule-strong);
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+
+  .demo__examples button:hover {
+    color: var(--accent);
+  }
+
+  /* Agent safety */
+
+  .safety {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    container-type: inline-size;
+  }
+
+  .safety[hidden] {
+    display: none;
+  }
+
+  .safety__defences {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .safety__label {
+    margin-right: 6px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .safety__defences button {
+    padding: 5px 10px;
+    border: 1.5px solid var(--ink);
+    border-radius: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .safety__defences button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .safety__defences button[aria-pressed='true'] {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* 16 tiles: two full rows of 8 when there's room, otherwise four rows of 4 */
+  .safety__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 5px;
+  }
+
+  @container (min-width: 680px) {
+    .safety__grid {
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+    }
+  }
+
+  .tile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;
+    padding: 5px 7px;
+    border: 1.5px solid transparent;
+    background: var(--fill);
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.25;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+
+  .tile__tag {
+    font-weight: 500;
+  }
+
+  .tile__sub {
+    opacity: 0.85;
+  }
+
+  .tile[data-state='pass'] {
+    background: #0a7f5a;
+    color: #fff;
+  }
+
+  .tile[data-state='fail'] {
+    background: #e1251b;
+    color: #fff;
+  }
+
+  .tile--task {
+    border-style: dashed;
+    border-color: var(--rule-strong);
+  }
+
+  .tile--task:not([data-state='pending']) {
+    border-color: transparent;
+  }
+
+  .tile[aria-current='true'] {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .safety__metrics {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 16px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .safety__metrics :global(b) {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .safety__key {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .key {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+  }
+
+  .key--fail {
+    background: #e1251b;
+  }
+
+  .key--pass {
+    margin-left: 8px;
+    background: #0a7f5a;
+  }
+
+  .safety__log {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 2px 10px;
+    min-height: 76px;
+    margin: 0;
+    padding: 8px 10px;
+    border-left: 3px solid var(--rule-strong);
+    background: var(--fill);
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .safety__log :global(dt) {
+    color: var(--muted);
+  }
+
+  .safety__log :global(dd) {
+    margin: 0;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    color: var(--ink);
+  }
+
+  .safety__log :global(.verdict) {
+    font-weight: 600;
+  }
+
+  .safety__log :global(.verdict--fail) {
+    color: #c41f16;
+  }
+
+  .safety__log :global(.verdict--pass) {
+    color: #0a7f5a;
+  }
+</style>
+
+<script>
+  import '../scripts/embodied-demo';
+  import '../scripts/agent-safety';
+</script>

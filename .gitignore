@@ -1,11 +1,13 @@
-.quarto/
-_site/
-_freeze/
+node_modules/
+dist/
+.astro/
+.env
 .DS_Store
-.Rproj.user/
 
-/.quarto/
+# Full-size source photos and videos; the site uses the compressed copies in public/media/.
+media-originals/
 
-# Staging inbox for notes dragged out of the Obsidian vault.
-# The converted post under posts/notes/ is the source of truth.
-/Blogs/
+# Local-only material: the CV (kept out of the public repo), screenshots, the design export.
+Pratik_CV.pdf
+Screenshot *.png
+layout_design/

@@ -1,0 +1,57 @@
+---
+import { site } from '../data/site';
+import { href } from '../lib/paths';
+
+interface Props {
+  // The home page footer sits inside the column and links back to the top instead of home.
+  home?: boolean;
+}
+
+const { home = false } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class:list={['site-footer', { 'site-footer--home': home }]}>
+  <div class="container">
+    <div class="site-footer__row">
+      <span>© {year} {site.name}</span>
+      <span>{site.location}</span>
+      {home ? <a href="#top">Back to top ↑</a> : <a href={href('/')}>Back to home ↑</a>}
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 2px solid var(--ink);
+  }
+
+  .site-footer__row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px 24px;
+    padding-block: 18px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .site-footer a {
+    color: var(--muted);
+  }
+
+  .site-footer a:hover {
+    color: var(--accent);
+  }
+
+  .site-footer--home {
+    border-top: 0;
+    padding: var(--section-gap) 0 40px;
+  }
+
+  .site-footer--home .site-footer__row {
+    padding-block: 16px 0;
+    border-top: 2px solid var(--ink);
+  }
+</style>

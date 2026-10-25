@@ -1,0 +1,121 @@
+---
+import { render } from 'astro:content';
+import Figure from '../../components/Figure.astro';
+import Pager from '../../components/Pager.astro';
+import Base from '../../layouts/Base.astro';
+import { TYPE_TAG } from '../../data/taxonomy';
+import { getProjects } from '../../lib/content';
+import { pad } from '../../lib/format';
+import { href } from '../../lib/paths';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project, i) => ({
+    params: { slug: project.id },
+    props: { project, prev: projects[i - 1], next: projects[i + 1] },
+  }));
+}
+
+const { project, prev, next } = Astro.props;
+const { Content } = await render(project);
+const d = project.data;
+const link = (p?: typeof project) => p && { href: href(`/work/${p.id}/`), title: p.data.title };
+---
+
+<Base title={d.title} description={d.blurb}>
+  <article class="container page">
+    <div class="meta-row">
+      <span>01 — Work / {pad(d.order)}</span>
+      <span>{d.tracks.join(' · ')}</span>
+      <a href={href('/work/')}>← All projects</a>
+    </div>
+
+    <h1 class="title">{d.title}</h1>
+    <p class="lede">{d.blurb}</p>
+
+    <dl class="facts">
+      <div>
+        <dt>Type</dt>
+        <dd><span class:list={['tag', TYPE_TAG[d.type]]}>{d.type}</span></dd>
+      </div>
+      <div>
+        <dt>Tracks</dt>
+        <dd>{d.tracks.join(' · ')}</dd>
+      </div>
+      {
+        d.meta && (
+          <div>
+            <dt>Context</dt>
+            <dd>{d.meta}</dd>
+          </div>
+        )
+      }
+      <div>
+        <dt>Links</dt>
+        <dd class="facts__links">
+          {d.links.length ? d.links.map((l) => <a href={href(l.href)}>{l.label} ↗</a>) : <span>—</span>}
+        </dd>
+      </div>
+    </dl>
+
+    <div class="media">
+      <Figure caption={d.media} src={d.image} ratio="16 / 9" size="lg" label={`FIG. ${pad(d.order)}`} />
+    </div>
+
+    {
+      project.body?.trim() && (
+        <div class="prose">
+          <Content />
+        </div>
+      )
+    }
+
+    <Pager label="More projects" prev={link(prev)} next={link(next)} />
+  </article>
+</Base>
+
+<style>
+  .title {
+    max-width: 20ch;
+    margin: 40px 0 0;
+    font-weight: 800;
+    font-size: clamp(2.6rem, 5.5vw, 5.25rem);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px 32px;
+    margin: 48px 0 0;
+    padding-top: 16px;
+    border-top: 2px solid var(--ink);
+  }
+
+  .facts dt {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .facts dd {
+    margin: 6px 0 0;
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  .facts__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+  }
+
+  .facts__links a {
+    color: var(--accent);
+  }
+
+  .media {
+    margin: 40px 0 56px;
+  }
+</style>

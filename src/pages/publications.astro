@@ -1,0 +1,155 @@
+---
+import Figure from '../components/Figure.astro';
+import Base from '../layouts/Base.astro';
+import { papers } from '../data/publications';
+---
+
+<Base
+  title="Publications"
+  description="Papers, manuscripts and preprints by Pratik Ingle on soft manipulation surfaces, tactile learning and multi-robot systems."
+>
+  <div class="container page">
+    <div class="meta-row">
+      <span>02 — Publications</span>
+    </div>
+    <h1 class="display">Papers <em>and preprints.</em></h1>
+    <p class="lede">Published work, manuscripts and papers under review.</p>
+
+    <ol class="papers">
+      {
+        papers.map((p) => (
+          <li class="paper">
+            <div class="paper__media">
+              <Figure caption={p.media} src={p.image} ratio="16 / 10" size="sm" corners={2} />
+            </div>
+            <div class="paper__body">
+              <span class:list={['paper__venue', { 'paper__venue--pending': p.pending }]}>{p.venue}</span>
+              <h2 class="paper__title">{p.title}</h2>
+              <span class="paper__note">{p.note}</span>
+              {(p.links.length > 0 || p.bibtex !== false) && (
+                <div class="paper__links">
+                  {p.links.map((l) => (
+                    <a href={l.href}>{l.label}</a>
+                  ))}
+                  {p.bibtex ? (
+                    <details>
+                      <summary>BibTeX</summary>
+                      <pre>{p.bibtex}</pre>
+                    </details>
+                  ) : (
+                    p.bibtex !== false && <a href="#">BibTeX</a>
+                  )}
+                </div>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</Base>
+
+<style>
+  .papers {
+    margin: 56px 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: 2px solid var(--ink);
+  }
+
+  .paper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px 40px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .paper__media {
+    flex: 0 0 320px;
+    max-width: 100%;
+  }
+
+  .paper__body {
+    flex: 1 1 420px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .paper__venue {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .paper__venue--pending {
+    color: var(--accent);
+  }
+
+  .paper__title {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: normal;
+  }
+
+  .paper__note {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .paper__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+
+  .paper__links a,
+  .paper__links summary {
+    padding: 4px 0;
+  }
+
+  .paper__links summary {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .paper__links summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .paper__links details[open] {
+    flex-basis: 100%;
+  }
+
+  .paper__links pre {
+    margin: 8px 0 0;
+    padding: 16px;
+    overflow-x: auto;
+    background: var(--fill);
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    user-select: all;
+  }
+
+  @media (max-width: 720px) {
+    .paper__media {
+      flex-basis: 100%;
+    }
+
+    .paper__title {
+      font-size: 21px;
+    }
+  }
+</style>

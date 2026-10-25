@@ -1,0 +1,64 @@
+---
+import { render } from 'astro:content';
+import Figure from '../../components/Figure.astro';
+import Pager from '../../components/Pager.astro';
+import Base from '../../layouts/Base.astro';
+import { getPosts } from '../../lib/content';
+import { formatMonth, readingTime } from '../../lib/format';
+import { href } from '../../lib/paths';
+
+export async function getStaticPaths() {
+  // Posts with a `url` live on another site, so only local Markdown posts get a page here.
+  const posts = (await getPosts()).filter((post) => !post.data.url);
+  return posts.map((post, i) => ({
+    params: { slug: post.id },
+    props: { post, prev: posts[i - 1], next: posts[i + 1] },
+  }));
+}
+
+const { post, prev, next } = Astro.props;
+const { Content } = await render(post);
+const d = post.data;
+const link = (p?: typeof post) => p && { href: href(`/writing/${p.id}/`), title: p.data.title };
+---
+
+<Base title={d.title} description={d.excerpt}>
+  <article class="container page">
+    <div class="meta-row">
+      <span>03 — Writing</span>
+      <span>{formatMonth(d.date)} · {d.topic} · {readingTime(post.body)}</span>
+      <a href={href('/writing/')}>← All posts</a>
+    </div>
+
+    <h1 class="title">{d.title}</h1>
+    <p class="lede">{d.excerpt}</p>
+
+    <div class="media">
+      <Figure caption={d.media} src={d.image} ratio="16 / 9" size="lg" />
+    </div>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <Pager label="More writing" prev={link(prev)} next={link(next)} />
+  </article>
+</Base>
+
+<style>
+  .title {
+    max-width: 22ch;
+    margin: 40px 0 0;
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+    font-weight: 500;
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+  }
+
+  .media {
+    margin: 48px 0 56px;
+    padding-top: 16px;
+    border-top: 2px solid var(--ink);
+  }
+</style>
