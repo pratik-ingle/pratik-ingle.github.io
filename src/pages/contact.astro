@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, socials } from '../data/site';
+
+const link = (label: string) => socials.find((s) => s.label === label)!.href;
+
+// One row per way to reach me. `copy` adds a button that copies the value.
+const channels = [
+  { label: 'Email', text: site.email, href: `mailto:${site.email}`, copy: site.email },
+  { label: 'LinkedIn', text: 'Pratik Ingle', href: link('LinkedIn'), external: true },
+  { label: 'GitHub', text: '@pratik-ingle', href: link('GitHub'), external: true },
+];
+---
+
+<Base title="Contact" description="Get in touch with Pratik Ingle by email, LinkedIn or GitHub.">
+  <div class="container page">
+    <div class="meta-row">
+      <span>05 — Contact</span>
+    </div>
+    <h1 class="display">Let’s <em>talk!</em></h1>
+    <p class="lede">Feel free to reach out through any of these.</p>
+
+    <dl class="channels">
+      {
+        channels.map((c) => (
+          <div class="channel">
+            <dt>{c.label}</dt>
+            <dd>
+              <a href={c.href}>
+                {c.text}
+                {c.external && ' ↗'}
+              </a>
+              {c.copy && (
+                <button type="button" class="channel__copy" data-copy={c.copy} hidden>
+                  Copy
+                </button>
+              )}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</Base>
+
+<script>
+  // Copy buttons only appear where the browser can copy, since mailto links fail for webmail users.
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
+    if (!navigator.clipboard) continue;
+    button.hidden = false;
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy!);
+        button.textContent = 'Copied ✓';
+      } catch {
+        button.textContent = 'Couldn’t copy';
+      }
+      setTimeout(() => (button.textContent = 'Copy'), 2000);
+    });
+  }
+</script>
+
+<style>
+  .channels {
+    max-width: 44rem;
+    margin: 48px 0 0;
+    border-top: 2px solid var(--ink);
+  }
+
+  .channel {
+    display: grid;
+    grid-template-columns: 140px minmax(0, 1fr);
+    align-items: baseline;
+    gap: 6px 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .channel dt {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .channel dd {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 16px;
+    margin: 0;
+    min-width: 0;
+  }
+
+  .channel a {
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 5px;
+    overflow-wrap: anywhere;
+  }
+
+  .channel__copy {
+    padding: 2px 10px;
+    border: 1.5px solid var(--ink);
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  .channel__copy:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  @media (max-width: 560px) {
+    .channel {
+      grid-template-columns: 1fr;
+      padding: 16px 0;
+    }
+
+    .channel a {
+      font-size: 19px;
+    }
+  }
+</style>

@@ -25,7 +25,9 @@ const path = Astro.url.pathname.slice(base.length) || '/';
           );
         })
       }
-      <a href={`mailto:${site.email}`} class="site-nav__contact">Contact</a>
+      <a href={href('/contact/')} class="site-nav__contact" aria-current={path === '/contact/' ? 'page' : undefined}
+        >Contact</a
+      >
     </div>
   </nav>
 </header>
