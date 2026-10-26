@@ -18,7 +18,7 @@ Everything the site still shows as a placeholder or needs a decision on. Fill in
 | Work | 2 links, write-ups for 3 projects; optional: a sharper W1 video, real media for the generated figures |
 | Publications | 3 preprint links, 3 BibTeX entries |
 | Writing | optional: more posts, your own covers for the 2 generated ones |
-| Life | 1 scuba sentence; optional: your own book takes, 1 sharper cover |
+| Life | optional: your own book takes, 1 sharper cover |
 | Home and profile | 2 optional items |
 
 ---
@@ -148,10 +148,6 @@ One link per line; I'll pull the title, date and summary from each page.
 ---
 
 ## 5. Life page
-
-**L4. Scuba diving** (marked "Now exploring")
-
-- Replace `[Certification, first dives, dream sites.]` with (or `none` to drop it) →
 
 ### L6. Reading shelf
 
