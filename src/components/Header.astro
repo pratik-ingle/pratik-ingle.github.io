@@ -1,6 +1,7 @@
 ---
 import { nav, site } from '../data/site';
 import { href } from '../lib/paths';
+import ContactWindow from './ContactWindow.astro';
 
 // Path relative to the deploy base, so "/work/rl-code-generation/" still highlights Work.
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -25,11 +26,10 @@ const path = Astro.url.pathname.slice(base.length) || '/';
           );
         })
       }
-      <a href={href('/contact/')} class="site-nav__contact" aria-current={path === '/contact/' ? 'page' : undefined}
-        >Contact</a
-      >
+      <button type="button" class="site-nav__contact" popovertarget="contact-window">Contact</button>
     </div>
   </nav>
+  <ContactWindow />
 </header>
 
 <script>
@@ -111,8 +111,14 @@ const path = Astro.url.pathname.slice(base.length) || '/';
   .site-nav__links .site-nav__contact {
     margin-left: 8px;
     padding: 12px 18px;
+    border: 0;
     background: var(--ink);
     color: var(--paper);
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 15px;
+    line-height: inherit;
+    cursor: pointer;
   }
 
   .site-nav__links .site-nav__contact:hover {
@@ -152,9 +158,13 @@ const path = Astro.url.pathname.slice(base.length) || '/';
       justify-content: space-between;
     }
 
+    .site-nav__links a,
+    .site-nav__links .site-nav__contact {
+      font-size: 14px;
+    }
+
     .site-nav__links a {
       padding: 8px 4px;
-      font-size: 14px;
     }
 
     .site-nav__links .site-nav__contact {

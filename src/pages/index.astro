@@ -44,9 +44,10 @@ import { href } from '../lib/paths';
           and more recently in vision-language-action (VLA) models, LLM inference, safety, and evaluation.
         </p>
         <p>
-          I love to talk to people, get to know their experiences, research and ideas, and write back. <a
+          I love to talk to people, get to know their experiences, research and ideas, and write back. <button
+            type="button"
             class="hero__message"
-            href={href('/contact/')}>Send me a message!</a
+            popovertarget="contact-window">Send me a message!</button
           >
         </p>
       </div>
@@ -180,9 +181,20 @@ import { href } from '../lib/paths';
 
   /* The invitation to get in touch stands out from the other links. */
   .hero__about .hero__message {
+    padding: 0;
+    border: 0;
+    background: none;
     color: var(--accent);
-    text-decoration-color: currentColor;
+    font: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
     white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .hero__about .hero__message:hover {
+    text-decoration-thickness: 2px;
   }
 
   .hero__actions {

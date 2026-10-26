@@ -15,6 +15,15 @@ export const socials = [
   { label: 'Email', icon: 'mail', href: `mailto:${site.email}` },
 ] as const;
 
+// Rows in the "Let's talk!" contact window, in order. `copy` adds a button that copies the value.
+export const contact: { label: string; text: string; href: string; copy?: string }[] = [
+  { label: 'Email', text: site.email, href: `mailto:${site.email}`, copy: site.email },
+  { label: 'X', text: '@PratikIngle_', href: 'https://x.com/PratikIngle_' },
+  { label: 'LinkedIn', text: 'Pratik Ingle', href: 'https://www.linkedin.com/in/pratik-ingle-03034b152' },
+  { label: 'GitHub', text: '@pratik-ingle', href: 'https://github.com/pratik-ingle' },
+  { label: 'Feedback', text: 'Give me anonymous feedback!', href: 'https://www.admonymous.co/pratik-ingle' },
+];
+
 export const nav = [
   { label: 'Work', path: '/work/' },
   { label: 'Publications', path: '/publications/' },

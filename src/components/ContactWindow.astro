@@ -1,0 +1,232 @@
+---
+// The "Let's talk!" window. Any button with popovertarget="contact-window" opens it (the header's
+// Contact button, "Send me a message!" on the home page). It floats over the current page and closes
+// on Esc, a click outside, or the × button.
+import { contact } from '../data/site';
+---
+
+<section id="contact-window" class="contact" popover aria-labelledby="contact-title">
+  <div class="contact__head">
+    <h2 id="contact-title">Let’s <em>talk!</em></h2>
+    <button type="button" class="contact__close" popovertarget="contact-window" popovertargetaction="hide">
+      <span aria-hidden="true">×</span>
+      <span class="sr-only">Close</span>
+    </button>
+  </div>
+  <p class="contact__lede">Feel free to reach out through any of these.</p>
+  <dl class="contact__rows">
+    {
+      contact.map((c) => (
+        <div class="contact__row">
+          <dt>{c.label}</dt>
+          <dd>
+            <a href={c.href} target={c.href.startsWith('mailto:') ? undefined : '_blank'} rel="noopener">
+              {c.text}
+            </a>
+            {c.copy && (
+              <button type="button" class="contact__copy" data-copy={c.copy} hidden>
+                Copy
+              </button>
+            )}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>
+
+<script>
+  // Copy buttons only appear where the browser can copy; mailto links don't help webmail users.
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
+    if (!navigator.clipboard) continue;
+    button.hidden = false;
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy!);
+        button.textContent = 'Copied ✓';
+      } catch {
+        button.textContent = 'Couldn’t copy';
+      }
+      setTimeout(() => (button.textContent = 'Copy'), 2000);
+    });
+  }
+
+  // Browsers without popover support: open and close the window by toggling an attribute instead.
+  if (!HTMLElement.prototype.hasOwnProperty('popover')) {
+    const win = document.getElementById('contact-window')!;
+    document.addEventListener('click', (e) => {
+      const trigger = (e.target as Element).closest('[popovertarget="contact-window"]');
+      if (trigger) win.toggleAttribute('data-open', trigger.getAttribute('popovertargetaction') !== 'hide');
+      else if (!win.contains(e.target as Node)) win.removeAttribute('data-open');
+    });
+    document.addEventListener('keydown', (e) => e.key === 'Escape' && win.removeAttribute('data-open'));
+  }
+</script>
+
+<style>
+  /* Floats just under the sticky header, lined up with the Contact button. */
+  .contact {
+    position: fixed;
+    inset: auto;
+    top: calc(var(--header-h, 70px) + 12px);
+    right: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
+    width: min(440px, calc(100vw - 2 * var(--gutter)));
+    max-height: calc(100vh - var(--header-h, 70px) - 24px);
+    overflow: auto;
+    margin: 0;
+    padding: 22px 24px 18px;
+    border: 2px solid var(--ink);
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  /* Hidden until opened. Kept as separate rules: a browser that doesn't know :popover-open drops any
+     rule naming it, and the [data-open] fallback must still work there. */
+  .contact {
+    display: none;
+  }
+
+  .contact[data-open] {
+    display: block;
+    z-index: 40;
+  }
+
+  .contact:popover-open {
+    display: block;
+    transition:
+      opacity 0.16s ease,
+      transform 0.16s ease;
+  }
+
+  @starting-style {
+    .contact:popover-open {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact:popover-open {
+      transition: none;
+    }
+  }
+
+  .contact::backdrop {
+    background: rgba(10, 10, 10, 0.12);
+  }
+
+  .contact__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .contact__head h2 {
+    margin: 0;
+    font-weight: 800;
+    font-size: 34px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .contact__head em {
+    font-family: var(--serif);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--accent);
+  }
+
+  .contact__close {
+    margin: -6px -8px 0 0;
+    padding: 2px 10px;
+    border: 0;
+    background: none;
+    color: var(--muted);
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .contact__close:hover {
+    color: var(--accent);
+  }
+
+  .contact__lede {
+    margin: 10px 0 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--text-2);
+  }
+
+  .contact__rows {
+    margin: 16px 0 0;
+    border-top: 2px solid var(--ink);
+  }
+
+  .contact__row {
+    display: grid;
+    grid-template-columns: 84px minmax(0, 1fr);
+    align-items: baseline;
+    gap: 4px 16px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .contact__row dt {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .contact__row dd {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+    margin: 0;
+    min-width: 0;
+  }
+
+  .contact__row a {
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 4px;
+    overflow-wrap: anywhere;
+  }
+
+  .contact__copy {
+    padding: 1px 8px;
+    border: 1.5px solid var(--ink);
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 11px;
+    cursor: pointer;
+  }
+
+  .contact__copy:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Phones: label above link, so the email address fits on one line. */
+  @media (max-width: 560px) {
+    .contact {
+      padding: 18px 18px 14px;
+    }
+
+    .contact__head h2 {
+      font-size: 30px;
+    }
+
+    .contact__row {
+      grid-template-columns: 1fr;
+      gap: 2px;
+      padding: 9px 0;
+    }
+  }
+</style>
