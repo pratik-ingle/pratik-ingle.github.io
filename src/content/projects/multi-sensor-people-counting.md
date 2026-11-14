@@ -1,5 +1,5 @@
 ---
-order: 7
+order: 6
 title: "Multi-sensor people counting"
 type: Build
 tracks: [Robotics, Tools]

@@ -1,5 +1,5 @@
 ---
-order: 6
+order: 5
 title: "JEPA from first principles"
 type: Build
 tracks: [ML, Tools]

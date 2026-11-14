@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 13
 title: "Thermodynamic solvers for robot state estimation"
 type: Research
 tracks: [Robotics, ML]

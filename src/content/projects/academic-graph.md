@@ -1,5 +1,5 @@
 ---
-order: 8
+order: 7
 title: "CS & robotics researcher atlas"
 type: Build
 tracks: [ML, Tools]

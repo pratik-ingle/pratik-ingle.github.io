@@ -52,7 +52,7 @@ Everything the site still shows as a placeholder or needs a decision on. Fill in
 
 Pictures show at **4:3** on the Work card and **16:9** on the project's own page. Write-ups appear on the project page under the headings shown; plain sentences are fine and Markdown works (lists, links, `**bold**`).
 
-Every project now has a picture. Six of them are figures I generated because their repos had no images: W2, W5, W9, W11, W12 and W14. The charts use the numbers in your READMEs and the diagrams follow your README or CV. Whenever you have a real screenshot or recording for one of them, write it here and I'll swap it in:
+Every project now has a picture. Six of them are figures I generated because their repos had no images: W2, W4, W8, W10, W11 and W14. The charts use the numbers in your READMEs and the diagrams follow your README or CV. Whenever you have a real screenshot or recording for one of them, write it here and I'll swap it in:
 
 - Real media for a generated figure (say which project) →
 
@@ -75,19 +75,19 @@ Shows a generated diagram of the webcam-to-LEAP retargeting pipeline. Link is th
 - Write-up · **Approach** →
 - Write-up · **Results** →
 
-### W6. JEPA from first principles
+### W5. JEPA from first principles
 
 Now shows a screenshot of the live demo. Only the "Demo ↗" link is set.
 
 - Also link the code repo `github.com/pratik-ingle/jepa-visualization`? (yes / no) →
 
-### W10. Time Weaver
+### W9. Time Weaver
 
 Shows the landing-page screenshot.
 
 - Better picture, e.g. the assistant answering a question? (blank keeps the screenshot) →
 
-### W13. Warehouse layout optimisation
+### W12. Warehouse layout optimisation
 
 No link, so the card says "Details →".
 
