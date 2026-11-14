@@ -1,5 +1,5 @@
 ---
-order: 10
+order: 11
 title: "Sales-intelligence agent"
 type: Build
 tracks: [LLMs, Tools]

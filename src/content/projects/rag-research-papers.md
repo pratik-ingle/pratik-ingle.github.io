@@ -1,5 +1,5 @@
 ---
-order: 11
+order: 12
 title: "RAG over research papers"
 type: Build
 tracks: [LLMs]

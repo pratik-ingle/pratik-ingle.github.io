@@ -1,5 +1,5 @@
 ---
-order: 12
+order: 13
 title: "Warehouse layout optimisation"
 type: Research
 tracks: [Robotics]
