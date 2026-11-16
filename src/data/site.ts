@@ -3,7 +3,7 @@ export const site = {
   role: 'Embodied AI and LLM safety researcher',
   description:
     'Pratik Ingle is a PhD candidate at the IT University of Copenhagen working on robot learning, tactile perception and world models.',
-  tagline: 'Embodied AI, LLM inference & safety — 55.68°N 12.57°E',
+  tagline: 'Embodied AI, world models — 55.68°N 12.57°E',
   location: 'Copenhagen · 55.68°N 12.57°E',
   email: 'pratik.ingle135@gmail.com',
 };
