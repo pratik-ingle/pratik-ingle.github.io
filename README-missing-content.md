@@ -14,7 +14,7 @@ Everything the site still shows as a placeholder or needs a decision on. Fill in
 
 | Area | Still missing |
 | --- | --- |
-| Decisions | 7 quick choices (section 1) |
+| Decisions | 6 quick choices (section 1) |
 | Work | 2 links, write-ups for 3 projects; optional: a sharper W1 video, real media for the generated figures |
 | Publications | 3 preprint links, 3 BibTeX entries |
 | Writing | optional: more posts, your own covers for the 2 generated ones |
@@ -31,19 +31,16 @@ Everything the site still shows as a placeholder or needs a decision on. Fill in
 **D2. Old site's project pages** (Moving Depot, UVC disinfection drone, decision-making in collectives, quantum influencer agents, robotic boats, the COVID quantum classifier, optical radiation pressure springs, your Master's thesis). Bring them over as they are / add some as projects on the Work page (say which) / drop them.
 →
 
-**D3. Writing's "Machine learning" tab is empty.** Hide empty tabs / keep it / retag a post (say which) as Machine learning.
+**D3. Thesis defence (January 2027)** no longer appears on the home page. Add a line to the bio / leave it out.
 →
 
-**D4. Thesis defence (January 2027)** no longer appears on the home page. Add a line to the bio / leave it out.
+**D4. Post title.** The site lists "Universal Coding Language"; on your blog it's "The Last Programming Language Won't Be for Humans". Keep / use the blog title.
 →
 
-**D5. Post title.** The site lists "Universal Coding Language"; on your blog it's "The Last Programming Language Won't Be for Humans". Keep / use the blog title.
+**D5. "Video ↗" YouTube links** on the CASE 2025 and RoboSoft 2025 papers, and the one I added to In-hand tactile perception. Keep / remove.
 →
 
-**D6. "Video ↗" YouTube links** on the CASE 2025 and RoboSoft 2025 papers, and the one I added to In-hand tactile perception. Keep / remove.
-→
-
-**D7. CASE 2025 arXiv link** (`arxiv.org/abs/2507.14967`, listed on the MANTA-RAY page). Add it next to the DOI / leave it out.
+**D6. CASE 2025 arXiv link** (`arxiv.org/abs/2507.14967`, listed on the MANTA-RAY page). Add it next to the DOI / leave it out.
 →
 
 ---

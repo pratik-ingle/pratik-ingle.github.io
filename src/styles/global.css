@@ -386,6 +386,38 @@ button {
   font-weight: 700;
 }
 
+.prose h4,
+.prose h5 {
+  margin: 1.6em 0 0.4em;
+  font-family: var(--sans);
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.prose h4 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.prose h5 {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* KaTeX math: display equations scroll sideways on narrow screens instead of overflowing. */
+.prose .katex {
+  font-size: 1.08em;
+}
+
+.prose .katex-display {
+  margin: 0 0 1.1em;
+  padding: 4px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
 .prose a {
   text-decoration-thickness: 1px;
 }
